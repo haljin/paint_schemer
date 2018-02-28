@@ -1,12 +1,11 @@
-import * as React from "react"
-import {Socket} from "phoenix"
+import * as React from "react";
 
-export type userid = number
+export type userid = number;
 
 export default class MainComponent extends React.Component<any, any> {
 
+  public render() {
 
-  render() {
     return <div>Bla bla bla </div>;
   }
 }

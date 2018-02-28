@@ -4,9 +4,11 @@
     "module": "es2015",
     "jsx": "preserve",
     "moduleResolution": "node",
-    "baseUrl": "assets/js",
+    "baseUrl": "js",
     "outDir": "ts-build",
-    "allowJs": true
+    "allowJs": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
   },
   "exclude": [
     "node_modules",
