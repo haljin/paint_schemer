@@ -8,7 +8,7 @@ defmodule PaintSchemer.Paints.Paint do
     field :color, :binary
     field :name, :string
     belongs_to :manufacturer, PaintSchemer.Paints.Manufacturer
-    belongs_to :type, PaintSchemer.Paints.Type
+    belongs_to :type, PaintSchemer.Paints.PaintType
 
     timestamps()
   end

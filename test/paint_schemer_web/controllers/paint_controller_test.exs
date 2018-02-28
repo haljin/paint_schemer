@@ -9,7 +9,12 @@ defmodule PaintSchemerWeb.PaintControllerTest do
   @invalid_attrs %{color: nil, name: nil}
 
   def fixture(:paint) do
-    {:ok, paint} = Paints.create_paint(@create_attrs)
+    {:ok, type} = Paints.create_paint_type(%{name: "Some paint type"})
+    {:ok, manufacturer} = Paints.create_manufacturer(%{name: "Some manufacturer"})
+    {:ok, paint} =
+      @create_attrs
+      |> Map.merge(%{type_id: type.id, manufacturer_id: manufacturer.id})
+      |> Paints.create_paint
     paint
   end
 
@@ -26,7 +31,13 @@ defmodule PaintSchemerWeb.PaintControllerTest do
 
   describe "create paint" do
     test "renders paint when data is valid", %{conn: conn} do
-      conn = post conn, paint_path(conn, :create), paint: @create_attrs
+      {:ok, type} = Paints.create_paint_type(%{name: "Some paint type"})
+      {:ok, manufacturer} = Paints.create_manufacturer(%{name: "Some manufacturer"})
+      attrs =
+        @create_attrs
+        |> Map.merge(%{type_id: type.id, manufacturer_id: manufacturer.id})
+
+      conn = post conn, paint_path(conn, :create), paint: attrs
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
       conn = get conn, paint_path(conn, :show, id)

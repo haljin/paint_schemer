@@ -14,8 +14,6 @@ defmodule PaintSchemerWeb.PaintView do
   def render("paint.json", %{paint: paint}) do
     %{id: paint.id,
       name: paint.name,
-      color: paint.color,
-      manufacturer: paint.manufacturer.name,
-      type: paint.type.name}
+      color: paint.color}
   end
 end

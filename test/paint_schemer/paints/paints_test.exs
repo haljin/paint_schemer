@@ -64,62 +64,62 @@ defmodule PaintSchemer.PaintsTest do
   end
 
   describe "paint_types" do
-    alias PaintSchemer.Paints.Type
+    alias PaintSchemer.Paints.PaintType
 
     @valid_attrs %{name: "some name"}
     @update_attrs %{name: "some updated name"}
     @invalid_attrs %{name: nil}
 
-    def type_fixture(attrs \\ %{}) do
-      {:ok, type} =
+    def paint_type_fixture(attrs \\ %{}) do
+      {:ok, paint_type} =
         attrs
         |> Enum.into(@valid_attrs)
-        |> Paints.create_type()
+        |> Paints.create_paint_type()
 
-      type
+      paint_type
     end
 
     test "list_paint_types/0 returns all paint_types" do
-      type = type_fixture()
-      assert Paints.list_paint_types() == [type]
+      paint_type = paint_type_fixture()
+      assert Paints.list_paint_types() == [paint_type]
     end
 
-    test "get_type!/1 returns the type with given id" do
-      type = type_fixture()
-      assert Paints.get_type!(type.id) == type
+    test "get_paint_type!/1 returns the paint_type with given id" do
+      paint_type = paint_type_fixture()
+      assert Paints.get_paint_type!(paint_type.id) == paint_type
     end
 
-    test "create_type/1 with valid data creates a type" do
-      assert {:ok, %Type{} = type} = Paints.create_type(@valid_attrs)
-      assert type.name == "some name"
+    test "create_paint_type/1 with valid data creates a paint_type" do
+      assert {:ok, %PaintType{} = paint_type} = Paints.create_paint_type(@valid_attrs)
+      assert paint_type.name == "some name"
     end
 
-    test "create_type/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Paints.create_type(@invalid_attrs)
+    test "create_paint_type/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Paints.create_paint_type(@invalid_attrs)
     end
 
-    test "update_type/2 with valid data updates the type" do
-      type = type_fixture()
-      assert {:ok, type} = Paints.update_type(type, @update_attrs)
-      assert %Type{} = type
-      assert type.name == "some updated name"
+    test "update_paint_type/2 with valid data updates the paint_type" do
+      paint_type = paint_type_fixture()
+      assert {:ok, paint_type} = Paints.update_paint_type(paint_type, @update_attrs)
+      assert %PaintType{} = paint_type
+      assert paint_type.name == "some updated name"
     end
 
-    test "update_type/2 with invalid data returns error changeset" do
-      type = type_fixture()
-      assert {:error, %Ecto.Changeset{}} = Paints.update_type(type, @invalid_attrs)
-      assert type == Paints.get_type!(type.id)
+    test "update_paint_type/2 with invalid data returns error changeset" do
+      paint_type = paint_type_fixture()
+      assert {:error, %Ecto.Changeset{}} = Paints.update_paint_type(paint_type, @invalid_attrs)
+      assert paint_type == Paints.get_paint_type!(paint_type.id)
     end
 
-    test "delete_type/1 deletes the type" do
-      type = type_fixture()
-      assert {:ok, %Type{}} = Paints.delete_type(type)
-      assert_raise Ecto.NoResultsError, fn -> Paints.get_type!(type.id) end
+    test "delete_paint_type/1 deletes the paint_type" do
+      paint_type = paint_type_fixture()
+      assert {:ok, %PaintType{}} = Paints.delete_paint_type(paint_type)
+      assert_raise Ecto.NoResultsError, fn -> Paints.get_paint_type!(paint_type.id) end
     end
 
-    test "change_type/1 returns a type changeset" do
-      type = type_fixture()
-      assert %Ecto.Changeset{} = Paints.change_type(type)
+    test "change_paint_type/1 returns a paint_type changeset" do
+      paint_type = paint_type_fixture()
+      assert %Ecto.Changeset{} = Paints.change_paint_type(paint_type)
     end
   end
 
@@ -138,7 +138,7 @@ defmodule PaintSchemer.PaintsTest do
         |> Paints.create_manufacturer()
       {:ok, type} =
         @type_attrs
-        |> Paints.create_type()
+        |> Paints.create_paint_type()
       {:ok, paint} =
         attrs
         |> Enum.into(@valid_attrs)
@@ -164,7 +164,7 @@ defmodule PaintSchemer.PaintsTest do
         |> Paints.create_manufacturer()
       {:ok, type} =
         @type_attrs
-        |> Paints.create_type()
+        |> Paints.create_paint_type()
 
       assert {:ok, %Paint{} = paint} =
         Map.merge(@valid_attrs, %{manufacturer_id: manufacturer.id, type_id: type.id})
@@ -172,7 +172,7 @@ defmodule PaintSchemer.PaintsTest do
       assert paint.color == "some color"
       assert paint.name == "some name"
     end
- 
+
     test "create_paint/1 with invalid data returns error changeset" do
       assert {:error, %Ecto.Changeset{}} = Paints.create_paint(@invalid_attrs)
     end
@@ -202,4 +202,6 @@ defmodule PaintSchemer.PaintsTest do
       assert %Ecto.Changeset{} = Paints.change_paint(paint)
     end
   end
+
+
 end

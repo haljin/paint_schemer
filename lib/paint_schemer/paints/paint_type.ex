@@ -1,7 +1,7 @@
-defmodule PaintSchemer.Paints.Type do
+defmodule PaintSchemer.Paints.PaintType do
   use Ecto.Schema
   import Ecto.Changeset
-  alias PaintSchemer.Paints.Type
+  alias PaintSchemer.Paints.PaintType
 
 
   schema "paint_types" do
@@ -11,8 +11,8 @@ defmodule PaintSchemer.Paints.Type do
   end
 
   @doc false
-  def changeset(%Type{} = type, attrs) do
-    type
+  def changeset(%PaintType{} = paint_type, attrs) do
+    paint_type
     |> cast(attrs, [:name])
     |> validate_required([:name])
   end

@@ -23,5 +23,7 @@ defmodule PaintSchemerWeb.Router do
   scope "/api", PaintSchemerWeb do
     pipe_through :api
     resources "/paints", PaintController, except: [:new, :edit]
+    resources "/paint_types", PaintTypeController, except: [:new, :edit]
+    resources "/paint_manufacturers", ManufacturerController, except: [:new, :edit]
   end
 end
