@@ -3,7 +3,7 @@ defmodule PaintSchemer.PaintsTest do
 
   alias PaintSchemer.Paints
 
-  describe "paint_manufacturerers" do
+  describe "paint_manufacturers" do
     alias PaintSchemer.Paints.Manufacturer
 
     @valid_attrs %{name: "some name"}
@@ -19,9 +19,9 @@ defmodule PaintSchemer.PaintsTest do
       manufacturer
     end
 
-    test "list_paint_manufacturerers/0 returns all paint_manufacturerers" do
+    test "list_paint_manufacturers/0 returns all paint_manufacturers" do
       manufacturer = manufacturer_fixture()
-      assert Paints.list_paint_manufacturerers() == [manufacturer]
+      assert Paints.list_paint_manufacturers() == [manufacturer]
     end
 
     test "get_manufacturer!/1 returns the manufacturer with given id" do
@@ -120,6 +120,68 @@ defmodule PaintSchemer.PaintsTest do
     test "change_type/1 returns a type changeset" do
       type = type_fixture()
       assert %Ecto.Changeset{} = Paints.change_type(type)
+    end
+  end
+
+  describe "paints" do
+    alias PaintSchemer.Paints.Paint
+
+    @valid_attrs %{color: "some color", name: "some name"}
+    @update_attrs %{color: "some updated color", name: "some updated name"}
+    @invalid_attrs %{color: nil, name: nil}
+
+    def paint_fixture(attrs \\ %{}) do
+      {:ok, paint} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Paints.create_paint()
+
+      paint
+    end
+
+    test "list_paints/0 returns all paints" do
+      paint = paint_fixture()
+      assert Paints.list_paints() == [paint]
+    end
+
+    test "get_paint!/1 returns the paint with given id" do
+      paint = paint_fixture()
+      assert Paints.get_paint!(paint.id) == paint
+    end
+
+    test "create_paint/1 with valid data creates a paint" do
+      assert {:ok, %Paint{} = paint} = Paints.create_paint(@valid_attrs)
+      assert paint.color == "some color"
+      assert paint.name == "some name"
+    end
+
+    test "create_paint/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Paints.create_paint(@invalid_attrs)
+    end
+
+    test "update_paint/2 with valid data updates the paint" do
+      paint = paint_fixture()
+      assert {:ok, paint} = Paints.update_paint(paint, @update_attrs)
+      assert %Paint{} = paint
+      assert paint.color == "some updated color"
+      assert paint.name == "some updated name"
+    end
+
+    test "update_paint/2 with invalid data returns error changeset" do
+      paint = paint_fixture()
+      assert {:error, %Ecto.Changeset{}} = Paints.update_paint(paint, @invalid_attrs)
+      assert paint == Paints.get_paint!(paint.id)
+    end
+
+    test "delete_paint/1 deletes the paint" do
+      paint = paint_fixture()
+      assert {:ok, %Paint{}} = Paints.delete_paint(paint)
+      assert_raise Ecto.NoResultsError, fn -> Paints.get_paint!(paint.id) end
+    end
+
+    test "change_paint/1 returns a paint changeset" do
+      paint = paint_fixture()
+      assert %Ecto.Changeset{} = Paints.change_paint(paint)
     end
   end
 end

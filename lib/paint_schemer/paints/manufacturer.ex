@@ -4,7 +4,7 @@ defmodule PaintSchemer.Paints.Manufacturer do
   alias PaintSchemer.Paints.Manufacturer
 
 
-  schema "paint_manufacturerers" do
+  schema "paint_manufacturers" do
     field :name, :string
 
     timestamps()
