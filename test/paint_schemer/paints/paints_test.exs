@@ -126,17 +126,26 @@ defmodule PaintSchemer.PaintsTest do
   describe "paints" do
     alias PaintSchemer.Paints.Paint
 
+    @manufacturer_attrs %{name: "some manufacturer"}
+    @type_attrs %{name: "some type"}
     @valid_attrs %{color: "some color", name: "some name"}
     @update_attrs %{color: "some updated color", name: "some updated name"}
     @invalid_attrs %{color: nil, name: nil}
 
     def paint_fixture(attrs \\ %{}) do
+      {:ok, manufacturer} =
+        @manufacturer_attrs
+        |> Paints.create_manufacturer()
+      {:ok, type} =
+        @type_attrs
+        |> Paints.create_type()
       {:ok, paint} =
         attrs
         |> Enum.into(@valid_attrs)
+        |> Enum.into(%{manufacturer_id: manufacturer.id, type_id: type.id})
         |> Paints.create_paint()
 
-      paint
+      %Paint{ paint | manufacturer: manufacturer, type: type}
     end
 
     test "list_paints/0 returns all paints" do
@@ -150,11 +159,20 @@ defmodule PaintSchemer.PaintsTest do
     end
 
     test "create_paint/1 with valid data creates a paint" do
-      assert {:ok, %Paint{} = paint} = Paints.create_paint(@valid_attrs)
+      {:ok, manufacturer} =
+        @manufacturer_attrs
+        |> Paints.create_manufacturer()
+      {:ok, type} =
+        @type_attrs
+        |> Paints.create_type()
+
+      assert {:ok, %Paint{} = paint} =
+        Map.merge(@valid_attrs, %{manufacturer_id: manufacturer.id, type_id: type.id})
+        |> Paints.create_paint()
       assert paint.color == "some color"
       assert paint.name == "some name"
     end
-
+ 
     test "create_paint/1 with invalid data returns error changeset" do
       assert {:error, %Ecto.Changeset{}} = Paints.create_paint(@invalid_attrs)
     end

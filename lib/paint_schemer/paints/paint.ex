@@ -7,8 +7,8 @@ defmodule PaintSchemer.Paints.Paint do
   schema "paints" do
     field :color, :binary
     field :name, :string
-    field :manufacturer_id, :id
-    field :type_id, :id
+    belongs_to :manufacturer, PaintSchemer.Paints.Manufacturer
+    belongs_to :type, PaintSchemer.Paints.Type
 
     timestamps()
   end
@@ -16,7 +16,7 @@ defmodule PaintSchemer.Paints.Paint do
   @doc false
   def changeset(%Paint{} = paint, attrs) do
     paint
-    |> cast(attrs, [:name, :color])
-    |> validate_required([:name, :color])
+    |> cast(attrs, [:name, :color, :type_id, :manufacturer_id])
+    |> validate_required([:name, :color, :type_id, :manufacturer_id])
   end
 end
