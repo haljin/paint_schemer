@@ -1,6 +1,9 @@
 {
+  "name": "paint-schemer",
+  "version": "0.0.1",
   "repository": {},
-  "license": "MIT",
+  "license": "Apache 2.0",
+
   "scripts": {
     "deploy": "webpack -p",
     "watch": "webpack --watch-stdin --progress --color"
