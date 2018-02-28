@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
-    "target": "es2015",
-    "module": "es2015",
-    "jsx": "preserve",
+    "target": "es5",
+    "module": "es6",
+    "jsx": "react",
     "moduleResolution": "node",
-    "baseUrl": "js",
+    "baseUrl": "src",
     "outDir": "ts-build",
     "allowJs": true,
     "noUnusedLocals": true,

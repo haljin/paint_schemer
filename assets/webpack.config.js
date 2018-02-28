@@ -3,7 +3,7 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin")
 
 const config = {
-    entry: ["./css/app.css", "./js/app.js"],
+    entry: ["./css/app.css", "./src/app.tsx"],
     output: {
         path: path.resolve(__dirname, "../priv/static"),
         filename: "js/app.js"
@@ -16,7 +16,7 @@ const config = {
         rules: [
             {
                 test: /\.tsx?$/,
-                use: ["babel-loader", "ts-loader"]
+                use: "ts-loader"
             },
             {
                 test: /\.jsx?$/,
