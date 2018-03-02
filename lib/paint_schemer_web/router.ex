@@ -33,6 +33,8 @@ defmodule PaintSchemerWeb.Router do
   scope "/admin", PaintSchemerWeb do
     pipe_through :admin
     get "/", AdminController, :index
+    get "/users", AdminController, :index
+    get "/paints", AdminController, :index
   end
 
   # Other scopes may use custom stacks.

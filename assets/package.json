@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "repository": {},
   "license": "Apache 2.0",
-
   "scripts": {
     "deploy": "webpack -p",
     "watch": "webpack --watch-stdin --progress --color"
@@ -12,7 +11,8 @@
     "phoenix": "file:../deps/phoenix",
     "phoenix_html": "file:../deps/phoenix_html",
     "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react-dom": "^16.2.0",
+    "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
     "@types/phoenix": "0.0.4",
