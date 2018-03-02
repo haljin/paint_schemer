@@ -2,7 +2,7 @@
   "name": "paint-schemer",
   "version": "0.0.1",
   "repository": {},
-  "license": "Apache 2.0",
+  "license": "Apache-2.0",
   "scripts": {
     "deploy": "webpack -p",
     "watch": "webpack --watch-stdin --progress --color"
@@ -29,6 +29,7 @@
     "style-loader": "^0.20.2",
     "ts-loader": "^4.0.0",
     "tslint": "^5.9.1",
+    "tslint-react": "^3.5.1",
     "typescript": "^2.4.2",
     "webpack": "^4.0.1",
     "webpack-cli": "^2.0.9",

@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 import PaintsAdminFrame from "./components/admin/paints";
 import UsersAdminFrame from "./components/admin/users";
 
-class AdminPage extends React.Component<any, any> {
+class AdminPage extends React.Component<null, null> {
     public render() {
         return (
             <Router>
