@@ -1,6 +1,5 @@
 import * as React from "react";
 import { IDataEntry } from "../../data-types/response-types";
-import { EntryList } from "./list";
 
 interface IProps {
     url: string;
@@ -29,7 +28,7 @@ export default class DataManager extends React.Component<IProps, IState> {
         const onChangeCallback = (e: React.FormEvent<HTMLInputElement>) => this.onChange(e);
         return (
             <div>
-                <EntryList list={this.state.list} />
+                {this.props.children}
                 <form onSubmit={onSubmitCallback}>
                     <input type="text" value={this.state.content} onChange={onChangeCallback} />
                     <input type="submit" value="Create" />
