@@ -1,11 +1,12 @@
 import * as React from "react";
-import {IDataEntry} from "../../data-types/response-types";
+import { IDataEntry } from "../../data-types/response-types";
 
 interface IProps {
     list: IDataEntry[];
+    children?: React.ReactNode;
 }
 
-export class EntryList extends React.Component<IProps, null> {
+export class EntryList extends React.Component<IProps, {}> {
 
     public render() {
         return (

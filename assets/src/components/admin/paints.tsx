@@ -1,5 +1,5 @@
 import * as React from "react";
-import CreateForm from "../common/create-form";
+import DataManager from "../common/create-form";
 
 export default class PaintsAdminFrame extends React.Component<null, null> {
 
@@ -7,9 +7,9 @@ export default class PaintsAdminFrame extends React.Component<null, null> {
         return (
             <div>
                 Manufacturer
-                <CreateForm url="/api/paint_manufacturers" type="manufacturer" />
+                <DataManager url="/api/paint_manufacturers" type="manufacturer" />
                 Types
-                <CreateForm url="/api/paint_types" type="paint_type"/>
+                <DataManager url="/api/paint_types" type="paint_type"/>
             </div>);
     }
 }

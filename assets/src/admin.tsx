@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 import PaintsAdminFrame from "./components/admin/paints";
 import UsersAdminFrame from "./components/admin/users";
 
-class AdminPage extends React.Component<null, null> {
+class AdminPage extends React.Component<{ children?: React.ReactNode }, {}> {
     public render() {
         return (
             <Router>
@@ -27,11 +27,8 @@ class AdminPage extends React.Component<null, null> {
     }
 }
 
-function render(node) {
-    ReactDOM.render(<AdminPage />, node);
-}
 
 const main = document.getElementById("react-main");
 if (main) {
-    render(main);
+    ReactDOM.render(<AdminPage />, main);
 }

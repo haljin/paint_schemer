@@ -9,7 +9,13 @@
     "allowJs": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "strict": true,
+    "allowSyntheticDefaultImports": true
   },
+  "typeRoots": [
+    "node_modules/@types",
+    "src",
+  ],
   "exclude": [
     "node_modules",
     "deps",

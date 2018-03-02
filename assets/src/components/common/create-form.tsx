@@ -1,10 +1,12 @@
 import * as React from "react";
-import {IDataEntry} from "../../data-types/response-types";
-import {EntryList} from "./list";
+import { IDataEntry } from "../../data-types/response-types";
+import { EntryList } from "./list";
 
 interface IProps {
     url: string;
     type: string;
+    dataCallback?(data: IDataEntry[]): void;
+    children?: React.ReactNode;
 }
 
 interface IState {
@@ -12,10 +14,10 @@ interface IState {
     list: IDataEntry[];
     result: string;
 }
-export default class CreateForm extends React.Component<IProps, IState> {
+export default class DataManager extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
-        this.state = { content: "", result: "", list: []};
+        this.state = { content: "", result: "", list: [] };
     }
 
     public componentDidMount() {
@@ -23,11 +25,11 @@ export default class CreateForm extends React.Component<IProps, IState> {
     }
 
     public render() {
-        const onSubmitCallback = (e) => this.onSubmit(e);
-        const onChangeCallback = (e) => this.onChange(e);
+        const onSubmitCallback = (e: React.FormEvent<HTMLFormElement>) => this.onSubmit(e);
+        const onChangeCallback = (e: React.FormEvent<HTMLInputElement>) => this.onChange(e);
         return (
             <div>
-                <EntryList list={this.state.list}/>
+                <EntryList list={this.state.list} />
                 <form onSubmit={onSubmitCallback}>
                     <input type="text" value={this.state.content} onChange={onChangeCallback} />
                     <input type="submit" value="Create" />
@@ -50,7 +52,12 @@ export default class CreateForm extends React.Component<IProps, IState> {
     private getRequest() {
         fetch(this.props.url)
             .then((resp) => resp.json())
-            .then((json) => this.setState({ list: json.data}));
+            .then((json) => {
+                this.setState({ list: json.data });
+                if (this.props.dataCallback) {
+                    this.props.dataCallback(json.data);
+                }
+            });
     }
 
     private postRequest() {
