@@ -3,10 +3,13 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin")
 
 const config = {
-    entry: ["./css/app.css", "./src/app.tsx"],
+    entry: {
+        app: ["./css/app.css", "./src/app.tsx"],
+        admin: ["./css/app.css", "./src/admin.tsx"]
+    },
     output: {
         path: path.resolve(__dirname, "../priv/static"),
-        filename: "js/app.js"
+        filename: "js/[name].js"
     },
     resolve: {
         extensions: [".ts", ".tsx", ".js", ".jsx"],
