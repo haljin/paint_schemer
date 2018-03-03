@@ -3,6 +3,7 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin")
 
 const config = {
+    devtool: "inline-source-map",
     entry: {
         app: ["./css/app.css", "./src/app.tsx"],
         admin: ["./css/app.css", "./src/admin.tsx"]

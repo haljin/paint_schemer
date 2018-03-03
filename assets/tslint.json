@@ -4,6 +4,7 @@
     "tslint-react"
   ],
   "rules": {
-    "no-empty-interface": false
+    "no-empty-interface": false,
+    "jsx-no-multiline-js": false
   }
 }

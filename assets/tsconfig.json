@@ -10,7 +10,8 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "strict": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
   },
   "typeRoots": [
     "node_modules/@types",
