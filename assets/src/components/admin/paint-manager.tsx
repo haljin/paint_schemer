@@ -35,12 +35,12 @@ export default class PaintManager extends DataManager<IProps, IState> {
             <div>
                 {this.props.label}
                 <PaintList list={this.state.data} selectedCallback={selectCallback} />
+                <input type="text" value={this.state.color} onChange={onChangeCallback} />
                 <DataEntryForm
                     extraData={extraData}
                     url={this.props.url}
                     refreshCallback={rfshCallback}
                 />
-                <input type="text" value={this.state.color} onChange={onChangeCallback} />
                 <DeleteButton
                     url={this.props.url}
                     selectedId={this.state.selectedId}
