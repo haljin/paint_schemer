@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/haljin/paint_schemer.svg?branch=master)](https://travis-ci.org/haljin/paint_schemer)
+
 # PaintSchemer
 
 To start your Phoenix server:
