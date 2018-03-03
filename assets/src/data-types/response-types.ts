@@ -6,3 +6,9 @@ export interface IDataEntry {
 export interface IManfacturerEntry extends IDataEntry { }
 
 export interface ITypeEntry extends IDataEntry { }
+
+export interface IPaintEntry extends IDataEntry {
+    manufacturer?: string;
+    type?: string;
+    color: string;
+}

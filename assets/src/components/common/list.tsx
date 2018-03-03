@@ -6,7 +6,7 @@ interface IProps {
     children?: React.ReactNode;
 }
 
-export class EntryList extends React.Component<IProps, {}> {
+export default class EntryList extends React.Component < IProps, {} > {
 
     public render() {
         return (

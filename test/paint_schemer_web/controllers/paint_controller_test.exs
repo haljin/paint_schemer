@@ -4,8 +4,8 @@ defmodule PaintSchemerWeb.PaintControllerTest do
   alias PaintSchemer.Paints
   alias PaintSchemer.Paints.Paint
 
-  @create_attrs %{color: "some color", name: "some name"}
-  @update_attrs %{color: "some updated color", name: "some updated name"}
+  @create_attrs %{color: <<15, 12, 12>>, name: "some name"}
+  @update_attrs %{color: <<16, 12, 12>>, name: "some updated name"}
   @invalid_attrs %{color: nil, name: nil}
 
   def fixture(:paint) do
@@ -43,7 +43,9 @@ defmodule PaintSchemerWeb.PaintControllerTest do
       conn = get conn, paint_path(conn, :show, id)
       assert json_response(conn, 200)["data"] == %{
         "id" => id,
-        "color" => "some color",
+        "manufacturer" => "Some manufacturer",
+        "type" => "Some paint type",
+        "color" => "#0F0C0C",
         "name" => "some name"}
     end
 
@@ -63,7 +65,9 @@ defmodule PaintSchemerWeb.PaintControllerTest do
       conn = get conn, paint_path(conn, :show, id)
       assert json_response(conn, 200)["data"] == %{
         "id" => id,
-        "color" => "some updated color",
+        "manufacturer" => "Some manufacturer",
+        "type" => "Some paint type",
+        "color" => "#100C0C",
         "name" => "some updated name"}
     end
 

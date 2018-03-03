@@ -27,7 +27,6 @@ class AdminPage extends React.Component<{ children?: React.ReactNode }, {}> {
     }
 }
 
-
 const main = document.getElementById("react-main");
 if (main) {
     ReactDOM.render(<AdminPage />, main);

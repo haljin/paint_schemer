@@ -1,26 +1,20 @@
 import * as React from "react";
-import { IDataEntry } from "../../data-types/response-types";
 
 interface IProps {
+    children?: React.ReactNode;
     url: string;
     type: string;
-    dataCallback?(data: IDataEntry[]): void;
-    children?: React.ReactNode;
+    refreshCallback(): void;
 }
 
 interface IState {
     content: string;
-    list: IDataEntry[];
     result: string;
 }
-export default class DataManager extends React.Component<IProps, IState> {
+export default class DataEntryForm extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
-        this.state = { content: "", result: "", list: [] };
-    }
-
-    public componentDidMount() {
-        this.getRequest();
+        this.state = { content: "", result: "" };
     }
 
     public render() {
@@ -48,17 +42,6 @@ export default class DataManager extends React.Component<IProps, IState> {
         this.setState({ content: event.currentTarget.value });
     }
 
-    private getRequest() {
-        fetch(this.props.url)
-            .then((resp) => resp.json())
-            .then((json) => {
-                this.setState({ list: json.data });
-                if (this.props.dataCallback) {
-                    this.props.dataCallback(json.data);
-                }
-            });
-    }
-
     private postRequest() {
         const data = { [this.props.type]: { name: this.state.content } };
         const request = {
@@ -71,7 +54,7 @@ export default class DataManager extends React.Component<IProps, IState> {
 
         fetch(this.props.url, request)
             .then(() => this.setState({ result: "Success" }))
-            .then(() => this.getRequest())
+            .then(() => this.props.refreshCallback())
             .catch((error) => this.setState({ result: `Failed ${error}` }));
     }
 
