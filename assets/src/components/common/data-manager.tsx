@@ -1,8 +1,8 @@
 import * as React from "react";
 import { IDataEntry } from "../../data-types/response-types";
-import DeleteButton from "../common/delete-button";
-import DataEntryForm from "../common/entry-form";
-import EntryList from "../common/list";
+import DeleteButton from "./delete-button";
+import DataEntryForm from "./entry-form";
+import EntryList from "./list";
 
 interface IProps {
     url: string;
@@ -13,10 +13,9 @@ interface IState {
     selectedId?: number;
     data: IDataEntry[];
 }
-export default class DataManager extends React.Component<IProps, IState> {
-    constructor(props: IProps) {
-        super(props);
-        this.state = { data: [] };
+export default class DataManager<TProps extends IProps, TState extends IState> extends React.Component<TProps, TState> {
+    public componentWillMount() {
+        this.setState({ data: [] });
     }
 
     public componentDidMount() {
@@ -25,16 +24,16 @@ export default class DataManager extends React.Component<IProps, IState> {
 
     public render() {
         const rfshCallback = () => this.refresh();
-        const selectCallback = (id: number) => this.setState({ selectedId: id });
+        const selectCallback = (id: number) => this.entrySelected(id);
         return (
             <div>
                 {this.props.label}
                 <EntryList list={this.state.data} selectedCallback={selectCallback} />
                 <DataEntryForm
                     url={this.props.url}
-                    type="manufacturer"
                     refreshCallback={rfshCallback}
                 />
+
                 <DeleteButton
                     url={this.props.url}
                     selectedId={this.state.selectedId}
@@ -43,15 +42,21 @@ export default class DataManager extends React.Component<IProps, IState> {
             </div >);
     }
 
+    protected entrySelected(id: number) {
+        this.setState({ selectedId: id });
+        if (this.props.selectedCallback) {
+            this.props.selectedCallback(id);
+        }
+    }
+
+    protected refresh() {
+        this.getRequest(this.props.url)
+            .then((data) => this.setState({ data }));
+    }
+
     private getRequest(url: string) {
         return fetch(url)
             .then((resp) => resp.json())
             .then((json) => json.data);
     }
-
-    private refresh() {
-        this.getRequest(this.props.url)
-            .then((data) => this.setState({ data }));
-    }
-
 }

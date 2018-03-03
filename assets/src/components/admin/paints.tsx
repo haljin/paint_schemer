@@ -1,19 +1,19 @@
 import * as React from "react";
 import { IManfacturerEntry, IPaintEntry, ITypeEntry } from "../../data-types/response-types";
-import ExtendedEntryList from "../common/extended-list";
-import DataManager from "./data-manager";
+import DataManager from "../common/data-manager";
+import PaintManager from "./paint-manager";
 
 interface IState {
     manufacturers: IManfacturerEntry[];
     types: ITypeEntry[];
     paints: IPaintEntry[];
-    selectedManufacturer: number | null;
-    selectedType: number | null;
+    selectedManufacturer?: number;
+    selectedType?: number;
 }
 export default class PaintsAdminFrame extends React.Component<{}, IState> {
     constructor(props: {}) {
         super(props);
-        this.state = { manufacturers: [], types: [], paints: [], selectedManufacturer: null, selectedType: null };
+        this.state = { manufacturers: [], types: [], paints: [] };
     }
 
     public render() {
@@ -31,8 +31,12 @@ export default class PaintsAdminFrame extends React.Component<{}, IState> {
                     label="Types"
                     selectedCallback={typeSelectCallback}
                 />
-                Paints
-                <ExtendedEntryList list={this.state.paints} />
+                <PaintManager
+                    url="/api/paints"
+                    label="Paints"
+                    selectedManufacturer={this.state.selectedManufacturer}
+                    selectedType={this.state.selectedType}
+                />
             </div >);
     }
 

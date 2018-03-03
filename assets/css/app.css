@@ -15,7 +15,7 @@
     text-align: center;
     width: 34px;
   }
-  
+
   .square:focus {
     outline: none;
   }
@@ -24,4 +24,8 @@
     clear: both;
     content: "";
     display: table;
+  }
+
+  .selected {
+    background: red;
   }

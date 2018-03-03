@@ -11,17 +11,16 @@ interface IState {
     selected: number | null;
 }
 
-export default class EntryList extends React.Component<IProps, IState> {
-    constructor(props: IProps) {
-        super(props);
-        this.state = { selected: null };
+export default class EntryList<TProps extends IProps, TState extends IState> extends React.Component<TProps, TState> {
+    public componentWillMount() {
+        this.setState({ selected: null });
     }
 
     public render() {
         const entries = this.props.list.map((entry, i) => {
             const clickFun = () => this.clicked(entry);
-            const style = { background: this.state.selected === entry.id ? "red" : "none" };
-            return <li style={style} onClick={clickFun} key={i}>{entry.name}</li>;
+            const className = this.state.selected === entry.id ? "selected" : "";
+            return <li className={className} onClick={clickFun} key={i}>{entry.name}</li>;
         });
         return <ul> {entries} </ul>;
     }

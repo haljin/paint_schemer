@@ -3,7 +3,7 @@ import * as React from "react";
 interface IProps {
     children?: React.ReactNode;
     url: string;
-    type: string;
+    extraData?: object;
     refreshCallback: () => void;
 }
 
@@ -43,7 +43,8 @@ export default class DataEntryForm extends React.Component<IProps, IState> {
     }
 
     private postRequest() {
-        const data = { data: { name: this.state.content } };
+        const { extraData = {} } = this.props;
+        const data = { data: { name: this.state.content, ...extraData } };
         const request = {
             body: JSON.stringify(data),
             headers: {
@@ -53,7 +54,12 @@ export default class DataEntryForm extends React.Component<IProps, IState> {
         };
 
         fetch(this.props.url, request)
-            .then(() => this.setState({ result: "Success" }))
+            .then((resp) => {
+                if (resp.status === 201) {
+                    return this.setState({ result: "Success" });
+                }
+                throw new Error(`${resp.status} - ${resp.statusText}`);
+            })
             .then(() => this.props.refreshCallback())
             .catch((error) => this.setState({ result: `Failed ${error}` }));
     }

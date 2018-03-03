@@ -11,8 +11,13 @@ defmodule PaintSchemerWeb.PaintController do
     render(conn, "index.json", paints: paints)
   end
 
-  def create(conn, %{"paint" => paint_params}) do
-    with {:ok, %Paint{} = paint} <- Paints.create_paint(paint_params) do
+  def create(conn, %{"data" => paint_params}) do
+    with "#" <> color_hex <- paint_params["color"],
+      color_hex = String.upcase(color_hex),
+      {:ok, color_binary} <- Base.decode16(color_hex),
+      converted_color_params = %{paint_params | "color" => color_binary},
+      {:ok, %Paint{} = paint} <- Paints.create_paint(converted_color_params)
+    do
       conn
       |> put_status(:created)
       |> put_resp_header("location", paint_path(conn, :show, paint))
@@ -39,4 +44,5 @@ defmodule PaintSchemerWeb.PaintController do
       send_resp(conn, :no_content, "")
     end
   end
+
 end
