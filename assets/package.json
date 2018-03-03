@@ -5,7 +5,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "deploy": "webpack -p",
-    "watch": "webpack --watch-stdin --progress --color"
+    "watch": "webpack --watch-stdin --progress --color --mode development"
   },
   "dependencies": {
     "phoenix": "file:../deps/phoenix",

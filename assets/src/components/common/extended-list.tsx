@@ -17,6 +17,6 @@ export default class ExtendedEntryList extends React.Component<IProps, {}> {
                 <td>{entry.type}</td>
             </tr>));
         return (
-            <table>{rows}</table>);
+            <table><tbody>{rows}</tbody></table>);
     }
 }

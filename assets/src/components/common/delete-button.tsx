@@ -4,7 +4,7 @@ interface IProps {
     children?: React.ReactNode;
     url: string;
     selectedId?: number;
-    refreshCallback(): void;
+    refreshCallback: () => void;
 }
 
 export default class DeleteButton extends React.Component<IProps, {}> {

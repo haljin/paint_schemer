@@ -26,7 +26,7 @@ defmodule PaintSchemerWeb.PaintTypeControllerTest do
 
   describe "create paint_type" do
     test "renders paint_type when data is valid", %{conn: conn} do
-      conn = post conn, paint_type_path(conn, :create), paint_type: @create_attrs
+      conn = post conn, paint_type_path(conn, :create), data: @create_attrs
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
       conn = get conn, paint_type_path(conn, :show, id)
@@ -36,7 +36,7 @@ defmodule PaintSchemerWeb.PaintTypeControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
-      conn = post conn, paint_type_path(conn, :create), paint_type: @invalid_attrs
+      conn = post conn, paint_type_path(conn, :create), data: @invalid_attrs
       assert json_response(conn, 422)["errors"] != %{}
     end
   end
@@ -45,7 +45,7 @@ defmodule PaintSchemerWeb.PaintTypeControllerTest do
     setup [:create_paint_type]
 
     test "renders paint_type when data is valid", %{conn: conn, paint_type: %PaintType{id: id} = paint_type} do
-      conn = put conn, paint_type_path(conn, :update, paint_type), paint_type: @update_attrs
+      conn = put conn, paint_type_path(conn, :update, paint_type), data: @update_attrs
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
       conn = get conn, paint_type_path(conn, :show, id)
@@ -55,7 +55,7 @@ defmodule PaintSchemerWeb.PaintTypeControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, paint_type: paint_type} do
-      conn = put conn, paint_type_path(conn, :update, paint_type), paint_type: @invalid_attrs
+      conn = put conn, paint_type_path(conn, :update, paint_type), data: @invalid_attrs
       assert json_response(conn, 422)["errors"] != %{}
     end
   end

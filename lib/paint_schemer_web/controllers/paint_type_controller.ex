@@ -11,7 +11,7 @@ defmodule PaintSchemerWeb.PaintTypeController do
     render(conn, "index.json", paint_types: paint_types)
   end
 
-  def create(conn, %{"paint_type" => paint_type_params}) do
+  def create(conn, %{"data" => paint_type_params}) do
     with {:ok, %PaintType{} = paint_type} <- Paints.create_paint_type(paint_type_params) do
       conn
       |> put_status(:created)
@@ -25,7 +25,7 @@ defmodule PaintSchemerWeb.PaintTypeController do
     render(conn, "show.json", paint_type: paint_type)
   end
 
-  def update(conn, %{"id" => id, "paint_type" => paint_type_params}) do
+  def update(conn, %{"id" => id, "data" => paint_type_params}) do
     paint_type = Paints.get_paint_type!(id)
 
     with {:ok, %PaintType{} = paint_type} <- Paints.update_paint_type(paint_type, paint_type_params) do

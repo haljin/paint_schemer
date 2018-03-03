@@ -4,7 +4,7 @@ interface IProps {
     children?: React.ReactNode;
     url: string;
     type: string;
-    refreshCallback(): void;
+    refreshCallback: () => void;
 }
 
 interface IState {
@@ -43,7 +43,7 @@ export default class DataEntryForm extends React.Component<IProps, IState> {
     }
 
     private postRequest() {
-        const data = { [this.props.type]: { name: this.state.content } };
+        const data = { data: { name: this.state.content } };
         const request = {
             body: JSON.stringify(data),
             headers: {

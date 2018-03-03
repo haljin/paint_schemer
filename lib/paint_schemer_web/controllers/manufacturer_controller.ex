@@ -11,7 +11,7 @@ defmodule PaintSchemerWeb.ManufacturerController do
     render(conn, "index.json", paint_manufacturers: paint_manufacturers)
   end
 
-  def create(conn, %{"manufacturer" => manufacturer_params}) do
+  def create(conn, %{"data" => manufacturer_params}) do
     with {:ok, %Manufacturer{} = manufacturer} <- Paints.create_manufacturer(manufacturer_params) do
       conn
       |> put_status(:created)
@@ -25,7 +25,7 @@ defmodule PaintSchemerWeb.ManufacturerController do
     render(conn, "show.json", manufacturer: manufacturer)
   end
 
-  def update(conn, %{"id" => id, "manufacturer" => manufacturer_params}) do
+  def update(conn, %{"id" => id, "data" => manufacturer_params}) do
     manufacturer = Paints.get_manufacturer!(id)
 
     with {:ok, %Manufacturer{} = manufacturer} <- Paints.update_manufacturer(manufacturer, manufacturer_params) do

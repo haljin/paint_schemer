@@ -26,7 +26,7 @@ defmodule PaintSchemerWeb.ManufacturerControllerTest do
 
   describe "create manufacturer" do
     test "renders manufacturer when data is valid", %{conn: conn} do
-      conn = post conn, manufacturer_path(conn, :create), manufacturer: @create_attrs
+      conn = post conn, manufacturer_path(conn, :create), data: @create_attrs
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
       conn = get conn, manufacturer_path(conn, :show, id)
@@ -36,7 +36,7 @@ defmodule PaintSchemerWeb.ManufacturerControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
-      conn = post conn, manufacturer_path(conn, :create), manufacturer: @invalid_attrs
+      conn = post conn, manufacturer_path(conn, :create), data: @invalid_attrs
       assert json_response(conn, 422)["errors"] != %{}
     end
   end
@@ -45,7 +45,7 @@ defmodule PaintSchemerWeb.ManufacturerControllerTest do
     setup [:create_manufacturer]
 
     test "renders manufacturer when data is valid", %{conn: conn, manufacturer: %Manufacturer{id: id} = manufacturer} do
-      conn = put conn, manufacturer_path(conn, :update, manufacturer), manufacturer: @update_attrs
+      conn = put conn, manufacturer_path(conn, :update, manufacturer), data: @update_attrs
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
       conn = get conn, manufacturer_path(conn, :show, id)
@@ -55,7 +55,7 @@ defmodule PaintSchemerWeb.ManufacturerControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, manufacturer: manufacturer} do
-      conn = put conn, manufacturer_path(conn, :update, manufacturer), manufacturer: @invalid_attrs
+      conn = put conn, manufacturer_path(conn, :update, manufacturer), data: @invalid_attrs
       assert json_response(conn, 422)["errors"] != %{}
     end
   end
