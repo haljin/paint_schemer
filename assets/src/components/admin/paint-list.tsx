@@ -1,5 +1,6 @@
 import * as React from "react";
 import { IPaintEntry } from "../../data-types/response-types";
+import EntryList from "../common/list";
 
 interface IProps {
     list: IPaintEntry[];
@@ -11,12 +12,7 @@ interface IState {
     selected: number | null;
 }
 
-export default class ExtendedEntryList extends React.Component<IProps, IState> {
-    constructor(props: IProps) {
-        super(props);
-        this.state = { selected: null };
-    }
-
+export default class PaintList extends EntryList<IProps, IState> {
     public render() {
         const rows = this.props.list.map((entry, i) => {
             const className = this.state.selected === entry.id ? "selected" : "";
@@ -30,14 +26,10 @@ export default class ExtendedEntryList extends React.Component<IProps, IState> {
                 </tr>);
         });
         return (
-            <table><tbody>{rows}</tbody></table>);
-    }
-
-    private clicked(entry: IPaintEntry) {
-        this.setState({ selected: entry.id });
-        if (this.props.selectedCallback) {
-            this.props.selectedCallback(entry.id);
-        }
+            <table>
+                <thead><td>Name</td><td>Color</td><td>Manufacturer</td><td>Type</td></thead>
+                <tbody>{rows}</tbody>
+            </table>);
     }
 
 }

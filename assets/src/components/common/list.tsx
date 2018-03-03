@@ -25,7 +25,7 @@ export default class EntryList<TProps extends IProps, TState extends IState> ext
         return <ul> {entries} </ul>;
     }
 
-    private clicked(entry: IDataEntry) {
+    protected clicked(entry: IDataEntry) {
         this.setState({ selected: entry.id });
         if (this.props.selectedCallback) {
             this.props.selectedCallback(entry.id);

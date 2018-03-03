@@ -3,7 +3,7 @@ import { IPaintEntry } from "../../data-types/response-types";
 import DataManager from "../common/data-manager";
 import DeleteButton from "../common/delete-button";
 import DataEntryForm from "../common/entry-form";
-import ExtendedEntryList from "../common/extended-list";
+import PaintList from "./paint-list";
 
 interface IProps {
     url: string;
@@ -34,7 +34,7 @@ export default class PaintManager extends DataManager<IProps, IState> {
         return (
             <div>
                 {this.props.label}
-                <ExtendedEntryList list={this.state.data} selectedCallback={selectCallback} />
+                <PaintList list={this.state.data} selectedCallback={selectCallback} />
                 <DataEntryForm
                     extraData={extraData}
                     url={this.props.url}
