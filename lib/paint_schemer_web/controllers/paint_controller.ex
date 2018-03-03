@@ -12,10 +12,7 @@ defmodule PaintSchemerWeb.PaintController do
   end
 
   def create(conn, %{"data" => paint_params}) do
-    with "#" <> color_hex <- paint_params["color"],
-      color_hex = String.upcase(color_hex),
-      {:ok, color_binary} <- Base.decode16(color_hex),
-      converted_color_params = %{paint_params | "color" => color_binary},
+    with {:ok, converted_color_params} <- convert_color(paint_params),
       {:ok, %Paint{} = paint} <- Paints.create_paint(converted_color_params)
     do
       conn
@@ -30,19 +27,24 @@ defmodule PaintSchemerWeb.PaintController do
     render(conn, "show.json", paint: paint)
   end
 
-  def update(conn, %{"id" => id, "paint" => paint_params}) do
-    paint = Paints.get_paint!(id)
-
-    with {:ok, %Paint{} = paint} <- Paints.update_paint(paint, paint_params) do
-      render(conn, "show.json", paint: paint)
-    end
-  end
-
   def delete(conn, %{"id" => id}) do
     paint = Paints.get_paint!(id)
     with {:ok, %Paint{}} <- Paints.delete_paint(paint) do
       send_resp(conn, :no_content, "")
     end
+  end
+
+  defp convert_color(paint_params) do
+    with "#" <> color_hex <- paint_params["color"],
+      color_hex = String.upcase(color_hex),
+      {:ok, color_binary} <- Base.decode16(color_hex),
+      converted_color_params = %{paint_params | "color" => color_binary}
+    do
+      {:ok, converted_color_params}
+    else
+      _ -> {:error, :bad_input}
+    end
+
   end
 
 end

@@ -40,8 +40,8 @@ defmodule PaintSchemerWeb.Router do
   # Other scopes may use custom stacks.
   scope "/api", PaintSchemerWeb do
     pipe_through :api
-    resources "/paints", PaintController, except: [:new, :edit]
-    resources "/paint_types", PaintTypeController, except: [:new, :edit]
-    resources "/paint_manufacturers", ManufacturerController, except: [:new, :edit]
+    resources "/paints", PaintController, except: [:new, :edit, :update]
+    resources "/paint_types", PaintTypeController, except: [:new, :edit, :update]
+    resources "/paint_manufacturers", ManufacturerController, except: [:new, :edit, :update]
   end
 end

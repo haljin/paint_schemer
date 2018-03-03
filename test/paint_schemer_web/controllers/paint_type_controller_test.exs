@@ -2,10 +2,8 @@ defmodule PaintSchemerWeb.PaintTypeControllerTest do
   use PaintSchemerWeb.ConnCase
 
   alias PaintSchemer.Paints
-  alias PaintSchemer.Paints.PaintType
 
   @create_attrs %{name: "some name"}
-  @update_attrs %{name: "some updated name"}
   @invalid_attrs %{name: nil}
 
   def fixture(:paint_type) do
@@ -37,25 +35,6 @@ defmodule PaintSchemerWeb.PaintTypeControllerTest do
 
     test "renders errors when data is invalid", %{conn: conn} do
       conn = post conn, paint_type_path(conn, :create), data: @invalid_attrs
-      assert json_response(conn, 422)["errors"] != %{}
-    end
-  end
-
-  describe "update paint_type" do
-    setup [:create_paint_type]
-
-    test "renders paint_type when data is valid", %{conn: conn, paint_type: %PaintType{id: id} = paint_type} do
-      conn = put conn, paint_type_path(conn, :update, paint_type), data: @update_attrs
-      assert %{"id" => ^id} = json_response(conn, 200)["data"]
-
-      conn = get conn, paint_type_path(conn, :show, id)
-      assert json_response(conn, 200)["data"] == %{
-        "id" => id,
-        "name" => "some updated name"}
-    end
-
-    test "renders errors when data is invalid", %{conn: conn, paint_type: paint_type} do
-      conn = put conn, paint_type_path(conn, :update, paint_type), data: @invalid_attrs
       assert json_response(conn, 422)["errors"] != %{}
     end
   end

@@ -242,7 +242,6 @@ defmodule PaintSchemer.Paints do
 
   """
   def create_paint(attrs \\ %{}) do
-    IO.inspect attrs, label: "Paint attrs"
     %Paint{}
     |> Paint.changeset(attrs)
     |> Repo.insert()

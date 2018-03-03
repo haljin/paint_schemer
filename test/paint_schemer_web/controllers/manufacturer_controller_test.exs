@@ -2,10 +2,8 @@ defmodule PaintSchemerWeb.ManufacturerControllerTest do
   use PaintSchemerWeb.ConnCase
 
   alias PaintSchemer.Paints
-  alias PaintSchemer.Paints.Manufacturer
 
   @create_attrs %{name: "some name"}
-  @update_attrs %{name: "some updated name"}
   @invalid_attrs %{name: nil}
 
   def fixture(:manufacturer) do
@@ -37,25 +35,6 @@ defmodule PaintSchemerWeb.ManufacturerControllerTest do
 
     test "renders errors when data is invalid", %{conn: conn} do
       conn = post conn, manufacturer_path(conn, :create), data: @invalid_attrs
-      assert json_response(conn, 422)["errors"] != %{}
-    end
-  end
-
-  describe "update manufacturer" do
-    setup [:create_manufacturer]
-
-    test "renders manufacturer when data is valid", %{conn: conn, manufacturer: %Manufacturer{id: id} = manufacturer} do
-      conn = put conn, manufacturer_path(conn, :update, manufacturer), data: @update_attrs
-      assert %{"id" => ^id} = json_response(conn, 200)["data"]
-
-      conn = get conn, manufacturer_path(conn, :show, id)
-      assert json_response(conn, 200)["data"] == %{
-        "id" => id,
-        "name" => "some updated name"}
-    end
-
-    test "renders errors when data is invalid", %{conn: conn, manufacturer: manufacturer} do
-      conn = put conn, manufacturer_path(conn, :update, manufacturer), data: @invalid_attrs
       assert json_response(conn, 422)["errors"] != %{}
     end
   end

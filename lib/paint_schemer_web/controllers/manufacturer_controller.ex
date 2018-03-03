@@ -25,14 +25,6 @@ defmodule PaintSchemerWeb.ManufacturerController do
     render(conn, "show.json", manufacturer: manufacturer)
   end
 
-  def update(conn, %{"id" => id, "data" => manufacturer_params}) do
-    manufacturer = Paints.get_manufacturer!(id)
-
-    with {:ok, %Manufacturer{} = manufacturer} <- Paints.update_manufacturer(manufacturer, manufacturer_params) do
-      render(conn, "show.json", manufacturer: manufacturer)
-    end
-  end
-
   def delete(conn, %{"id" => id}) do
     manufacturer = Paints.get_manufacturer!(id)
     with {:ok, %Manufacturer{}} <- Paints.delete_manufacturer(manufacturer) do

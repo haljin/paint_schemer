@@ -25,14 +25,6 @@ defmodule PaintSchemerWeb.PaintTypeController do
     render(conn, "show.json", paint_type: paint_type)
   end
 
-  def update(conn, %{"id" => id, "data" => paint_type_params}) do
-    paint_type = Paints.get_paint_type!(id)
-
-    with {:ok, %PaintType{} = paint_type} <- Paints.update_paint_type(paint_type, paint_type_params) do
-      render(conn, "show.json", paint_type: paint_type)
-    end
-  end
-
   def delete(conn, %{"id" => id}) do
     paint_type = Paints.get_paint_type!(id)
     with {:ok, %PaintType{}} <- Paints.delete_paint_type(paint_type) do

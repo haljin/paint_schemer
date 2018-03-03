@@ -2,10 +2,8 @@ defmodule PaintSchemerWeb.PaintControllerTest do
   use PaintSchemerWeb.ConnCase
 
   alias PaintSchemer.Paints
-  alias PaintSchemer.Paints.Paint
 
   @create_attrs %{color: <<15, 12, 12>>, name: "some name"}
-  @update_attrs %{color: <<16, 12, 12>>, name: "some updated name"}
   @invalid_attrs %{color: nil, name: nil}
 
   def fixture(:paint) do
@@ -35,7 +33,7 @@ defmodule PaintSchemerWeb.PaintControllerTest do
       {:ok, manufacturer} = Paints.create_manufacturer(%{name: "Some manufacturer"})
       attrs =
         @create_attrs
-        |> Map.merge(%{type_id: type.id, manufacturer_id: manufacturer.id})
+        |> Map.merge(%{type_id: type.id, manufacturer_id: manufacturer.id, color: "#0F0C0C"})
 
       conn = post conn, paint_path(conn, :create), data: attrs
       assert %{"id" => id} = json_response(conn, 201)["data"]
@@ -51,29 +49,7 @@ defmodule PaintSchemerWeb.PaintControllerTest do
 
     test "renders errors when data is invalid", %{conn: conn} do
       conn = post conn, paint_path(conn, :create), data: @invalid_attrs
-      assert json_response(conn, 422)["errors"] != %{}
-    end
-  end
-
-  describe "update paint" do
-    setup [:create_paint]
-
-    test "renders paint when data is valid", %{conn: conn, paint: %Paint{id: id} = paint} do
-      conn = put conn, paint_path(conn, :update, paint), data: @update_attrs
-      assert %{"id" => ^id} = json_response(conn, 200)["data"]
-
-      conn = get conn, paint_path(conn, :show, id)
-      assert json_response(conn, 200)["data"] == %{
-        "id" => id,
-        "manufacturer" => "Some manufacturer",
-        "type" => "Some paint type",
-        "color" => "#100C0C",
-        "name" => "some updated name"}
-    end
-
-    test "renders errors when data is invalid", %{conn: conn, paint: paint} do
-      conn = put conn, paint_path(conn, :update, paint), data: @invalid_attrs
-      assert json_response(conn, 422)["errors"] != %{}
+      assert json_response(conn, 422)
     end
   end
 
