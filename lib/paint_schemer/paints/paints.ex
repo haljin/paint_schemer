@@ -301,4 +301,100 @@ defmodule PaintSchemer.Paints do
         preload: [type: t, manufacturer: m]
   end
 
+
+  alias PaintSchemer.Paints.PaintTechnique
+
+  @doc """
+  Returns the list of paint_technique.
+
+  ## Examples
+
+      iex> list_paint_technique()
+      [%PaintTechnique{}, ...]
+
+  """
+  def list_paint_technique do
+    Repo.all(PaintTechnique)
+  end
+
+  @doc """
+  Gets a single paint_technique.
+
+  Raises `Ecto.NoResultsError` if the Paint technique does not exist.
+
+  ## Examples
+
+      iex> get_paint_technique!(123)
+      %PaintTechnique{}
+
+      iex> get_paint_technique!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_paint_technique!(id), do: Repo.get!(PaintTechnique, id)
+
+  @doc """
+  Creates a paint_technique.
+
+  ## Examples
+
+      iex> create_paint_technique(%{field: value})
+      {:ok, %PaintTechnique{}}
+
+      iex> create_paint_technique(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_paint_technique(attrs \\ %{}) do
+    %PaintTechnique{}
+    |> PaintTechnique.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a paint_technique.
+
+  ## Examples
+
+      iex> update_paint_technique(paint_technique, %{field: new_value})
+      {:ok, %PaintTechnique{}}
+
+      iex> update_paint_technique(paint_technique, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_paint_technique(%PaintTechnique{} = paint_technique, attrs) do
+    paint_technique
+    |> PaintTechnique.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a PaintTechnique.
+
+  ## Examples
+
+      iex> delete_paint_technique(paint_technique)
+      {:ok, %PaintTechnique{}}
+
+      iex> delete_paint_technique(paint_technique)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_paint_technique(%PaintTechnique{} = paint_technique) do
+    Repo.delete(paint_technique)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking paint_technique changes.
+
+  ## Examples
+
+      iex> change_paint_technique(paint_technique)
+      %Ecto.Changeset{source: %PaintTechnique{}}
+
+  """
+  def change_paint_technique(%PaintTechnique{} = paint_technique) do
+    PaintTechnique.changeset(paint_technique, %{})
+  end
 end

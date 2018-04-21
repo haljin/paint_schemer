@@ -15,3 +15,5 @@ defmodule PaintSchemer.Repo.Migrations.CreatePaints do
     create index(:paints, [:type_id])
   end
 end
+
+# mix phx.gen.json Paints Paint paints name:string manufacturer_id:references:paint_manufacturers color:binary type_id:references:paint_types

@@ -204,4 +204,64 @@ defmodule PaintSchemer.PaintsTest do
   end
 
 
+
+  describe "paint_technique" do
+    alias PaintSchemer.Paints.PaintTechnique
+
+    @valid_attrs %{name: "some name"}
+    @update_attrs %{name: "some updated name"}
+    @invalid_attrs %{name: nil}
+
+    def paint_technique_fixture(attrs \\ %{}) do
+      {:ok, paint_technique} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Paints.create_paint_technique()
+
+      paint_technique
+    end
+
+    test "list_paint_technique/0 returns all paint_technique" do
+      paint_technique = paint_technique_fixture()
+      assert Paints.list_paint_technique() == [paint_technique]
+    end
+
+    test "get_paint_technique!/1 returns the paint_technique with given id" do
+      paint_technique = paint_technique_fixture()
+      assert Paints.get_paint_technique!(paint_technique.id) == paint_technique
+    end
+
+    test "create_paint_technique/1 with valid data creates a paint_technique" do
+      assert {:ok, %PaintTechnique{} = paint_technique} = Paints.create_paint_technique(@valid_attrs)
+      assert paint_technique.name == "some name"
+    end
+
+    test "create_paint_technique/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Paints.create_paint_technique(@invalid_attrs)
+    end
+
+    test "update_paint_technique/2 with valid data updates the paint_technique" do
+      paint_technique = paint_technique_fixture()
+      assert {:ok, paint_technique} = Paints.update_paint_technique(paint_technique, @update_attrs)
+      assert %PaintTechnique{} = paint_technique
+      assert paint_technique.name == "some updated name"
+    end
+
+    test "update_paint_technique/2 with invalid data returns error changeset" do
+      paint_technique = paint_technique_fixture()
+      assert {:error, %Ecto.Changeset{}} = Paints.update_paint_technique(paint_technique, @invalid_attrs)
+      assert paint_technique == Paints.get_paint_technique!(paint_technique.id)
+    end
+
+    test "delete_paint_technique/1 deletes the paint_technique" do
+      paint_technique = paint_technique_fixture()
+      assert {:ok, %PaintTechnique{}} = Paints.delete_paint_technique(paint_technique)
+      assert_raise Ecto.NoResultsError, fn -> Paints.get_paint_technique!(paint_technique.id) end
+    end
+
+    test "change_paint_technique/1 returns a paint_technique changeset" do
+      paint_technique = paint_technique_fixture()
+      assert %Ecto.Changeset{} = Paints.change_paint_technique(paint_technique)
+    end
+  end
 end
