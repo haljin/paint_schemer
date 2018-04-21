@@ -8,6 +8,7 @@ defmodule PaintSchemer.Schemes.Step do
     field :ordering, :integer
     belongs_to :paint_technique, PaintSchemer.Paints.PaintTechnique
     belongs_to :section, PaintSchemer.Schemes.Section
+    has_many :paint_mixes, PaintSchemer.Schemes.PaintMix
 
 
     timestamps()
