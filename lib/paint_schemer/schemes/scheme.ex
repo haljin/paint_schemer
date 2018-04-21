@@ -8,6 +8,7 @@ defmodule PaintSchemer.Schemes.Scheme do
     field :description, :string
     field :image_url, :string
     field :title, :string
+    has_many :sections, PaintSchemer.Schemes.Section
 
     timestamps()
   end
@@ -16,6 +17,6 @@ defmodule PaintSchemer.Schemes.Scheme do
   def changeset(%Scheme{} = scheme, attrs) do
     scheme
     |> cast(attrs, [:title, :description, :image_url])
-    |> validate_required([:title, :description, :image_url])
+    |> validate_required([:title])
   end
 end

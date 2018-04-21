@@ -128,8 +128,8 @@ defmodule PaintSchemer.PaintsTest do
 
     @manufacturer_attrs %{name: "some manufacturer"}
     @type_attrs %{name: "some type"}
-    @valid_attrs %{color: "some color", name: "some name"}
-    @update_attrs %{color: "some updated color", name: "some updated name"}
+    @valid_attrs %{color: <<255, 255, 255>>, name: "some name"}
+    @update_attrs %{color: <<50, 50, 50>>, name: "some updated name"}
     @invalid_attrs %{color: nil, name: nil}
 
     def paint_fixture(attrs \\ %{}) do
@@ -169,7 +169,7 @@ defmodule PaintSchemer.PaintsTest do
       assert {:ok, %Paint{} = paint} =
         Map.merge(@valid_attrs, %{manufacturer_id: manufacturer.id, type_id: type.id})
         |> Paints.create_paint()
-      assert paint.color == "some color"
+      assert paint.color == <<255, 255, 255>>
       assert paint.name == "some name"
     end
 
@@ -181,7 +181,7 @@ defmodule PaintSchemer.PaintsTest do
       paint = paint_fixture()
       assert {:ok, paint} = Paints.update_paint(paint, @update_attrs)
       assert %Paint{} = paint
-      assert paint.color == "some updated color"
+      assert paint.color == <<50, 50, 50>>
       assert paint.name == "some updated name"
     end
 

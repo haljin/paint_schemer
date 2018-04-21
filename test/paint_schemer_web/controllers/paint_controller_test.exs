@@ -3,7 +3,7 @@ defmodule PaintSchemerWeb.PaintControllerTest do
 
   alias PaintSchemer.Paints
 
-  @create_attrs %{color: <<15, 12, 12>>, name: "some name"}
+  @create_attrs %{color: <<12, 12, 12>>, name: "some name"}
   @invalid_attrs %{color: nil, name: nil}
 
   def fixture(:paint) do

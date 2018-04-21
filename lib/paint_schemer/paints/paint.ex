@@ -17,6 +17,6 @@ defmodule PaintSchemer.Paints.Paint do
   def changeset(%Paint{} = paint, attrs) do
     paint
     |> cast(attrs, [:name, :color, :type_id, :manufacturer_id])
-    |> validate_required([:name, :color, :type_id, :manufacturer_id])
+    |> validate_required([:name, :color, :type_id, :manufacturer_id], trim: false)
   end
 end

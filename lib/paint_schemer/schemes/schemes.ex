@@ -102,196 +102,196 @@ defmodule PaintSchemer.Schemes do
     Scheme.changeset(scheme, %{})
   end
 
-  alias PaintSchemer.Schemes.Sections
+  alias PaintSchemer.Schemes.Section
 
   @doc """
-  Returns the list of scheme_sections.
+  Returns the list of scheme_section.
 
   ## Examples
 
-      iex> list_scheme_sections()
-      [%Sections{}, ...]
+      iex> list_scheme_section()
+      [%Section{}, ...]
 
   """
-  def list_scheme_sections do
-    Repo.all(Sections)
+  def list_scheme_section do
+    Repo.all(Section)
   end
 
   @doc """
-  Gets a single sections.
+  Gets a single section.
 
-  Raises `Ecto.NoResultsError` if the Sections does not exist.
+  Raises `Ecto.NoResultsError` if the Section does not exist.
 
   ## Examples
 
-      iex> get_sections!(123)
-      %Sections{}
+      iex> get_section!(123)
+      %Section{}
 
-      iex> get_sections!(456)
+      iex> get_section!(456)
       ** (Ecto.NoResultsError)
 
   """
-  def get_sections!(id), do: Repo.get!(Sections, id)
+  def get_section!(id), do: Repo.get!(Section, id)
 
   @doc """
-  Creates a sections.
+  Creates a section.
 
   ## Examples
 
-      iex> create_sections(%{field: value})
-      {:ok, %Sections{}}
+      iex> create_section(%{field: value})
+      {:ok, %Section{}}
 
-      iex> create_sections(%{field: bad_value})
+      iex> create_section(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_sections(attrs \\ %{}) do
-    %Sections{}
-    |> Sections.changeset(attrs)
+  def create_section(attrs \\ %{}) do
+    %Section{}
+    |> Section.changeset(attrs)
     |> Repo.insert()
   end
 
   @doc """
-  Updates a sections.
+  Updates a section.
 
   ## Examples
 
-      iex> update_sections(sections, %{field: new_value})
-      {:ok, %Sections{}}
+      iex> update_section(section, %{field: new_value})
+      {:ok, %Section{}}
 
-      iex> update_sections(sections, %{field: bad_value})
+      iex> update_section(section, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_sections(%Sections{} = sections, attrs) do
-    sections
-    |> Sections.changeset(attrs)
+  def update_section(%Section{} = section, attrs) do
+    section
+    |> Section.changeset(attrs)
     |> Repo.update()
   end
 
   @doc """
-  Deletes a Sections.
+  Deletes a Section.
 
   ## Examples
 
-      iex> delete_sections(sections)
-      {:ok, %Sections{}}
+      iex> delete_section(section)
+      {:ok, %Section{}}
 
-      iex> delete_sections(sections)
+      iex> delete_section(section)
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_sections(%Sections{} = sections) do
-    Repo.delete(sections)
+  def delete_section(%Section{} = section) do
+    Repo.delete(section)
   end
 
   @doc """
-  Returns an `%Ecto.Changeset{}` for tracking sections changes.
+  Returns an `%Ecto.Changeset{}` for tracking section changes.
 
   ## Examples
 
-      iex> change_sections(sections)
-      %Ecto.Changeset{source: %Sections{}}
+      iex> change_section(section)
+      %Ecto.Changeset{source: %Section{}}
 
   """
-  def change_sections(%Sections{} = sections) do
-    Sections.changeset(sections, %{})
+  def change_section(%Section{} = section) do
+    Section.changeset(section, %{})
   end
 
-  alias PaintSchemer.Schemes.Steps
+  alias PaintSchemer.Schemes.Step
 
   @doc """
-  Returns the list of scheme_steps.
+  Returns the list of scheme_step.
 
   ## Examples
 
-      iex> list_scheme_steps()
-      [%Steps{}, ...]
+      iex> list_scheme_step()
+      [%Step{}, ...]
 
   """
-  def list_scheme_steps do
-    Repo.all(Steps)
+  def list_scheme_step do
+    Repo.all(Step)
   end
 
   @doc """
-  Gets a single steps.
+  Gets a single step.
 
-  Raises `Ecto.NoResultsError` if the Steps does not exist.
+  Raises `Ecto.NoResultsError` if the Step does not exist.
 
   ## Examples
 
-      iex> get_steps!(123)
-      %Steps{}
+      iex> get_step!(123)
+      %Step{}
 
-      iex> get_steps!(456)
+      iex> get_step!(456)
       ** (Ecto.NoResultsError)
 
   """
-  def get_steps!(id), do: Repo.get!(Steps, id)
+  def get_step!(id), do: Repo.get!(Step, id)
 
   @doc """
-  Creates a steps.
+  Creates a step.
 
   ## Examples
 
-      iex> create_steps(%{field: value})
-      {:ok, %Steps{}}
+      iex> create_step(%{field: value})
+      {:ok, %Step{}}
 
-      iex> create_steps(%{field: bad_value})
+      iex> create_step(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_steps(attrs \\ %{}) do
-    %Steps{}
-    |> Steps.changeset(attrs)
+  def create_step(attrs \\ %{}) do
+    %Step{}
+    |> Step.changeset(attrs)
     |> Repo.insert()
   end
 
   @doc """
-  Updates a steps.
+  Updates a step.
 
   ## Examples
 
-      iex> update_steps(steps, %{field: new_value})
-      {:ok, %Steps{}}
+      iex> update_step(step, %{field: new_value})
+      {:ok, %Step{}}
 
-      iex> update_steps(steps, %{field: bad_value})
+      iex> update_step(step, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_steps(%Steps{} = steps, attrs) do
-    steps
-    |> Steps.changeset(attrs)
+  def update_step(%Step{} = step, attrs) do
+    step
+    |> Step.changeset(attrs)
     |> Repo.update()
   end
 
   @doc """
-  Deletes a Steps.
+  Deletes a Step.
 
   ## Examples
 
-      iex> delete_steps(steps)
-      {:ok, %Steps{}}
+      iex> delete_step(step)
+      {:ok, %Step{}}
 
-      iex> delete_steps(steps)
+      iex> delete_step(step)
       {:error, %Ecto.Changeset{}}
 
   """
-  def delete_steps(%Steps{} = steps) do
-    Repo.delete(steps)
+  def delete_step(%Step{} = step) do
+    Repo.delete(step)
   end
 
   @doc """
-  Returns an `%Ecto.Changeset{}` for tracking steps changes.
+  Returns an `%Ecto.Changeset{}` for tracking step changes.
 
   ## Examples
 
-      iex> change_steps(steps)
-      %Ecto.Changeset{source: %Steps{}}
+      iex> change_step(step)
+      %Ecto.Changeset{source: %Step{}}
 
   """
-  def change_steps(%Steps{} = steps) do
-    Steps.changeset(steps, %{})
+  def change_step(%Step{} = step) do
+    Step.changeset(step, %{})
   end
 
   alias PaintSchemer.Schemes.PaintMix

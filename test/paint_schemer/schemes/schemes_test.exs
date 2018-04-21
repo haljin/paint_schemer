@@ -2,6 +2,7 @@ defmodule PaintSchemer.SchemesTest do
   use PaintSchemer.DataCase
 
   alias PaintSchemer.Schemes
+  alias PaintSchemer.Paints
 
   describe "schemes" do
     alias PaintSchemer.Schemes.Scheme
@@ -67,137 +68,210 @@ defmodule PaintSchemer.SchemesTest do
     end
   end
 
-  describe "scheme_sections" do
-    alias PaintSchemer.Schemes.Sections
+  describe "scheme_section" do
+    alias PaintSchemer.Schemes.Section
 
-    @valid_attrs %{ordering: 42}
-    @update_attrs %{ordering: 43}
-    @invalid_attrs %{ordering: nil}
+    @scheme_attrs %{description: "some description", image_url: "some image_url", title: "some title"}
+    @valid_attrs %{}
+    @update_attrs %{}
+    @invalid_attrs %{scheme_id: nil}
 
-    def sections_fixture(attrs \\ %{}) do
-      {:ok, sections} =
+    def section_fixture(attrs \\ %{}) do
+      {:ok, scheme} =
+        @scheme_attrs
+        |> Schemes.create_scheme()
+      {:ok, section} =
         attrs
         |> Enum.into(@valid_attrs)
-        |> Schemes.create_sections()
+        |> Enum.into(%{scheme_id: scheme.id})
+        |> Schemes.create_section()
 
-      sections
+      section
     end
 
-    test "list_scheme_sections/0 returns all scheme_sections" do
-      sections = sections_fixture()
-      assert Schemes.list_scheme_sections() == [sections]
+    test "list_scheme_section/0 returns all scheme_section" do
+      section = section_fixture()
+      assert Schemes.list_scheme_section() == [section]
     end
 
-    test "get_sections!/1 returns the sections with given id" do
-      sections = sections_fixture()
-      assert Schemes.get_sections!(sections.id) == sections
+    test "get_section!/1 returns the section with given id" do
+      section = section_fixture()
+      assert Schemes.get_section!(section.id) == section
     end
 
-    test "create_sections/1 with valid data creates a sections" do
-      assert {:ok, %Sections{} = sections} = Schemes.create_sections(@valid_attrs)
-      assert sections.ordering == 42
+    test "create_section/1 with valid data creates a section" do
+      {:ok, scheme} =
+        @scheme_attrs
+        |> Schemes.create_scheme()
+
+      assert {:ok, %Section{} = section} =
+        Map.merge(@valid_attrs, %{scheme_id: scheme.id})
+        |> Schemes.create_section()
+      assert %Section{} = section
     end
 
-    test "create_sections/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Schemes.create_sections(@invalid_attrs)
+    test "create_section/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Schemes.create_section(@invalid_attrs)
     end
 
-    test "update_sections/2 with valid data updates the sections" do
-      sections = sections_fixture()
-      assert {:ok, sections} = Schemes.update_sections(sections, @update_attrs)
-      assert %Sections{} = sections
-      assert sections.ordering == 43
+    test "update_section/2 with valid data updates the section" do
+      section = section_fixture()
+      assert {:ok, section} = Schemes.update_section(section, @update_attrs)
+      assert %Section{} = section
     end
 
-    test "update_sections/2 with invalid data returns error changeset" do
-      sections = sections_fixture()
-      assert {:error, %Ecto.Changeset{}} = Schemes.update_sections(sections, @invalid_attrs)
-      assert sections == Schemes.get_sections!(sections.id)
+    test "update_section/2 with invalid data returns error changeset" do
+      section = section_fixture()
+      assert {:error, %Ecto.Changeset{}} = Schemes.update_section(section, @invalid_attrs)
+      assert section == Schemes.get_section!(section.id)
     end
 
-    test "delete_sections/1 deletes the sections" do
-      sections = sections_fixture()
-      assert {:ok, %Sections{}} = Schemes.delete_sections(sections)
-      assert_raise Ecto.NoResultsError, fn -> Schemes.get_sections!(sections.id) end
-    end
+    test "delete_section/1 deletes the section" do
+      section = section_fixture()
+      assert {:ok, %Section{}} = Schemes.delete_section(section)
+      assert_raise Ecto.NoResultsError, fn -> Schemes.get_section!(section.id) end
+  end
 
-    test "change_sections/1 returns a sections changeset" do
-      sections = sections_fixture()
-      assert %Ecto.Changeset{} = Schemes.change_sections(sections)
+    test "change_section/1 returns a section changeset" do
+      section = section_fixture()
+      assert %Ecto.Changeset{} = Schemes.change_section(section)
     end
   end
 
-  describe "scheme_steps" do
-    alias PaintSchemer.Schemes.Steps
+  describe "scheme_step" do
+    alias PaintSchemer.Schemes.Step
+    alias PaintSchemer.Schemes
+    alias PaintSchemer.Paints
 
+    @paint_technique_attrs %{name: "Some technique"}
+    @scheme_attrs %{description: "some description", image_url: "some image_url", title: "some title"}
+    @section_attrs %{title: "Some title"}
     @valid_attrs %{ordering: 42}
     @update_attrs %{ordering: 43}
     @invalid_attrs %{ordering: nil}
 
-    def steps_fixture(attrs \\ %{}) do
-      {:ok, steps} =
+    def step_fixture(attrs \\ %{}) do
+      {:ok, technique} =
+        @paint_technique_attrs
+        |> Paints.create_paint_technique()
+      {:ok, scheme} =
+        @scheme_attrs
+        |> Schemes.create_scheme()
+      {:ok, section} =
+        @section_attrs
+        |> Enum.into(%{scheme_id: scheme.id})
+        |> Schemes.create_section()
+      {:ok, step} =
         attrs
         |> Enum.into(@valid_attrs)
-        |> Schemes.create_steps()
+        |> Enum.into(%{paint_technique_id: technique.id, section_id: section.id})
+        |> Schemes.create_step()
 
-      steps
+      step
     end
 
-    test "list_scheme_steps/0 returns all scheme_steps" do
-      steps = steps_fixture()
-      assert Schemes.list_scheme_steps() == [steps]
+    test "list_scheme_step/0 returns all scheme_step" do
+      step = step_fixture()
+      assert Schemes.list_scheme_step() == [step]
     end
 
-    test "get_steps!/1 returns the steps with given id" do
-      steps = steps_fixture()
-      assert Schemes.get_steps!(steps.id) == steps
+    test "get_step!/1 returns the step with given id" do
+      step = step_fixture()
+      assert Schemes.get_step!(step.id) == step
     end
 
-    test "create_steps/1 with valid data creates a steps" do
-      assert {:ok, %Steps{} = steps} = Schemes.create_steps(@valid_attrs)
-      assert steps.ordering == 42
+    test "create_step/1 with valid data creates a step" do
+      {:ok, technique} =
+        @paint_technique_attrs
+        |> Paints.create_paint_technique()
+      {:ok, scheme} =
+        @scheme_attrs
+        |> Schemes.create_scheme()
+      {:ok, section} =
+        @section_attrs
+        |> Enum.into(%{scheme_id: scheme.id})
+        |> Schemes.create_section()
+
+
+      assert {:ok, %Step{} = step} =
+        Map.merge(@valid_attrs, %{paint_technique_id: technique.id, section_id: section.id})
+        |> Schemes.create_step()
+      assert step.ordering == 42
     end
 
-    test "create_steps/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Schemes.create_steps(@invalid_attrs)
+    test "create_step/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Schemes.create_step(@invalid_attrs)
     end
 
-    test "update_steps/2 with valid data updates the steps" do
-      steps = steps_fixture()
-      assert {:ok, steps} = Schemes.update_steps(steps, @update_attrs)
-      assert %Steps{} = steps
-      assert steps.ordering == 43
+    test "update_step/2 with valid data updates the step" do
+      step = step_fixture()
+      assert {:ok, step} = Schemes.update_step(step, @update_attrs)
+      assert %Step{} = step
+      assert step.ordering == 43
     end
 
-    test "update_steps/2 with invalid data returns error changeset" do
-      steps = steps_fixture()
-      assert {:error, %Ecto.Changeset{}} = Schemes.update_steps(steps, @invalid_attrs)
-      assert steps == Schemes.get_steps!(steps.id)
+    test "update_step/2 with invalid data returns error changeset" do
+      step = step_fixture()
+      assert {:error, %Ecto.Changeset{}} = Schemes.update_step(step, @invalid_attrs)
+      assert step == Schemes.get_step!(step.id)
     end
 
-    test "delete_steps/1 deletes the steps" do
-      steps = steps_fixture()
-      assert {:ok, %Steps{}} = Schemes.delete_steps(steps)
-      assert_raise Ecto.NoResultsError, fn -> Schemes.get_steps!(steps.id) end
+    test "delete_step/1 deletes the step" do
+      step = step_fixture()
+      assert {:ok, %Step{}} = Schemes.delete_step(step)
+      assert_raise Ecto.NoResultsError, fn -> Schemes.get_step!(step.id) end
     end
 
-    test "change_steps/1 returns a steps changeset" do
-      steps = steps_fixture()
-      assert %Ecto.Changeset{} = Schemes.change_steps(steps)
+    test "change_step/1 returns a step changeset" do
+      step = step_fixture()
+      assert %Ecto.Changeset{} = Schemes.change_step(step)
     end
   end
 
   describe "scheme_mixes" do
     alias PaintSchemer.Schemes.PaintMix
 
+    @manufacturer_attrs %{name: "some manufacturer"}
+    @type_attrs %{name: "some type"}
+    @paint_attrs %{color: <<255, 255, 255>>, name: "some paint"}
+    @paint_technique_attrs %{name: "Some technique"}
+    @scheme_attrs %{description: "some description", image_url: "some image_url", title: "some title"}
+    @section_attrs %{title: "Some title"}
+    @step_attrs %{ordering: 42}
     @valid_attrs %{ratio: 42}
     @update_attrs %{ratio: 43}
     @invalid_attrs %{ratio: nil}
 
     def paint_mix_fixture(attrs \\ %{}) do
+      {:ok, manufacturer} =
+        @manufacturer_attrs
+        |> Paints.create_manufacturer()
+      {:ok, type} =
+        @type_attrs
+        |> Paints.create_paint_type()
+      {:ok, paint} =
+        @paint_attrs
+        |> Enum.into(%{manufacturer_id: manufacturer.id, type_id: type.id})
+        |> Paints.create_paint()
+      {:ok, technique} =
+        @paint_technique_attrs
+        |> Paints.create_paint_technique()
+      {:ok, scheme} =
+        @scheme_attrs
+        |> Schemes.create_scheme()
+      {:ok, section} =
+        @section_attrs
+        |> Enum.into(%{scheme_id: scheme.id})
+        |> Schemes.create_section()
+      {:ok, step} =
+        @step_attrs
+        |> Enum.into(%{section_id: section.id, paint_technique_id: technique.id})
+        |> Schemes.create_step()
+
       {:ok, paint_mix} =
         attrs
         |> Enum.into(@valid_attrs)
+        |> Enum.into(%{paint_id: paint.id, step_id: step.id})
         |> Schemes.create_paint_mix()
 
       paint_mix
@@ -214,7 +288,34 @@ defmodule PaintSchemer.SchemesTest do
     end
 
     test "create_paint_mix/1 with valid data creates a paint_mix" do
-      assert {:ok, %PaintMix{} = paint_mix} = Schemes.create_paint_mix(@valid_attrs)
+      {:ok, manufacturer} =
+        @manufacturer_attrs
+        |> Paints.create_manufacturer()
+      {:ok, type} =
+        @type_attrs
+        |> Paints.create_paint_type()
+      {:ok, paint} =
+        @paint_attrs
+        |> Enum.into(%{manufacturer_id: manufacturer.id, type_id: type.id})
+        |> Paints.create_paint()
+      {:ok, technique} =
+        @paint_technique_attrs
+        |> Paints.create_paint_technique()
+      {:ok, scheme} =
+        @scheme_attrs
+        |> Schemes.create_scheme()
+      {:ok, section} =
+        @section_attrs
+        |> Enum.into(%{scheme_id: scheme.id})
+        |> Schemes.create_section()
+      {:ok, step} =
+        @step_attrs
+        |> Enum.into(%{section_id: section.id, paint_technique_id: technique.id})
+        |> Schemes.create_step()
+
+      assert {:ok, %PaintMix{} = paint_mix} =
+        Map.merge(@valid_attrs, %{paint_id: paint.id, step_id: step.id})
+        |> Schemes.create_paint_mix()
       assert paint_mix.ratio == 42
     end
 

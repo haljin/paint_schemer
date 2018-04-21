@@ -1,6 +1,7 @@
 defmodule PaintSchemerWeb.PaintMixControllerTest do
   use PaintSchemerWeb.ConnCase
 
+  alias PaintSchemer.Paints
   alias PaintSchemer.Schemes
   alias PaintSchemer.Schemes.PaintMix
 
@@ -9,7 +10,18 @@ defmodule PaintSchemerWeb.PaintMixControllerTest do
   @invalid_attrs %{ratio: nil}
 
   def fixture(:paint_mix) do
-    {:ok, paint_mix} = Schemes.create_paint_mix(@create_attrs)
+    {:ok, type} = Paints.create_paint_type(%{name: "Some paint type"})
+    {:ok, manufacturer} = Paints.create_manufacturer(%{name: "Some manufacturer"})
+    {:ok, paint} = Paints.create_paint(%{color: <<12, 12, 12>>, name: "Some paint", manufacturer_id: manufacturer.id, type_id: type.id})
+    {:ok, technique} = Paints.create_paint_technique(%{name: "Some technique"})
+
+    {:ok, scheme} = Schemes.create_scheme(%{title: "Some scheme"})
+    {:ok, section} = Schemes.create_section(%{scheme_id: scheme.id})
+    {:ok, step} = Schemes.create_step(%{ordering: 1, section_id: section.id, paint_technique_id: technique.id})
+    {:ok, paint_mix} =
+      @create_attrs
+      |> Map.merge(%{paint_id: paint.id, step_id: step.id})
+      |> Schemes.create_paint_mix()
     paint_mix
   end
 
@@ -26,7 +38,19 @@ defmodule PaintSchemerWeb.PaintMixControllerTest do
 
   describe "create paint_mix" do
     test "renders paint_mix when data is valid", %{conn: conn} do
-      conn = post conn, paint_mix_path(conn, :create), paint_mix: @create_attrs
+      {:ok, type} = Paints.create_paint_type(%{name: "Some paint type"})
+      {:ok, manufacturer} = Paints.create_manufacturer(%{name: "Some manufacturer"})
+      {:ok, paint} = Paints.create_paint(%{color: <<12, 12, 12>>, name: "Some paint", manufacturer_id: manufacturer.id, type_id: type.id})
+      {:ok, technique} = Paints.create_paint_technique(%{name: "Some technique"})
+
+      {:ok, scheme} = Schemes.create_scheme(%{title: "Some scheme"})
+      {:ok, section} = Schemes.create_section(%{scheme_id: scheme.id})
+      {:ok, step} = Schemes.create_step(%{ordering: 1, section_id: section.id, paint_technique_id: technique.id})
+      attrs =
+        @create_attrs
+        |> Map.merge(%{paint_id: paint.id, step_id: step.id})
+
+      conn = post conn, paint_mix_path(conn, :create), paint_mix: attrs
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
       conn = get conn, paint_mix_path(conn, :show, id)

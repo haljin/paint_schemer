@@ -6,8 +6,8 @@ defmodule PaintSchemer.Schemes.PaintMix do
 
   schema "scheme_mixes" do
     field :ratio, :integer
-    field :step_id, :id
-    field :paint_id, :id
+    belongs_to :step, PaintSchemer.Schemes.Step
+    belongs_to :paint, PaintSchemer.Paints.PaintTechnique
 
     timestamps()
   end
@@ -15,7 +15,7 @@ defmodule PaintSchemer.Schemes.PaintMix do
   @doc false
   def changeset(%PaintMix{} = paint_mix, attrs) do
     paint_mix
-    |> cast(attrs, [:ratio])
-    |> validate_required([:ratio])
+    |> cast(attrs, [:ratio, :step_id, :paint_id])
+    |> validate_required([:ratio, :step_id, :paint_id])
   end
 end
