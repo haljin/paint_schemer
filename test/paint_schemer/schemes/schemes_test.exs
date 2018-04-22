@@ -72,7 +72,7 @@ defmodule PaintSchemer.SchemesTest do
     alias PaintSchemer.Schemes.Section
 
     @scheme_attrs %{description: "some description", image_url: "some image_url", title: "some title"}
-    @valid_attrs %{}
+    @valid_attrs %{name: "some sections"}
     @update_attrs %{}
     @invalid_attrs %{scheme_id: nil}
 

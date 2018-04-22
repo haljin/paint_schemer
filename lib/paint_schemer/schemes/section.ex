@@ -5,6 +5,7 @@ defmodule PaintSchemer.Schemes.Section do
 
 
   schema "scheme_sections" do
+    field :name, :string
     belongs_to :scheme, PaintSchemer.Schemes.Scheme
     has_many :steps, PaintSchemer.Schemes.Step
 

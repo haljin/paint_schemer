@@ -4,6 +4,7 @@ defmodule PaintSchemer.Repo.Migrations.CreateSchemeSections do
   def change do
     create table(:scheme_sections) do
       add :scheme_id, references(:schemes, on_delete: :delete_all)
+      add :name, :string
 
       timestamps()
     end
