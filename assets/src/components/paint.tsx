@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import Highlighter from "react-highlight-words";
 import { Option, Options } from "react-select";
 import Select from "react-select";
@@ -7,15 +7,11 @@ import { IPaintEntry } from "../data-types/response-types";
 interface IProps {
   children?: React.ReactNode;
   paintList: IPaintEntry[];
+  selectedValue: IPaintEntry[];
+  updatePaints: (paints: IPaintEntry[]) => void;
 }
-export default class Paint extends React.Component<IProps, { selectedValue: Options<IPaintEntry> }> {
+export default class Paint extends React.Component<IProps, {}> {
   private inputValue: string = "";
-
-  constructor(props: IProps) {
-    super(props);
-    this.state = { selectedValue: [] };
-  }
-
   public render() {
     const onChange = this.onChangeHandler.bind(this);
     const onInputChange = (inputValue: string) => this.inputValue = inputValue;
@@ -24,19 +20,26 @@ export default class Paint extends React.Component<IProps, { selectedValue: Opti
     return (
       <Select
         onInputChange={onInputChange}
-        options={this.props.paintList.map((paint) => ({ value: paint, label: paint.manufacturer + " " + paint.name }))}
+        options={this.props.paintList.map(this.makeOption)}
         multi={true}
         onChange={onChange}
         optionRenderer={optionRenderFun}
-        value={this.state.selectedValue}
+        value={this.props.selectedValue.map(this.makeOption)}
         valueRenderer={valueRenderFun}
       />
     );
   }
 
+  private makeOption(paint: IPaintEntry) {
+    return { value: paint, label: paint.manufacturer + " " + paint.name };
+  }
+
   private onChangeHandler(newValue: Option<IPaintEntry> | Options<IPaintEntry> | null) {
     if (newValue instanceof Array) {
-      this.setState({ selectedValue: newValue });
+      const paints = newValue
+        .filter((option) => option.value !== undefined)
+        .map((option) => option.value) as IPaintEntry[];
+      this.props.updatePaints(paints);
     }
   }
 
@@ -54,13 +57,18 @@ export default class Paint extends React.Component<IProps, { selectedValue: Opti
   }
 
   private renderValue(option: Option<IPaintEntry>) {
+    const onInputChange = (e: React.FormEvent<HTMLInputElement>) => {
+      if (+e.currentTarget.value < 1) { e.currentTarget.value = "1"; }
+    };
+
     if (!option.value) {
       return null;
     }
     return (
       <div style={{ background: option.value.color }}>
         {option.value.name}
-        {(this.state.selectedValue.length > 1) ? <input type="number" defaultValue="1" /> : null}
+        {(this.props.selectedValue.length > 1) ?
+          <input onChange={onInputChange} type="number" defaultValue="1" /> : null}
       </div>);
   }
 }

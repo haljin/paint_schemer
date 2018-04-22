@@ -1,7 +1,7 @@
 import * as React from "react";
 import { IPaintEntry } from "../../data-types/response-types";
 import DataManager from "../common/data-manager";
-import DeleteButton from "../common/delete-button";
+import EntryDeleteButton from "../common/entry-delete-button";
 import DataEntryForm from "../common/entry-form";
 import PaintList from "./paint-list";
 
@@ -41,7 +41,7 @@ export default class PaintManager extends DataManager<IProps, IState> {
                     url={this.props.url}
                     refreshCallback={rfshCallback}
                 />
-                <DeleteButton
+                <EntryDeleteButton
                     url={this.props.url}
                     selectedId={this.state.selectedId}
                     refreshCallback={rfshCallback}

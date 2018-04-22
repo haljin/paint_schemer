@@ -1,10 +1,15 @@
-import * as React from "react";
-import { IPaintEntry } from "../data-types/response-types";
-import Paint from "./paint";
-export default class MainComponent extends React.Component<{ children?: React.ReactNode }, { data: IPaintEntry[] }> {
+import React from "react";
+import { IPaintEntry, IPaintTechniqueEntry } from "../data-types/response-types";
+import Section from "./section";
+
+interface IState {
+  data: IPaintEntry[];
+  techniques: IPaintTechniqueEntry[];
+}
+export default class MainComponent extends React.Component<{ children?: React.ReactNode }, IState> {
   constructor(props: any) {
     super(props);
-    this.state = { data: [] };
+    this.state = { data: [], techniques: [] };
   }
 
   public componentDidMount() {
@@ -14,13 +19,16 @@ export default class MainComponent extends React.Component<{ children?: React.Re
   public render() {
     return (
       <div>
-        <Paint paintList={this.state.data} />
+        {this.state.techniques.length > 0 &&
+          <Section paintList={this.state.data} techniqueList={this.state.techniques} />}
       </div>);
   }
 
   protected refresh() {
     this.getRequest("/api/paints")
       .then((data) => this.setState({ data }));
+    this.getRequest("/api/paint_techniques")
+      .then((data) => this.setState({ techniques: data }));
   }
 
   private getRequest(url: string) {

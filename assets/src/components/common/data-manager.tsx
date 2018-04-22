@@ -1,6 +1,6 @@
-import * as React from "react";
+import React from "react";
 import { IDataEntry } from "../../data-types/response-types";
-import DeleteButton from "./delete-button";
+import EntryDeleteButton from "./entry-delete-button";
 import DataEntryForm from "./entry-form";
 import EntryList from "./list";
 
@@ -34,7 +34,7 @@ export default class DataManager<TProps extends IProps, TState extends IState> e
                     refreshCallback={rfshCallback}
                 />
 
-                <DeleteButton
+                <EntryDeleteButton
                     url={this.props.url}
                     selectedId={this.state.selectedId}
                     refreshCallback={rfshCallback}

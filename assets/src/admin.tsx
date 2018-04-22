@@ -1,7 +1,7 @@
 import "phoenix_html";
 
-import * as React from "react";
-import * as ReactDOM from "react-dom";
+import React from "react";
+import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Link, Route } from "react-router-dom";
 import PaintsAdminFrame from "./components/admin/paints";
 import UsersAdminFrame from "./components/admin/users";

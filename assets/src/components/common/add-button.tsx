@@ -5,10 +5,10 @@ interface IProps {
     onClick: (e: React.FormEvent<HTMLButtonElement>) => void;
 }
 
-export default class DeleteButton extends React.Component<IProps, {}> {
+export default class AddButton extends React.Component<IProps, {}> {
     public render() {
         const onClick = (e: React.FormEvent<HTMLButtonElement>) => this.props.onClick(e);
-        return <button className="deleteButton" type="button" onClick={onClick}> x</button >;
+        return <button className="addButton" type="button" onClick={onClick}> +</button >;
     }
 
 }

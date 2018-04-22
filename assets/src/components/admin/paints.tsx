@@ -1,4 +1,4 @@
-import * as React from "react";
+import React from "react";
 import { IManfacturerEntry, IPaintEntry, ITypeEntry } from "../../data-types/response-types";
 import DataManager from "../common/data-manager";
 import PaintManager from "./paint-manager";
@@ -22,7 +22,7 @@ export default class PaintsAdminFrame extends React.Component<{}, IState> {
         return (
             <div>
                 <DataManager
-                    url="/api/paint_technique"
+                    url="/api/paint_techniques"
                     label="Techniques"
                 />
                 <DataManager

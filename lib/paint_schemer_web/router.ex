@@ -43,7 +43,7 @@ defmodule PaintSchemerWeb.Router do
     resources "/paints", PaintController, except: [:new, :edit, :update]
     resources "/paint_types", PaintTypeController, except: [:new, :edit, :update]
     resources "/paint_manufacturers", ManufacturerController, except: [:new, :edit, :update]
-    resources "/paint_technique", PaintTechniqueController, except: [:new, :edit, :update]
+    resources "/paint_techniques", PaintTechniqueController, except: [:new, :edit, :update]
 
     resources "/schemes", SchemeController, except: [:new, :edit]
   end

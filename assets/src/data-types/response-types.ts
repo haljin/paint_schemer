@@ -12,3 +12,5 @@ export interface IPaintEntry extends IDataEntry {
     type?: string;
     color: string;
 }
+
+export interface IPaintTechniqueEntry extends IDataEntry { }
