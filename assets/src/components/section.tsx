@@ -2,6 +2,8 @@ import React from "react";
 import { IPaintEntry, IPaintTechniqueEntry } from "../data-types/response-types";
 import AddButton from "./common/add-button";
 import DeleteButton from "./common/delete-button";
+import DownButton from "./common/down-button";
+import UpButton from "./common/up-button";
 import Paint from "./paint";
 import PaintTechnique from "./technique";
 
@@ -28,7 +30,7 @@ export default class Section extends React.Component<IProps, IState> {
   }
 
   public render() {
-    const addPaint = () => this.addPaints();
+    const addPaint = () => this.addStep();
     return (
       <div className="schemeSection">
         {this.renderPaints()}
@@ -38,30 +40,33 @@ export default class Section extends React.Component<IProps, IState> {
 
   private renderPaints() {
     return this.state.paintSteps.map((paintStep, i) => {
-      const updatePaints = this.updatePaint(i).bind(this);
-      const deletePaints = this.deletePaint(i).bind(this);
-      const updateTechnique = this.updateTechnique(i).bind(this);
       return (
         <div key={i}>
           <Paint
             key={"paint_" + i}
             selectedValue={paintStep.paints}
             paintList={this.props.paintList}
-            updatePaints={updatePaints}
+            updatePaints={this.updateStep(i)}
           />
           {this.props.techniqueList.length > 0 && <PaintTechnique
             key={"technique_" + i}
             selectedValue={paintStep.technique}
             techniqueList={this.props.techniqueList}
-            updateTechnique={updateTechnique}
+            updateTechnique={this.updateTechnique(i)}
           />}
-          {this.state.paintSteps.length > 1 && <DeleteButton key={"button_" + i} onClick={deletePaints} />}
+          {this.state.paintSteps.length > 1 &&
+            <div>
+              {i > 0 && <UpButton key={"upbutton_" + i} onClick={this.moveStep(i, i - 1)} />}
+              {i < this.state.paintSteps.length - 1 &&
+                <DownButton key={"downbutton_" + i} onClick={this.moveStep(i, i + 1)} />}
+              <DeleteButton key={"delbutton_" + i} onClick={this.deleteStep(i)} />
+            </div>}
         </div>
       );
     });
   }
 
-  private addPaints() {
+  private addStep() {
     if (this.state.paintSteps.length > this.maxPaints) {
       return;
     }
@@ -70,7 +75,7 @@ export default class Section extends React.Component<IProps, IState> {
     this.setState({ paintSteps: newPaints });
   }
 
-  private updatePaint(index: number) {
+  private updateStep = (index: number) => {
     return (paints: IPaintEntry[]) => {
       const newPaints = this.state.paintSteps;
       newPaints[index].paints = paints;
@@ -78,7 +83,7 @@ export default class Section extends React.Component<IProps, IState> {
     };
   }
 
-  private deletePaint(index: number) {
+  private deleteStep = (index: number) => {
     return () => {
       const newPaints = this.state.paintSteps;
       newPaints.splice(index, 1);
@@ -86,10 +91,19 @@ export default class Section extends React.Component<IProps, IState> {
     };
   }
 
-  private updateTechnique(index: number) {
+  private updateTechnique = (index: number) => {
     return (technique: IPaintTechniqueEntry) => {
       const newPaints = this.state.paintSteps;
       newPaints[index].technique = technique;
+      this.setState({ paintSteps: newPaints });
+    };
+  }
+
+  private moveStep = (index: number, newIndex: number) => {
+    return () => {
+      const newPaints = this.state.paintSteps;
+      const moved = newPaints.splice(index, 1);
+      newPaints.splice(newIndex, 0, moved[0]);
       this.setState({ paintSteps: newPaints });
     };
   }

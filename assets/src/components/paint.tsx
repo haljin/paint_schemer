@@ -13,19 +13,16 @@ interface IProps {
 export default class Paint extends React.Component<IProps, {}> {
   private inputValue: string = "";
   public render() {
-    const onChange = this.onChangeHandler.bind(this);
     const onInputChange = (inputValue: string) => this.inputValue = inputValue;
-    const optionRenderFun = this.renderOption.bind(this);
-    const valueRenderFun = this.renderValue.bind(this);
     return (
       <Select
         onInputChange={onInputChange}
         options={this.props.paintList.map(this.makeOption)}
         multi={true}
-        onChange={onChange}
-        optionRenderer={optionRenderFun}
+        onChange={this.onChangeHandler}
+        optionRenderer={this.renderOption}
         value={this.props.selectedValue.map(this.makeOption)}
-        valueRenderer={valueRenderFun}
+        valueRenderer={this.renderValue}
       />
     );
   }
@@ -34,7 +31,7 @@ export default class Paint extends React.Component<IProps, {}> {
     return { value: paint, label: paint.manufacturer + " " + paint.name };
   }
 
-  private onChangeHandler(newValue: Option<IPaintEntry> | Options<IPaintEntry> | null) {
+  private onChangeHandler = (newValue: Option<IPaintEntry> | Options<IPaintEntry> | null) => {
     if (newValue instanceof Array) {
       const paints = newValue
         .filter((option) => option.value !== undefined)
@@ -43,7 +40,7 @@ export default class Paint extends React.Component<IProps, {}> {
     }
   }
 
-  private renderOption(option: Option<IPaintEntry>) {
+  private renderOption = (option: Option<IPaintEntry>) => {
     if (!option.value) {
       return null;
     }
@@ -56,7 +53,7 @@ export default class Paint extends React.Component<IProps, {}> {
       </div>);
   }
 
-  private renderValue(option: Option<IPaintEntry>) {
+  private renderValue = (option: Option<IPaintEntry>) => {
     const onInputChange = (e: React.FormEvent<HTMLInputElement>) => {
       if (+e.currentTarget.value < 1) { e.currentTarget.value = "1"; }
     };
@@ -65,7 +62,7 @@ export default class Paint extends React.Component<IProps, {}> {
       return null;
     }
     return (
-      <div style={{ background: option.value.color }}>
+      <div style={{ background: option.value.color }} >
         {option.value.name}
         {(this.props.selectedValue.length > 1) ?
           <input onChange={onInputChange} type="number" defaultValue="1" /> : null}

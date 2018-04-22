@@ -14,16 +14,14 @@ interface IProps {
 export default class PaintTechnique extends React.Component<IProps, {}> {
   private inputValue: string = "";
   public render() {
-    const onChange = this.onChangeHandler.bind(this);
-    const optionRenderFun = this.renderOption.bind(this);
     const onInputChange = (inputValue: string) => this.inputValue = inputValue;
     return (
       <Select
         onInputChange={onInputChange}
         options={this.props.techniqueList.map(this.makeOption)}
-        onChange={onChange}
+        onChange={this.onChangeHandler}
         value={this.makeOption(this.props.selectedValue)}
-        optionRenderer={optionRenderFun}
+        optionRenderer={this.renderOption}
         clearable={false}
       />
     );
@@ -33,13 +31,13 @@ export default class PaintTechnique extends React.Component<IProps, {}> {
     return { value: technique, label: technique.name };
   }
 
-  private onChangeHandler(newValue: Option<IPaintTechniqueEntry>) {
-    if (newValue.value) {
+  private onChangeHandler = (newValue: Option<IPaintTechniqueEntry> | null) => {
+    if (newValue && newValue.value) {
       this.props.updateTechnique(newValue.value);
     }
   }
 
-  private renderOption(option: Option<IPaintTechniqueEntry>) {
+  private renderOption = (option: Option<IPaintTechniqueEntry>) => {
     if (!option.value) {
       return null;
     }
