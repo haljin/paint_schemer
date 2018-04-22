@@ -22,6 +22,10 @@ export default class PaintsAdminFrame extends React.Component<{}, IState> {
         return (
             <div>
                 <DataManager
+                    url="/api/paint_technique"
+                    label="Techniques"
+                />
+                <DataManager
                     url="/api/paint_manufacturers"
                     label="Manufacturers"
                     selectedCallback={manSelectCallback}

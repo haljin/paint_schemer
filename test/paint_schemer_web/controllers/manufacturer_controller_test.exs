@@ -18,7 +18,7 @@ defmodule PaintSchemerWeb.ManufacturerControllerTest do
   describe "index" do
     test "lists all paint_manufacturers", %{conn: conn} do
       conn = get conn, manufacturer_path(conn, :index)
-      assert json_response(conn, 200)["data"] == []
+      assert is_list(json_response(conn, 200)["data"])
     end
   end
 

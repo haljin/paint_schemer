@@ -18,7 +18,7 @@ defmodule PaintSchemerWeb.PaintTypeControllerTest do
   describe "index" do
     test "lists all paint_types", %{conn: conn} do
       conn = get conn, paint_type_path(conn, :index)
-      assert json_response(conn, 200)["data"] == []
+      assert is_list(json_response(conn, 200)["data"])
     end
   end
 

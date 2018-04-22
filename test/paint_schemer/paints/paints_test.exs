@@ -21,7 +21,7 @@ defmodule PaintSchemer.PaintsTest do
 
     test "list_paint_manufacturers/0 returns all paint_manufacturers" do
       manufacturer = manufacturer_fixture()
-      assert Paints.list_paint_manufacturers() == [manufacturer]
+      assert manufacturer in Paints.list_paint_manufacturers()
     end
 
     test "get_manufacturer!/1 returns the manufacturer with given id" do
@@ -81,7 +81,7 @@ defmodule PaintSchemer.PaintsTest do
 
     test "list_paint_types/0 returns all paint_types" do
       paint_type = paint_type_fixture()
-      assert Paints.list_paint_types() == [paint_type]
+      assert paint_type in Paints.list_paint_types()
     end
 
     test "get_paint_type!/1 returns the paint_type with given id" do
@@ -150,7 +150,7 @@ defmodule PaintSchemer.PaintsTest do
 
     test "list_paints/0 returns all paints" do
       paint = paint_fixture()
-      assert Paints.list_paints() == [paint]
+      assert paint in Paints.list_paints()
     end
 
     test "get_paint!/1 returns the paint with given id" do

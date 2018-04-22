@@ -24,7 +24,7 @@ defmodule PaintSchemerWeb.PaintTechniqueControllerTest do
 
   describe "create paint_technique" do
     test "renders paint_technique when data is valid", %{conn: conn} do
-      conn = post conn, paint_technique_path(conn, :create), paint_technique: @create_attrs
+      conn = post conn, paint_technique_path(conn, :create), data: @create_attrs
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
       conn = get conn, paint_technique_path(conn, :show, id)
@@ -34,7 +34,7 @@ defmodule PaintSchemerWeb.PaintTechniqueControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
-      conn = post conn, paint_technique_path(conn, :create), paint_technique: @invalid_attrs
+      conn = post conn, paint_technique_path(conn, :create), data: @invalid_attrs
       assert json_response(conn, 422)["errors"] != %{}
     end
   end

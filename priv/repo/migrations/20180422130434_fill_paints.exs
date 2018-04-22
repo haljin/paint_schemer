@@ -217,7 +217,6 @@ defmodule PaintSchemer.Repo.Migrations.FillPaints do
     |> Enum.map(fn(%{color: string_color} = p) ->
           {:ok, byte_color} = Base.decode16(string_color)
           Map.merge(%{p | color: byte_color}, %{inserted_at: DateTime.utc_now, updated_at: DateTime.utc_now}) end)
-    |> IO.inspect
 
     PaintSchemer.Repo.insert_all(Paint, paints)
   end

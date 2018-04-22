@@ -11,7 +11,7 @@ defmodule PaintSchemerWeb.PaintTechniqueController do
     render(conn, "index.json", paint_technique: paint_technique)
   end
 
-  def create(conn, %{"paint_technique" => paint_technique_params}) do
+  def create(conn, %{"data" => paint_technique_params}) do
     with {:ok, %PaintTechnique{} = paint_technique} <- Paints.create_paint_technique(paint_technique_params) do
       conn
       |> put_status(:created)
