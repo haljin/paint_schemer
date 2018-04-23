@@ -1,5 +1,5 @@
 /* tslint:disable:object-literal-sort-keys interface-name*/
-import { ActionCreator } from 'redux';
+import { ActionCreator } from "redux";
 import { IPaintEntry, IPaintTechniqueEntry } from "../data-types/response-types";
 
 export enum SchemeActionType {
@@ -62,16 +62,16 @@ export const addSection: ActionCreator<AddSectionAction> =
     () => {
         return {
             type: SchemeActionType.ADD_SECTION,
-        }
-    }
+        };
+    };
 
 export const deleteSection: ActionCreator<DeleteSectionAction> =
     (sectionId: number) => {
         return {
             type: SchemeActionType.DELETE_SECTION,
             sectionId,
-        }
-    }
+        };
+    };
 
 export const addStep: ActionCreator<AddStepAction> =
     (sectionId: number) => {
@@ -79,7 +79,7 @@ export const addStep: ActionCreator<AddStepAction> =
             type: SchemeActionType.ADD_STEP,
             sectionId,
         };
-    }
+    };
 
 export const updateStep: ActionCreator<UpdateStepAction> =
     (sectionId: number, index: number, paints?: IPaintEntry[], technique?: IPaintTechniqueEntry) => {
@@ -90,7 +90,7 @@ export const updateStep: ActionCreator<UpdateStepAction> =
             paints,
             technique,
         };
-    }
+    };
 
 export const moveStep: ActionCreator<MoveStepAction> =
     (sectionId: number, index: number, newIndex: number) => {
@@ -100,7 +100,7 @@ export const moveStep: ActionCreator<MoveStepAction> =
             index,
             newIndex,
         };
-    }
+    };
 
 export const deleteStep: ActionCreator<DeleteStepAction> =
     (sectionId: number, index: number) => {
@@ -109,7 +109,7 @@ export const deleteStep: ActionCreator<DeleteStepAction> =
             sectionId,
             index,
         };
-    }
+    };
 
 export const updatePaints: ActionCreator<UpdatePaintListAction> =
     (paints: IPaintEntry[]) => {
@@ -117,7 +117,7 @@ export const updatePaints: ActionCreator<UpdatePaintListAction> =
             type: SchemeActionType.UPDATE_PAINT_LIST,
             paints,
         };
-    }
+    };
 
 export const updateTechniques: ActionCreator<UpdatePaintTechniquesAction> =
     (techniques: IPaintTechniqueEntry[]) => {
@@ -125,10 +125,10 @@ export const updateTechniques: ActionCreator<UpdatePaintTechniquesAction> =
             type: SchemeActionType.UPDATE_PAINT_TECHNIQUES,
             techniques,
         };
-    }
+    };
 
-export interface OtherAction { type: '' };
-export const OtherAction: OtherAction = { type: '' };
+export interface OtherAction { type: ""; }
+export const otherAction: OtherAction = { type: "" };
 
 export type SchemeAction =
     UpdatePaintListAction |

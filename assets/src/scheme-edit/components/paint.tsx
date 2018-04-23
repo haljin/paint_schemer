@@ -20,7 +20,10 @@ export class Paint extends React.Component<IProps, {}> {
     return (
       <Select
         onInputChange={onInputChange}
-        options={this.props.paintList.map(this.makeOption)}
+        options={
+          (this.props.selectedValue.length >= 3) ?
+            this.props.selectedValue :
+            this.props.paintList.map(this.makeOption)}
         multi={true}
         onChange={this.onChangeHandler}
         optionRenderer={this.renderOption}
@@ -35,7 +38,7 @@ export class Paint extends React.Component<IProps, {}> {
   }
 
   private onChangeHandler = (newValue: Option<IPaintEntry> | Options<IPaintEntry> | null) => {
-    if (newValue instanceof Array) {
+    if ((newValue instanceof Array) && (newValue.length <= 3)) {
       const paints = newValue
         .filter((option) => option.value !== undefined)
         .map((option) => option.value) as IPaintEntry[];
