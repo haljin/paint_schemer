@@ -53,7 +53,6 @@ export class PaintTechnique extends React.Component<IProps, {}> {
         />
       </div>);
   }
-
 }
 
 const mapStateToProps = (state: ISchemeState) => {
