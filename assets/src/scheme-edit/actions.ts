@@ -3,6 +3,8 @@ import { ActionCreator } from "redux";
 import { IPaintEntry, IPaintTechniqueEntry } from "../data-types/response-types";
 
 export enum SchemeActionType {
+    VALIDATE_SCHEME = "VALIDATE_SCHEME",
+    SAVE_SCHEME = "SAVE_SCHEME",
     ADD_SECTION = "ADD_SECTION",
     UPDATE_SECTION = "UPDATE_SECTION",
     DELETE_SECTION = "DELETE_SECTION",
@@ -12,6 +14,14 @@ export enum SchemeActionType {
     DELETE_STEP = "DELETE_STEP",
     UPDATE_PAINT_LIST = "UPDATE_PAINT_LIST",
     UPDATE_PAINT_TECHNIQUES = "UPDATE_PAINT_TECHNIQUES",
+}
+
+export interface ValidateSchemeAcion {
+    readonly type: typeof SchemeActionType.VALIDATE_SCHEME;
+}
+
+export interface SaveSchemeAction {
+    readonly type: typeof SchemeActionType.SAVE_SCHEME;
 }
 
 export interface AddSectionAction {
@@ -63,6 +73,20 @@ export interface UpdatePaintTechniquesAction {
     readonly type: typeof SchemeActionType.UPDATE_PAINT_TECHNIQUES;
     readonly techniques: IPaintTechniqueEntry[];
 }
+
+export const validateScheme: ActionCreator<ValidateSchemeAcion> =
+    () => {
+        return {
+            type: SchemeActionType.VALIDATE_SCHEME,
+        };
+    };
+
+export const saveScheme: ActionCreator<SaveSchemeAction> =
+    () => {
+        return {
+            type: SchemeActionType.SAVE_SCHEME,
+        };
+    };
 
 export const addSection: ActionCreator<AddSectionAction> =
     () => {
@@ -146,6 +170,8 @@ export interface OtherAction { type: ""; }
 export const otherAction: OtherAction = { type: "" };
 
 export type SchemeAction =
+    ValidateSchemeAcion |
+    SaveSchemeAction |
     UpdatePaintListAction |
     UpdatePaintTechniquesAction |
     AddSectionAction |

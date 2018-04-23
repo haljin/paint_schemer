@@ -38,6 +38,7 @@
     "redux": "^4.0.0",
     "redux-devtools-extension": "^2.13.2",
     "reselect": "^3.0.1",
+    "rieke": "^2.0.0",
     "style-loader": "^0.20.2",
     "ts-loader": "^4.0.0",
     "tslint": "^5.9.1",

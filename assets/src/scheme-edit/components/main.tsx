@@ -5,9 +5,11 @@ import DeleteButton from "../../common/components/delete-button";
 import { IPaintEntry, IPaintTechniqueEntry } from "../../data-types/response-types";
 import {
   addSection, AddSectionAction, deleteSection, DeleteSectionAction,
-  UpdatePaintListAction, updatePaints, UpdatePaintTechniquesAction, updateTechniques,
+  saveScheme, SaveSchemeAction, UpdatePaintListAction, updatePaints,
+  UpdatePaintTechniquesAction, updateTechniques, validateScheme, ValidateSchemeAcion,
 } from "../actions";
 import { IPaintSection, ISchemeState } from "../state";
+import SaveButton from "./save-button";
 import Section from "./section";
 
 interface IProps {
@@ -18,9 +20,11 @@ interface IProps {
   onTechniqueListUpdate: (techniques: IPaintTechniqueEntry[]) => UpdatePaintTechniquesAction;
   onAddSection: () => AddSectionAction;
   onDeleteSection: (sectionId: number) => DeleteSectionAction;
+  validate: () => ValidateSchemeAcion;
+  onSave: () => SaveSchemeAction;
 }
 
-export class MainComponent extends React.Component<IProps> {
+class MainComponent extends React.Component<IProps> {
   public componentDidMount() {
     this.refresh();
   }
@@ -46,6 +50,7 @@ export class MainComponent extends React.Component<IProps> {
             </div>);
         })}
         <AddButton onClick={this.props.onAddSection} />
+        <SaveButton onClick={this.saveScheme} />
       </div>);
   }
 
@@ -60,6 +65,11 @@ export class MainComponent extends React.Component<IProps> {
     return fetch(url)
       .then((resp) => resp.json())
       .then((json) => json.data);
+  }
+
+  private saveScheme = () => {
+    this.props.validate();
+    this.props.onSave();
   }
 }
 
@@ -76,7 +86,9 @@ const mapDispatchToProps = (dispatch: Dispatch<ISchemeState>) => {
     onAddSection: () => dispatch(addSection()),
     onDeleteSection: (sectionId: number) => dispatch(deleteSection(sectionId)),
     onPaintListUpdate: (paints: IPaintEntry[]) => dispatch(updatePaints(paints)),
+    onSave: () => dispatch(saveScheme()),
     onTechniqueListUpdate: (techniques: IPaintTechniqueEntry[]) => dispatch(updateTechniques(techniques)),
+    validate: () => dispatch(validateScheme()),
   };
 };
 
