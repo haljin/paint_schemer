@@ -43,23 +43,21 @@ export default class Section extends React.Component<IProps, IState> {
       return (
         <div key={i}>
           <Paint
-            key={"paint_" + i}
             selectedValue={paintStep.paints}
             paintList={this.props.paintList}
             updatePaints={this.updateStep(i)}
           />
           {this.props.techniqueList.length > 0 && <PaintTechnique
-            key={"technique_" + i}
             selectedValue={paintStep.technique}
             techniqueList={this.props.techniqueList}
             updateTechnique={this.updateTechnique(i)}
           />}
           {this.state.paintSteps.length > 1 &&
             <div>
-              {i > 0 && <UpButton key={"upbutton_" + i} onClick={this.moveStep(i, i - 1)} />}
+              {i > 0 && <UpButton onClick={this.moveStep(i, i - 1)} />}
               {i < this.state.paintSteps.length - 1 &&
-                <DownButton key={"downbutton_" + i} onClick={this.moveStep(i, i + 1)} />}
-              <DeleteButton key={"delbutton_" + i} onClick={this.deleteStep(i)} />
+                <DownButton onClick={this.moveStep(i, i + 1)} />}
+              <DeleteButton onClick={this.deleteStep(i)} />
             </div>}
         </div>
       );

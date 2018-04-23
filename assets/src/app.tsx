@@ -1,14 +1,23 @@
 import "phoenix_html";
 
-import * as React from "react";
+import React from "react";
 import * as ReactDOM from "react-dom";
-import MainComponent from "./components/main";
+import { Provider, Store } from "react-redux";
+import { createStore } from "redux";
+import { devToolsEnhancer } from "redux-devtools-extension";
+import ConnectedMainComponent from "./components/main";
+import reducer, { ISchemeState } from "./state";
 
-function render(node: HTMLElement) {
-    ReactDOM.render(<MainComponent />, node);
+function render(node: HTMLElement, store: Store<ISchemeState | undefined>) {
+    ReactDOM.render(
+        <Provider store={store}>
+            <ConnectedMainComponent />
+        </Provider>, node);
 }
+const mainStore = createStore(reducer, devToolsEnhancer({ name: "dev" }));
 
 const main = document.getElementById("react-main");
+
 if (main) {
-    render(main);
+    render(main, mainStore);
 }

@@ -56,6 +56,7 @@ export default class Paint extends React.Component<IProps, {}> {
   private renderValue = (option: Option<IPaintEntry>) => {
     const onInputChange = (e: React.FormEvent<HTMLInputElement>) => {
       if (+e.currentTarget.value < 1) { e.currentTarget.value = "1"; }
+      if (option.value) { this.updateRatio(option.value.id, +e.currentTarget.value); }
     };
 
     if (!option.value) {
@@ -65,7 +66,17 @@ export default class Paint extends React.Component<IProps, {}> {
       <div style={{ background: option.value.color }} >
         {option.value.name}
         {(this.props.selectedValue.length > 1) ?
-          <input onChange={onInputChange} type="number" defaultValue="1" /> : null}
+          <input
+            onChange={onInputChange}
+            type="number"
+            defaultValue={option.value.ratio ? option.value.ratio.toString() : "1"}
+          /> : null}
       </div>);
+  }
+
+  private updateRatio = (id: number, ratio: number) => {
+    const values = this.props.selectedValue;
+    values.map((paint: IPaintEntry) => (paint.id === id) ? paint.ratio = ratio : paint);
+    this.props.updatePaints(values);
   }
 }

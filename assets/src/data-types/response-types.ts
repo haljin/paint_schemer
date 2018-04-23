@@ -11,6 +11,7 @@ export interface IPaintEntry extends IDataEntry {
     manufacturer?: string;
     type?: string;
     color: string;
+    ratio?: number;
 }
 
 export interface IPaintTechniqueEntry extends IDataEntry { }
