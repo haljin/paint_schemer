@@ -1,15 +1,18 @@
 import React from "react";
 import Highlighter from "react-highlight-words";
-import { Option, Options } from "react-select";
-import Select from "react-select";
+import { connect, Dispatch } from "react-redux";
+import Select, { Option, Options } from "react-select";
 import { IPaintEntry } from "../../data-types/response-types";
+import { updateStep, UpdateStepAction } from "../actions";
+import { ISchemeState } from "../state";
 
 interface IProps {
+  index: number;
   paintList: IPaintEntry[];
   selectedValue: IPaintEntry[];
-  updatePaints: (paints: IPaintEntry[]) => void;
+  updatePaints: (index: number, paints: IPaintEntry[]) => UpdateStepAction;
 }
-export default class Paint extends React.Component<IProps, {}> {
+export class Paint extends React.Component<IProps, {}> {
   private inputValue: string = "";
   public render() {
     const onInputChange = (inputValue: string) => this.inputValue = inputValue;
@@ -35,7 +38,7 @@ export default class Paint extends React.Component<IProps, {}> {
       const paints = newValue
         .filter((option) => option.value !== undefined)
         .map((option) => option.value) as IPaintEntry[];
-      this.props.updatePaints(paints);
+      this.props.updatePaints(this.props.index, paints);
     }
   }
 
@@ -76,6 +79,22 @@ export default class Paint extends React.Component<IProps, {}> {
   private updateRatio = (id: number, ratio: number) => {
     const values = this.props.selectedValue;
     values.map((paint: IPaintEntry) => (paint.id === id) ? paint.ratio = ratio : paint);
-    this.props.updatePaints(values);
+    this.props.updatePaints(this.props.index, values);
   }
 }
+
+const mapStateToProps = (state: ISchemeState) => {
+  return {
+    paintList: state.paintList,
+  };
+};
+
+const mapDispatchToProps = (dispatch: Dispatch<ISchemeState>) => {
+  return {
+    updatePaints: (index: number, paints: IPaintEntry[]) => dispatch(updateStep(index, paints)),
+  };
+};
+
+const ConnectedPaint = connect(mapStateToProps, mapDispatchToProps)(Paint);
+
+export default ConnectedPaint;

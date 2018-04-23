@@ -20,7 +20,8 @@ export interface ChangeRatioAction {
 export interface UpdateStepAction {
     readonly type: typeof SchemeActionType.UPDATE_STEP;
     readonly index: number;
-    readonly paints: IPaintEntry[];
+    readonly paints?: IPaintEntry[];
+    readonly technique?: IPaintTechniqueEntry;
 }
 
 export interface AddStepAction {
@@ -56,11 +57,12 @@ export function changeRatio(paintId: number, ratio: number): ChangeRatioAction {
     };
 }
 
-export function updateStep(index: number, paints: IPaintEntry[]): UpdateStepAction {
+export function updateStep(index: number, paints?: IPaintEntry[], technique?: IPaintTechniqueEntry): UpdateStepAction {
     return {
         type: SchemeActionType.UPDATE_STEP,
         index,
         paints,
+        technique,
     };
 }
 

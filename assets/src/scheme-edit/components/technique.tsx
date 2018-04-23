@@ -1,16 +1,20 @@
 import React from "react";
 import Highlighter from "react-highlight-words";
+import { connect, Dispatch } from "react-redux";
 import { Option } from "react-select";
 import Select from "react-select";
 import { IPaintTechniqueEntry } from "../../data-types/response-types";
+import { updateStep, UpdateStepAction } from "../actions";
+import { ISchemeState } from "../state";
 
 interface IProps {
+  index: number;
   techniqueList: IPaintTechniqueEntry[];
   selectedValue: IPaintTechniqueEntry;
-  updateTechnique: (paints: IPaintTechniqueEntry) => void;
+  updateTechnique: (index: number, paints: IPaintTechniqueEntry) => UpdateStepAction;
 }
 
-export default class PaintTechnique extends React.Component<IProps, {}> {
+export class PaintTechnique extends React.Component<IProps, {}> {
   private inputValue: string = "";
   public render() {
     const onInputChange = (inputValue: string) => this.inputValue = inputValue;
@@ -32,7 +36,7 @@ export default class PaintTechnique extends React.Component<IProps, {}> {
 
   private onChangeHandler = (newValue: Option<IPaintTechniqueEntry> | null) => {
     if (newValue && newValue.value) {
-      this.props.updateTechnique(newValue.value);
+      this.props.updateTechnique(this.props.index, newValue.value);
     }
   }
 
@@ -50,3 +54,20 @@ export default class PaintTechnique extends React.Component<IProps, {}> {
   }
 
 }
+
+const mapStateToProps = (state: ISchemeState) => {
+  return {
+    techniqueList: state.techniqueList,
+  };
+};
+
+const mapDispatchToProps = (dispatch: Dispatch<ISchemeState>) => {
+  return {
+    updateTechnique: (index: number, technique: IPaintTechniqueEntry) =>
+      dispatch(updateStep(index, undefined, technique)),
+  };
+};
+
+const ConnectedPaintTechnique = connect(mapStateToProps, mapDispatchToProps)(PaintTechnique);
+
+export default ConnectedPaintTechnique;
