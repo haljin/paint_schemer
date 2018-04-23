@@ -1,6 +1,6 @@
-import * as React from "react";
-import { IPaintEntry } from "../../data-types/response-types";
-import EntryList from "../common/list";
+import React from "react";
+import EntryList from "../common/components/list";
+import { IPaintEntry } from "../data-types/response-types";
 
 interface IProps {
     list: IPaintEntry[];

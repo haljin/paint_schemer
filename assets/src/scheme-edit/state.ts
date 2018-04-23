@@ -1,5 +1,5 @@
+import { IPaintEntry, IPaintTechniqueEntry } from "../data-types/response-types";
 import { SchemeAction, SchemeActionType } from "./actions";
-import { IPaintEntry, IPaintTechniqueEntry } from "./data-types/response-types";
 
 interface IPaintsStep {
     paints: IPaintEntry[];

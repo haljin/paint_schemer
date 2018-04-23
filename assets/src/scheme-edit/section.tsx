@@ -1,9 +1,9 @@
 import React from "react";
-import { IPaintEntry, IPaintTechniqueEntry } from "../../data-types/response-types";
-import AddButton from "../common/add-button";
-import DeleteButton from "../common/delete-button";
-import DownButton from "../common/down-button";
-import UpButton from "../common/up-button";
+import AddButton from "../common/components/add-button";
+import DeleteButton from "../common/components/delete-button";
+import DownButton from "../common/components/down-button";
+import UpButton from "../common/components/up-button";
+import { IPaintEntry, IPaintTechniqueEntry } from "../data-types/response-types";
 import Paint from "./paint";
 import PaintTechnique from "./technique";
 

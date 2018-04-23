@@ -5,8 +5,8 @@ import * as ReactDOM from "react-dom";
 import { Provider, Store } from "react-redux";
 import { createStore } from "redux";
 import { devToolsEnhancer } from "redux-devtools-extension";
-import ConnectedMainComponent from "./components/scheme-edit/main";
-import reducer, { ISchemeState } from "./state";
+import ConnectedMainComponent from "./scheme-edit/main";
+import reducer, { ISchemeState } from "./scheme-edit/state";
 
 function render(node: HTMLElement, store: Store<ISchemeState | undefined>) {
     ReactDOM.render(

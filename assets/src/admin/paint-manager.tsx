@@ -1,8 +1,8 @@
-import * as React from "react";
-import { IPaintEntry } from "../../data-types/response-types";
-import DataManager from "../common/data-manager";
-import EntryDeleteButton from "../common/entry-delete-button";
-import DataEntryForm from "../common/entry-form";
+import React from "react";
+import DataManager from "../common/components/data-manager";
+import EntryDeleteButton from "../common/components/entry-delete-button";
+import DataEntryForm from "../common/components/entry-form";
+import { IPaintEntry } from "../data-types/response-types";
 import PaintList from "./paint-list";
 
 interface IProps {

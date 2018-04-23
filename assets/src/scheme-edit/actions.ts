@@ -1,4 +1,4 @@
-import { IPaintEntry, IPaintTechniqueEntry } from "data-types/response-types";
+import { IPaintEntry, IPaintTechniqueEntry } from "../data-types/response-types";
 
 /* tslint:disable:object-literal-sort-keys interface-name*/
 export enum SchemeActionType {

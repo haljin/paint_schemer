@@ -2,7 +2,7 @@ import React from "react";
 import Highlighter from "react-highlight-words";
 import { Option, Options } from "react-select";
 import Select from "react-select";
-import { IPaintEntry } from "../../data-types/response-types";
+import { IPaintEntry } from "../data-types/response-types";
 
 interface IProps {
   children?: React.ReactNode;

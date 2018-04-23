@@ -3,8 +3,8 @@ import "phoenix_html";
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Link, Route } from "react-router-dom";
-import PaintsAdminFrame from "./components/admin/paints";
-import UsersAdminFrame from "./components/admin/users";
+import PaintsAdminFrame from "./paints";
+import UsersAdminFrame from "./users";
 
 class AdminPage extends React.Component<{ children?: React.ReactNode }, {}> {
     public render() {

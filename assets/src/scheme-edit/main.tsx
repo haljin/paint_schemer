@@ -1,9 +1,9 @@
 import React from "react";
 import { connect, Dispatch } from "react-redux";
-import { ISchemeState } from "state";
-import { updatePaints, updateTechniques } from "../../actions";
-import { IPaintEntry, IPaintTechniqueEntry } from "../../data-types/response-types";
+import { IPaintEntry, IPaintTechniqueEntry } from "../data-types/response-types";
+import { updatePaints, updateTechniques } from "./actions";
 import Section from "./section";
+import { ISchemeState } from "./state";
 
 interface IProps {
   children?: React.ReactNode;

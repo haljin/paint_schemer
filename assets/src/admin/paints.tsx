@@ -1,6 +1,6 @@
 import React from "react";
-import { IManfacturerEntry, IPaintEntry, ITypeEntry } from "../../data-types/response-types";
-import DataManager from "../common/data-manager";
+import DataManager from "../common/components/data-manager";
+import { IManfacturerEntry, IPaintEntry, ITypeEntry } from "../data-types/response-types";
 import PaintManager from "./paint-manager";
 
 interface IState {

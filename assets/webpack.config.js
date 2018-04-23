@@ -6,7 +6,7 @@ const config = {
     devtool: "inline-source-map",
     entry: {
         app: ["./css/app.css", "./src/app.tsx"],
-        admin: ["./css/app.css", "./src/admin.tsx"]
+        admin: ["./css/app.css", "./src/admin/admin.tsx"]
     },
     output: {
         path: path.resolve(__dirname, "../priv/static"),
