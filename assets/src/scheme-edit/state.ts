@@ -1,5 +1,6 @@
 import { IPaintEntry, IPaintTechniqueEntry } from "../data-types/response-types";
-import { SchemeAction, SchemeActionType } from "./actions";
+import { SchemeActionType } from "./actions";
+import { Reducer } from "redux";
 
 interface IPaintStep {
     paints: IPaintEntry[];
@@ -20,7 +21,7 @@ const initialState: ISchemeState = {
     techniqueList: [],
 };
 
-export default function reducer(state: ISchemeState = initialState, action: SchemeAction): ISchemeState {
+const reducer: Reducer<ISchemeState> = (state: ISchemeState = initialState, action) => {
     switch (action.type) {
         case SchemeActionType.UPDATE_PAINT_LIST:
             return { ...state, paintList: action.paints };
@@ -34,8 +35,7 @@ export default function reducer(state: ISchemeState = initialState, action: Sche
             }
             return state;
         case SchemeActionType.DELETE_STEP:
-            const deletedSteps = [...state.paintSteps];
-            deletedSteps.splice(action.index, 1);
+            const deletedSteps = state.paintSteps.filter((_paint, i) => i !== action.index);
             return { ...state, paintSteps: deletedSteps };
         case SchemeActionType.MOVE_STEP:
             const movedSteps = [...state.paintSteps];
@@ -43,17 +43,19 @@ export default function reducer(state: ISchemeState = initialState, action: Sche
             movedSteps.splice(action.newIndex, 0, moved[0]);
             return { ...state, paintSteps: movedSteps };
         case SchemeActionType.UPDATE_STEP:
-            if (action.paints) {
-                const updatedPaints = [...state.paintSteps];
-                updatedPaints[action.index].paints = action.paints;
-                return { ...state, paintSteps: updatedPaints };
-            } else if (action.technique) {
-                const updatedPaints = [...state.paintSteps];
-                updatedPaints[action.index].technique = action.technique;
-                return { ...state, paintSteps: updatedPaints };
-            }
-            return state;
+            const newSteps =
+                state.paintSteps.map((step, i) => {
+                    if (i === action.index) {
+                        const newPaints = (action.paints) ? action.paints : step.paints;
+                        const newTechnique = (action.technique) ? action.technique : step.technique;
+                        return { ...step, paints: newPaints, technique: newTechnique }
+                    }
+                    return step;
+                })
+            return { ...state, paintSteps: newSteps };
         default:
             return state;
     }
 }
+
+export default reducer;

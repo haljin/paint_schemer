@@ -9,9 +9,10 @@ import { ISchemeState } from "../state";
 
 interface IProps {
   index: number;
+  sectionId: number;
   techniqueList: IPaintTechniqueEntry[];
   selectedValue: IPaintTechniqueEntry;
-  updateTechnique: (index: number, paints: IPaintTechniqueEntry) => UpdateStepAction;
+  updateTechnique: (sectionId: number, index: number, paints: IPaintTechniqueEntry) => UpdateStepAction;
 }
 
 export class PaintTechnique extends React.Component<IProps, {}> {
@@ -36,7 +37,7 @@ export class PaintTechnique extends React.Component<IProps, {}> {
 
   private onChangeHandler = (newValue: Option<IPaintTechniqueEntry> | null) => {
     if (newValue && newValue.value) {
-      this.props.updateTechnique(this.props.index, newValue.value);
+      this.props.updateTechnique(this.props.sectionId, this.props.index, newValue.value);
     }
   }
 
@@ -63,8 +64,8 @@ const mapStateToProps = (state: ISchemeState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch<ISchemeState>) => {
   return {
-    updateTechnique: (index: number, technique: IPaintTechniqueEntry) =>
-      dispatch(updateStep(index, undefined, technique)),
+    updateTechnique: (sectionId: number, index: number, technique: IPaintTechniqueEntry) =>
+      dispatch(updateStep(sectionId, index, undefined, technique)),
   };
 };
 

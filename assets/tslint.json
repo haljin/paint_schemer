@@ -5,6 +5,12 @@
   ],
   "rules": {
     "no-empty-interface": false,
-    "jsx-no-multiline-js": false
+    "jsx-no-multiline-js": false,
+    "variable-name": [
+      true,
+      "ban-keywords",
+      "check-format",
+      "allow-leading-underscore"
+    ],
   }
 }

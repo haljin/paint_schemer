@@ -8,9 +8,10 @@ import { ISchemeState } from "../state";
 
 interface IProps {
   index: number;
+  sectionId: number;
   paintList: IPaintEntry[];
   selectedValue: IPaintEntry[];
-  updatePaints: (index: number, paints: IPaintEntry[]) => UpdateStepAction;
+  updatePaints: (sectionId: number, index: number, paints: IPaintEntry[]) => UpdateStepAction;
 }
 export class Paint extends React.Component<IProps, {}> {
   private inputValue: string = "";
@@ -38,7 +39,7 @@ export class Paint extends React.Component<IProps, {}> {
       const paints = newValue
         .filter((option) => option.value !== undefined)
         .map((option) => option.value) as IPaintEntry[];
-      this.props.updatePaints(this.props.index, paints);
+      this.props.updatePaints(this.props.sectionId, this.props.index, paints);
     }
   }
 
@@ -79,7 +80,7 @@ export class Paint extends React.Component<IProps, {}> {
   private updateRatio = (id: number, ratio: number) => {
     const values = this.props.selectedValue;
     values.map((paint: IPaintEntry) => (paint.id === id) ? paint.ratio = ratio : paint);
-    this.props.updatePaints(this.props.index, values);
+    this.props.updatePaints(this.props.sectionId, this.props.index, values);
   }
 }
 
@@ -91,7 +92,7 @@ const mapStateToProps = (state: ISchemeState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch<ISchemeState>) => {
   return {
-    updatePaints: (index: number, paints: IPaintEntry[]) => dispatch(updateStep(index, paints)),
+    updatePaints: (sectionId: number, index: number, paints: IPaintEntry[]) => dispatch(updateStep(sectionId, index, paints)),
   };
 };
 

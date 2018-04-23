@@ -21,7 +21,7 @@ export class MainComponent extends React.Component<IProps> {
     return (
       <div>
         {this.props.techniqueList.length > 0 &&
-          <Section paintList={this.props.paintList} techniqueList={this.props.techniqueList} />}
+          <Section sectionId={1} paintList={this.props.paintList} techniqueList={this.props.techniqueList} />}
       </div>);
   }
 
