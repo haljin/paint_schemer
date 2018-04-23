@@ -92,10 +92,12 @@ const mapStateToProps = (state: ISchemeState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch<ISchemeState>) => {
   return {
-    updatePaints: (sectionId: number, index: number, paints: IPaintEntry[]) => dispatch(updateStep(sectionId, index, paints)),
+    updatePaints: (sectionId: number, index: number, paints: IPaintEntry[]) =>
+      dispatch(updateStep(sectionId, index, paints)),
   };
 };
 
+// tslint:disable-next-line:variable-name
 const ConnectedPaint = connect(mapStateToProps, mapDispatchToProps)(Paint);
 
 export default ConnectedPaint;

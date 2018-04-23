@@ -6,7 +6,7 @@ import DownButton from "../../common/components/down-button";
 import UpButton from "../../common/components/up-button";
 import { IPaintEntry, IPaintTechniqueEntry } from "../../data-types/response-types";
 import { addStep, AddStepAction, deleteStep, DeleteStepAction, moveStep, MoveStepAction } from "../actions";
-import { IPaintSection, ISchemeState } from "../state";
+import { IPaintStep, ISchemeState } from "../state";
 import Paint from "./paint";
 import PaintTechnique from "./technique";
 
@@ -14,7 +14,7 @@ interface IProps {
   sectionId: number;
   paintList: IPaintEntry[];
   techniqueList: IPaintTechniqueEntry[];
-  paintSteps: IPaintSection;
+  paintSteps: IPaintStep[];
   onAddStep: (sectionId: number) => AddStepAction;
   onDeleteStep: (sectionId: number, i: number) => DeleteStepAction;
   onMoveStep: (sectionId: number, oldI: number, newI: number) => MoveStepAction;
@@ -48,11 +48,11 @@ class Section extends React.Component<IProps, {}> {
             index={i}
             selectedValue={paintStep.paints}
           />
-          {this.props.techniqueList.length > 0 && <PaintTechnique
+          <PaintTechnique
             sectionId={this.props.sectionId}
             index={i}
             selectedValue={paintStep.technique}
-          />}
+          />
           {this.props.paintSteps.length > 1 &&
             <div>
               {i > 0 && <UpButton onClick={moveUpHandler} />}
@@ -66,12 +66,6 @@ class Section extends React.Component<IProps, {}> {
   }
 }
 
-const mapStateToProps = (state: ISchemeState) => {
-  return {
-    paintSteps: state.paintSteps,
-  };
-};
-
 const mapDispatchToProps = (dispatch: Dispatch<ISchemeState>) => {
   return {
     onAddStep: (sectionId: number) => dispatch(addStep(sectionId)),
@@ -80,6 +74,7 @@ const mapDispatchToProps = (dispatch: Dispatch<ISchemeState>) => {
   };
 };
 
-const ConnectedSection = connect(mapStateToProps, mapDispatchToProps)(Section);
+// tslint:disable-next-line:variable-name
+const ConnectedSection = connect(() => ({}), mapDispatchToProps)(Section);
 
 export default ConnectedSection;

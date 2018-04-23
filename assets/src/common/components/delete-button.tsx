@@ -10,5 +10,4 @@ export default class DeleteButton extends React.Component<IProps, {}> {
         const onClick = (e: React.FormEvent<HTMLButtonElement>) => this.props.onClick(e);
         return <button className="deleteButton" type="button" onClick={onClick}> x</button >;
     }
-
 }
