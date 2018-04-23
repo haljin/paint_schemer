@@ -32,9 +32,9 @@ export class MainComponent extends React.Component<IProps> {
           const deleteHandler = () => this.props.onDeleteSection(i);
           return (
             <div key={i}>
-              {section.title}
               <Section
                 sectionId={i}
+                title={section.title}
                 paintSteps={section.steps}
                 paintList={this.props.paintList}
                 techniqueList={this.props.techniqueList}

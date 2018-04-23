@@ -12,6 +12,7 @@ import PaintTechnique from "./technique";
 
 interface IProps {
   sectionId: number;
+  title: string;
   paintList: IPaintEntry[];
   techniqueList: IPaintTechniqueEntry[];
   paintSteps: IPaintStep[];
@@ -21,11 +22,6 @@ interface IProps {
 }
 
 class Section extends React.Component<IProps, {}> {
-  constructor(props: IProps) {
-    super(props);
-    this.state = { paintSteps: [{ paints: [], technique: this.props.techniqueList[0] }] };
-  }
-
   public render() {
     const addHandler = () => this.props.onAddStep(this.props.sectionId);
     return (
@@ -43,6 +39,7 @@ class Section extends React.Component<IProps, {}> {
       const deleteHandler = () => this.props.onDeleteStep(sectionId, i);
       return (
         <div key={i}>
+          {this.props.title}
           <Paint
             sectionId={this.props.sectionId}
             index={i}
