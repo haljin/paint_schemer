@@ -1,6 +1,6 @@
 import { IPaintEntry, IPaintTechniqueEntry } from "../data-types/response-types";
 import { SchemeActionType } from "./actions";
-import { Reducer } from "redux";
+import { Reducer, AnyAction } from "redux";
 
 interface IPaintStep {
     paints: IPaintEntry[];
@@ -15,13 +15,13 @@ export interface ISchemeState {
     techniqueList: IPaintTechniqueEntry[];
 }
 
-const initialState: ISchemeState = {
+export const initialState: ISchemeState = {
     paintList: [],
     paintSteps: [],
     techniqueList: [],
 };
 
-const reducer: Reducer<ISchemeState> = (state: ISchemeState = initialState, action) => {
+const reducer: Reducer<ISchemeState> = (state: ISchemeState = initialState, action: AnyAction) => {
     switch (action.type) {
         case SchemeActionType.UPDATE_PAINT_LIST:
             return { ...state, paintList: action.paints };
