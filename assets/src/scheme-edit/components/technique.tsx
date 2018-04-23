@@ -69,6 +69,7 @@ const mapDispatchToProps = (dispatch: Dispatch<ISchemeState>) => {
   };
 };
 
+// tslint:disable-next-line:variable-name
 const ConnectedPaintTechnique = connect(mapStateToProps, mapDispatchToProps)(PaintTechnique);
 
 export default ConnectedPaintTechnique;
