@@ -5,7 +5,6 @@ import Select from "react-select";
 import { IPaintTechniqueEntry } from "../../data-types/response-types";
 
 interface IProps {
-  children?: React.ReactNode;
   techniqueList: IPaintTechniqueEntry[];
   selectedValue: IPaintTechniqueEntry;
   updateTechnique: (paints: IPaintTechniqueEntry) => void;

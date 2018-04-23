@@ -11,39 +11,39 @@ export enum SchemeActionType {
     UPDATE_PAINT_TECHNIQUES = "UPDATE_PAINT_TECHNIQUES",
 }
 
-interface ChangeRatioAction {
+export interface ChangeRatioAction {
     readonly type: typeof SchemeActionType.CHANGE_RATIO;
     readonly paintId: number;
     readonly ratio: number;
 }
 
-interface UpdateStepAction {
+export interface UpdateStepAction {
     readonly type: typeof SchemeActionType.UPDATE_STEP;
     readonly index: number;
     readonly paints: IPaintEntry[];
 }
 
-interface AddStepAction {
+export interface AddStepAction {
     readonly type: typeof SchemeActionType.ADD_STEP;
 }
 
-interface DeleteStepAction {
+export interface DeleteStepAction {
     readonly type: typeof SchemeActionType.DELETE_STEP;
     readonly index: number;
 }
 
-interface MoveStepAction {
+export interface MoveStepAction {
     readonly type: typeof SchemeActionType.MOVE_STEP;
     readonly index: number;
     readonly newIndex: number;
 }
 
-interface UpdatePaintListAction {
+export interface UpdatePaintListAction {
     readonly type: typeof SchemeActionType.UPDATE_PAINT_LIST;
     readonly paints: IPaintEntry[];
 }
 
-interface UpdatePaintTechniquesAction {
+export interface UpdatePaintTechniquesAction {
     readonly type: typeof SchemeActionType.UPDATE_PAINT_TECHNIQUES;
     readonly techniques: IPaintTechniqueEntry[];
 }

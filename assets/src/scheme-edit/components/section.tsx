@@ -1,15 +1,21 @@
 import React from "react";
+import { connect, Dispatch } from "react-redux";
 import AddButton from "../../common/components/add-button";
 import DeleteButton from "../../common/components/delete-button";
 import DownButton from "../../common/components/down-button";
 import UpButton from "../../common/components/up-button";
 import { IPaintEntry, IPaintTechniqueEntry } from "../../data-types/response-types";
+import { addStep, AddStepAction, deleteStep, DeleteStepAction } from "../actions";
+import { IPaintSection, ISchemeState } from "../state";
 import Paint from "./paint";
 import PaintTechnique from "./technique";
 
 interface IProps {
   paintList: IPaintEntry[];
   techniqueList: IPaintTechniqueEntry[];
+  steps: IPaintSection;
+  onAddStep: () => AddStepAction;
+  onDeleteStep: (i: number) => DeleteStepAction;
 }
 
 interface IPaintsStep {
@@ -21,7 +27,7 @@ interface IState {
   paintSteps: IPaintsStep[];
 }
 
-export default class Section extends React.Component<IProps, IState> {
+class Section extends React.Component<IProps, IState> {
   private maxPaints: number = 10;
 
   constructor(props: IProps) {
@@ -30,16 +36,15 @@ export default class Section extends React.Component<IProps, IState> {
   }
 
   public render() {
-    const addPaint = () => this.addStep();
     return (
       <div className="schemeSection">
         {this.renderPaints()}
-        {this.state.paintSteps.length <= this.maxPaints && <AddButton onClick={addPaint} />}
+        {this.state.paintSteps.length <= this.maxPaints && <AddButton onClick={this.props.onAddStep} />}
       </div>);
   }
 
   private renderPaints() {
-    return this.state.paintSteps.map((paintStep, i) => {
+    return this.props.steps.map((paintStep, i) => {
       return (
         <div key={i}>
           <Paint
@@ -62,15 +67,6 @@ export default class Section extends React.Component<IProps, IState> {
         </div>
       );
     });
-  }
-
-  private addStep() {
-    if (this.state.paintSteps.length > this.maxPaints) {
-      return;
-    }
-    const newPaints = this.state.paintSteps;
-    newPaints.push({ paints: [], technique: this.props.techniqueList[0] });
-    this.setState({ paintSteps: newPaints });
   }
 
   private updateStep = (index: number) => {
@@ -106,3 +102,20 @@ export default class Section extends React.Component<IProps, IState> {
     };
   }
 }
+
+const mapStateToProps = (state: ISchemeState) => {
+  return {
+    steps: state.paintSteps,
+  };
+};
+
+const mapDispatchToProps = (dispatch: Dispatch<ISchemeState>) => {
+  return {
+    onAddStep: () => dispatch(addStep()),
+    onDeleteStep: (index: number) => dispatch(deleteStep(index)),
+  };
+};
+
+const ConnectedSection = connect(mapStateToProps, mapDispatchToProps)(Section);
+
+export default ConnectedSection;

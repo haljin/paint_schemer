@@ -1,16 +1,15 @@
 import React from "react";
 import { connect, Dispatch } from "react-redux";
 import { IPaintEntry, IPaintTechniqueEntry } from "../../data-types/response-types";
-import { updatePaints, updateTechniques } from "../actions";
+import { UpdatePaintListAction, updatePaints, UpdatePaintTechniquesAction, updateTechniques } from "../actions";
 import { ISchemeState } from "../state";
 import Section from "./section";
 
 interface IProps {
-  children?: React.ReactNode;
   paintList: IPaintEntry[];
   techniqueList: IPaintTechniqueEntry[];
-  onPaintListUpdate: (paints: IPaintEntry[]) => any;
-  onTechniqueListUpdate: (techniques: IPaintTechniqueEntry[]) => any;
+  onPaintListUpdate: (paints: IPaintEntry[]) => UpdatePaintListAction;
+  onTechniqueListUpdate: (techniques: IPaintTechniqueEntry[]) => UpdatePaintTechniquesAction;
 }
 
 export class MainComponent extends React.Component<IProps> {
