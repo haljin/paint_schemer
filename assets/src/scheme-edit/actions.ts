@@ -4,8 +4,8 @@ import { IPaintEntry, IPaintTechniqueEntry } from "../data-types/response-types"
 
 export enum SchemeActionType {
     ADD_SECTION = "ADD_SECTION",
-    DELETE_SECTION = "DELETE_SECTION",
     UPDATE_SECTION = "UPDATE_SECTION",
+    DELETE_SECTION = "DELETE_SECTION",
     ADD_STEP = "ADD_STEP",
     UPDATE_STEP = "UPDATE_STEP",
     MOVE_STEP = "MOVE_STEP",
@@ -16,6 +16,12 @@ export enum SchemeActionType {
 
 export interface AddSectionAction {
     readonly type: typeof SchemeActionType.ADD_SECTION;
+}
+
+export interface UpdateSectionAction {
+    readonly type: typeof SchemeActionType.UPDATE_SECTION;
+    readonly sectionId: number;
+    readonly name: string;
 }
 
 export interface DeleteSectionAction {
@@ -62,6 +68,15 @@ export const addSection: ActionCreator<AddSectionAction> =
     () => {
         return {
             type: SchemeActionType.ADD_SECTION,
+        };
+    };
+
+export const updateSection: ActionCreator<UpdateSectionAction> =
+    (sectionId: number, name: string) => {
+        return {
+            type: SchemeActionType.UPDATE_SECTION,
+            sectionId,
+            name,
         };
     };
 
@@ -134,6 +149,7 @@ export type SchemeAction =
     UpdatePaintListAction |
     UpdatePaintTechniquesAction |
     AddSectionAction |
+    UpdateSectionAction |
     DeleteSectionAction |
     AddStepAction |
     UpdateStepAction |
