@@ -1,8 +1,10 @@
 /* tslint:disable:object-literal-sort-keys interface-name*/
 import { ActionCreator } from "redux";
 import { IPaintEntry, IPaintTechniqueEntry } from "../data-types/response-types";
+import { IPaintSection } from "./state";
 
 export enum SchemeActionType {
+    LOAD_SCHEME = "LOAD_SCHEME",
     VALIDATE_SCHEME = "VALIDATE_SCHEME",
     SAVE_SCHEME = "SAVE_SCHEME",
     UPDATE_TITLE = "UPDATE_TITLE",
@@ -15,6 +17,12 @@ export enum SchemeActionType {
     DELETE_STEP = "DELETE_STEP",
     UPDATE_PAINT_LIST = "UPDATE_PAINT_LIST",
     UPDATE_PAINT_TECHNIQUES = "UPDATE_PAINT_TECHNIQUES",
+}
+
+export interface LoadSchemeAction {
+    readonly type: typeof SchemeActionType.LOAD_SCHEME;
+    readonly paintSections: IPaintSection[];
+    readonly title: string;
 }
 
 export interface ValidateSchemeAcion {
@@ -78,6 +86,15 @@ export interface UpdatePaintTechniquesAction {
     readonly type: typeof SchemeActionType.UPDATE_PAINT_TECHNIQUES;
     readonly techniques: IPaintTechniqueEntry[];
 }
+
+export const loadScheme: ActionCreator<LoadSchemeAction> =
+    (scheme: IPaintSection[], title: string) => {
+        return {
+            type: SchemeActionType.LOAD_SCHEME,
+            paintSections: scheme,
+            title,
+        };
+    };
 
 export const validateScheme: ActionCreator<ValidateSchemeAcion> =
     () => {
@@ -183,6 +200,7 @@ export interface OtherAction { type: ""; }
 export const otherAction: OtherAction = { type: "" };
 
 export type SchemeAction =
+    LoadSchemeAction |
     ValidateSchemeAcion |
     SaveSchemeAction |
     UpdateTitleAction |

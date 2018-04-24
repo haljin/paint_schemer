@@ -34,6 +34,8 @@ function isValid(paintSections: IPaintSection[]): boolean {
 
 const reducer: Reducer<ISchemeState> = (state = initialState, action: SchemeAction): ISchemeState => {
     switch (action.type) {
+        case SchemeActionType.LOAD_SCHEME:
+            return { ...state, paintSections: action.paintSections, title: action.title };
         case SchemeActionType.VALIDATE_SCHEME:
             const validatedSections = state.paintSections.map((section): IPaintSection => {
                 const validatedSteps = section.steps.map((step): IPaintStep => {

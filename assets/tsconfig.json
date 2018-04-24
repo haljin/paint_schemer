@@ -3,6 +3,11 @@
     "target": "es5",
     "module": "es6",
     "jsx": "react",
+    "lib": [
+      "dom",
+      "es2015.promise",
+      "es2017"
+    ],
     "moduleResolution": "node",
     "baseUrl": "src",
     "outDir": "ts-build",
