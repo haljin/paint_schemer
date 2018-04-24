@@ -14,21 +14,22 @@ import { IPaintStep, ISchemeState } from "../state";
 import Step from "./step";
 
 interface IProps {
-  sectionId: number;
+  sectionIndex: number;
   title: string;
   paintList: IPaintEntry[];
   techniqueList: IPaintTechniqueEntry[];
   paintSteps: IPaintStep[];
-  onAddStep: (sectionId: number) => AddStepAction;
-  onDeleteStep: (sectionId: number, i: number) => DeleteStepAction;
-  onMoveStep: (sectionId: number, oldI: number, newI: number) => MoveStepAction;
-  onUpdateTitle: (sectionId: number, title: string) => UpdateSectionAction;
+  onAddStep: (sectionIndex: number) => AddStepAction;
+  onDeleteStep: (sectionIndex: number, i: number) => DeleteStepAction;
+  onMoveStep: (sectionIndex: number, oldI: number, newI: number) => MoveStepAction;
+  onUpdateTitle: (sectionIndex: number, title: string) => UpdateSectionAction;
 }
 
 class Section extends React.Component<IProps, {}> {
   public render() {
-    const addHandler = () => this.props.onAddStep(this.props.sectionId);
-    const updateTitleHandler = ({ title }: { title: string }) => this.props.onUpdateTitle(this.props.sectionId, title);
+    const addHandler = () => this.props.onAddStep(this.props.sectionIndex);
+    const updateTitleHandler = ({ title }: { title: string }) =>
+      this.props.onUpdateTitle(this.props.sectionIndex, title);
 
     return (
       <div className="schemeSection">
@@ -43,15 +44,15 @@ class Section extends React.Component<IProps, {}> {
   }
 
   private renderPaints() {
-    const { sectionId } = this.props;
+    const { sectionIndex } = this.props;
     return this.props.paintSteps.map((paintStep, i) => {
-      const moveUpHandler = () => this.props.onMoveStep(sectionId, i, i - 1);
-      const moveDownHandler = () => this.props.onMoveStep(sectionId, i, i + 1);
-      const deleteHandler = () => this.props.onDeleteStep(sectionId, i);
+      const moveUpHandler = () => this.props.onMoveStep(sectionIndex, i, i - 1);
+      const moveDownHandler = () => this.props.onMoveStep(sectionIndex, i, i + 1);
+      const deleteHandler = () => this.props.onDeleteStep(sectionIndex, i);
       return (
         <div key={i}>
           <Step
-            sectionId={this.props.sectionId}
+            sectionIndex={this.props.sectionIndex}
             stepId={i}
             paints={paintStep.paints}
             technique={paintStep.technique}
@@ -72,10 +73,11 @@ class Section extends React.Component<IProps, {}> {
 
 const mapDispatchToProps = (dispatch: Dispatch<ISchemeState>) => {
   return {
-    onAddStep: (sectionId: number) => dispatch(addStep(sectionId)),
-    onDeleteStep: (sectionId: number, index: number) => dispatch(deleteStep(sectionId, index)),
-    onMoveStep: (sectionId: number, index: number, newIndex: number) => dispatch(moveStep(sectionId, index, newIndex)),
-    onUpdateTitle: (sectionId: number, title: string) => dispatch(updateSection(sectionId, title)),
+    onAddStep: (sectionIndex: number) => dispatch(addStep(sectionIndex)),
+    onDeleteStep: (sectionIndex: number, index: number) => dispatch(deleteStep(sectionIndex, index)),
+    onMoveStep: (sectionIndex: number, index: number, newIndex: number) =>
+      dispatch(moveStep(sectionIndex, index, newIndex)),
+    onUpdateTitle: (sectionIndex: number, title: string) => dispatch(updateSection(sectionIndex, title)),
   };
 };
 

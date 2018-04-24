@@ -19,7 +19,7 @@ interface IProps {
   onPaintListUpdate: (paints: IPaintEntry[]) => UpdatePaintListAction;
   onTechniqueListUpdate: (techniques: IPaintTechniqueEntry[]) => UpdatePaintTechniquesAction;
   onAddSection: () => AddSectionAction;
-  onDeleteSection: (sectionId: number) => DeleteSectionAction;
+  onDeleteSection: (sectionIndex: number) => DeleteSectionAction;
   validate: () => ValidateSchemeAcion;
   onSave: () => SaveSchemeAction;
 }
@@ -37,7 +37,7 @@ class MainComponent extends React.Component<IProps> {
           return (
             <div key={i}>
               <Section
-                sectionId={i}
+                sectionIndex={i}
                 title={section.title}
                 paintSteps={section.steps}
                 paintList={this.props.paintList}
@@ -84,7 +84,7 @@ const mapStateToProps = (state: ISchemeState) => {
 const mapDispatchToProps = (dispatch: Dispatch<ISchemeState>) => {
   return {
     onAddSection: () => dispatch(addSection()),
-    onDeleteSection: (sectionId: number) => dispatch(deleteSection(sectionId)),
+    onDeleteSection: (sectionIndex: number) => dispatch(deleteSection(sectionIndex)),
     onPaintListUpdate: (paints: IPaintEntry[]) => dispatch(updatePaints(paints)),
     onSave: () => dispatch(saveScheme()),
     onTechniqueListUpdate: (techniques: IPaintTechniqueEntry[]) => dispatch(updateTechniques(techniques)),

@@ -70,20 +70,20 @@ const reducer: Reducer<ISchemeState> = (state = initialState, action: SchemeActi
             return { ...state, paintSections: [...state.paintSections, newSection] };
         case SchemeActionType.UPDATE_SECTION:
             const updatedSections = state.paintSections.map((section, i): IPaintSection => {
-                if (i === action.sectionId) {
+                if (i === action.sectionIndex) {
                     return { ...section, title: action.name };
                 }
                 return section;
             });
             return { ...state, paintSections: updatedSections };
         case SchemeActionType.DELETE_SECTION:
-            const deletedSections = state.paintSections.filter((_paint, i) => i !== action.sectionId);
+            const deletedSections = state.paintSections.filter((_paint, i) => i !== action.sectionIndex);
             return { ...state, paintSections: deletedSections };
         case SchemeActionType.ADD_STEP:
             if (state.techniqueList.length > 1) {
                 const newSections =
                     state.paintSections.map((section, i): IPaintSection => {
-                        if (action.sectionId === i) {
+                        if (action.sectionIndex === i) {
                             const newSectionStep = { paints: [], technique: state.techniqueList[0] };
                             return { ...section, steps: [...section.steps, newSectionStep] };
                         }
@@ -95,7 +95,7 @@ const reducer: Reducer<ISchemeState> = (state = initialState, action: SchemeActi
         case SchemeActionType.DELETE_STEP:
             const deletedSectionSteps =
                 state.paintSections.map((section, i): IPaintSection => {
-                    if (action.sectionId === i) {
+                    if (action.sectionIndex === i) {
                         const deletedSteps = section.steps.filter((_paint, j) => j !== action.index);
                         return { ...section, steps: deletedSteps };
                     }
@@ -105,7 +105,7 @@ const reducer: Reducer<ISchemeState> = (state = initialState, action: SchemeActi
         case SchemeActionType.MOVE_STEP:
             const movedSectionSteps =
                 state.paintSections.map((section, i): IPaintSection => {
-                    if (action.sectionId === i) {
+                    if (action.sectionIndex === i) {
                         const movedSteps = [...section.steps];
                         const moved = movedSteps.splice(action.index, 1);
                         movedSteps.splice(action.newIndex, 0, moved[0]);
@@ -117,7 +117,7 @@ const reducer: Reducer<ISchemeState> = (state = initialState, action: SchemeActi
         case SchemeActionType.UPDATE_STEP:
             const updatedSectionSteps =
                 state.paintSections.map((section, i): IPaintSection => {
-                    if (action.sectionId === i) {
+                    if (action.sectionIndex === i) {
                         const updatedSteps =
                             section.steps.map((step, j): IPaintStep => {
                                 if (j === action.index) {

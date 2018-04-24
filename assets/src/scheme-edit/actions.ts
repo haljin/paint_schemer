@@ -30,37 +30,37 @@ export interface AddSectionAction {
 
 export interface UpdateSectionAction {
     readonly type: typeof SchemeActionType.UPDATE_SECTION;
-    readonly sectionId: number;
+    readonly sectionIndex: number;
     readonly name: string;
 }
 
 export interface DeleteSectionAction {
     readonly type: typeof SchemeActionType.DELETE_SECTION;
-    readonly sectionId: number;
+    readonly sectionIndex: number;
 }
 
 export interface AddStepAction {
     readonly type: typeof SchemeActionType.ADD_STEP;
-    readonly sectionId: number;
+    readonly sectionIndex: number;
 }
 
 export interface UpdateStepAction {
     readonly type: typeof SchemeActionType.UPDATE_STEP;
-    readonly sectionId: number;
+    readonly sectionIndex: number;
     readonly index: number;
     readonly paints?: IPaintEntry[];
     readonly technique?: IPaintTechniqueEntry;
 }
 export interface MoveStepAction {
     readonly type: typeof SchemeActionType.MOVE_STEP;
-    readonly sectionId: number;
+    readonly sectionIndex: number;
     readonly index: number;
     readonly newIndex: number;
 }
 
 export interface DeleteStepAction {
     readonly type: typeof SchemeActionType.DELETE_STEP;
-    readonly sectionId: number;
+    readonly sectionIndex: number;
     readonly index: number;
 }
 
@@ -96,35 +96,35 @@ export const addSection: ActionCreator<AddSectionAction> =
     };
 
 export const updateSection: ActionCreator<UpdateSectionAction> =
-    (sectionId: number, name: string) => {
+    (sectionIndex: number, name: string) => {
         return {
             type: SchemeActionType.UPDATE_SECTION,
-            sectionId,
+            sectionIndex,
             name,
         };
     };
 
 export const deleteSection: ActionCreator<DeleteSectionAction> =
-    (sectionId: number) => {
+    (sectionIndex: number) => {
         return {
             type: SchemeActionType.DELETE_SECTION,
-            sectionId,
+            sectionIndex,
         };
     };
 
 export const addStep: ActionCreator<AddStepAction> =
-    (sectionId: number) => {
+    (sectionIndex: number) => {
         return {
             type: SchemeActionType.ADD_STEP,
-            sectionId,
+            sectionIndex,
         };
     };
 
 export const updateStep: ActionCreator<UpdateStepAction> =
-    (sectionId: number, index: number, paints?: IPaintEntry[], technique?: IPaintTechniqueEntry) => {
+    (sectionIndex: number, index: number, paints?: IPaintEntry[], technique?: IPaintTechniqueEntry) => {
         return {
             type: SchemeActionType.UPDATE_STEP,
-            sectionId,
+            sectionIndex,
             index,
             paints,
             technique,
@@ -132,20 +132,20 @@ export const updateStep: ActionCreator<UpdateStepAction> =
     };
 
 export const moveStep: ActionCreator<MoveStepAction> =
-    (sectionId: number, index: number, newIndex: number) => {
+    (sectionIndex: number, index: number, newIndex: number) => {
         return {
             type: SchemeActionType.MOVE_STEP,
-            sectionId,
+            sectionIndex,
             index,
             newIndex,
         };
     };
 
 export const deleteStep: ActionCreator<DeleteStepAction> =
-    (sectionId: number, index: number) => {
+    (sectionIndex: number, index: number) => {
         return {
             type: SchemeActionType.DELETE_STEP,
-            sectionId,
+            sectionIndex,
             index,
         };
     };

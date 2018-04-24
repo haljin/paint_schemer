@@ -4,7 +4,7 @@ import Paint from "./paint";
 import PaintTechnique from "./technique";
 
 interface IProps {
-  sectionId: number;
+  sectionIndex: number;
   stepId: number;
   paints: IPaintEntry[];
   technique: IPaintTechniqueEntry;
@@ -20,12 +20,12 @@ export default class Step extends React.Component<IProps, {}> {
     return (
       <div className={classNames.join(" ")}>
         <Paint
-          sectionId={this.props.sectionId}
+          sectionIndex={this.props.sectionIndex}
           index={this.props.stepId}
           selectedValue={this.props.paints}
         />
         <PaintTechnique
-          sectionId={this.props.sectionId}
+          sectionIndex={this.props.sectionIndex}
           index={this.props.stepId}
           selectedValue={this.props.technique}
         />
