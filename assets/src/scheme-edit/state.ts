@@ -2,8 +2,13 @@ import { Reducer } from "redux";
 import { IPaintEntry, IPaintTechniqueEntry } from "../data-types/response-types";
 import { SchemeAction, SchemeActionType } from "./actions";
 
+export interface IPaintMix {
+    paint: IPaintEntry;
+    ratio: number;
+}
+
 export interface IPaintStep {
-    paints: IPaintEntry[];
+    paints: IPaintMix[];
     technique: IPaintTechniqueEntry;
     valid?: boolean;
 }

@@ -41,12 +41,10 @@ defmodule PaintSchemerWeb.SchemeView do
   end
 
   defp render_paint_mix(%Schemes.PaintMix{id: id, ratio: ratio, paint: paint}) do
-    Map.merge(
     %{
       id: id,
-      ratio: ratio
-    },
-    PaintSchemerWeb.PaintView.render("paint.json", %{paint: paint})
-    )
+      ratio: ratio,
+      paint: PaintSchemerWeb.PaintView.render("paint.json", %{paint: paint})
+    }
   end
 end

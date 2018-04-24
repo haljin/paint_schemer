@@ -4,14 +4,14 @@ import { connect, Dispatch } from "react-redux";
 import Select, { Option, Options } from "react-select";
 import { IPaintEntry } from "../../data-types/response-types";
 import { updateStep, UpdateStepAction } from "../actions";
-import { ISchemeState } from "../state";
+import { IPaintMix, ISchemeState } from "../state";
 
 interface IProps {
   index: number;
   sectionIndex: number;
   paintList: IPaintEntry[];
-  selectedValue: IPaintEntry[];
-  updatePaints: (sectionIndex: number, index: number, paints: IPaintEntry[]) => UpdateStepAction;
+  selectedValue: IPaintMix[];
+  updatePaints: (sectionIndex: number, index: number, paints: IPaintMix[]) => UpdateStepAction;
 }
 export class Paint extends React.Component<IProps, {}> {
   private inputValue: string = "";
@@ -27,8 +27,8 @@ export class Paint extends React.Component<IProps, {}> {
         multi={true}
         onChange={this.onChangeHandler}
         optionRenderer={this.renderOption}
-        value={this.props.selectedValue.map(this.makeOption)}
-        valueRenderer={this.renderValue}
+        value={this.props.selectedValue.map(this.makeValue)}
+        valueRenderer={this.renderValue(this.props.selectedValue)}
       />
     );
   }
@@ -37,11 +37,15 @@ export class Paint extends React.Component<IProps, {}> {
     return { value: paint, label: paint.manufacturer + " " + paint.name };
   }
 
+  private makeValue(step: IPaintMix) {
+    return { value: step.paint, label: step.paint.manufacturer + " " + step.paint.name };
+  }
+
   private onChangeHandler = (newValue: Option<IPaintEntry> | Options<IPaintEntry> | null) => {
     if ((newValue instanceof Array) && (newValue.length <= 3)) {
       const paints = newValue
         .filter((option) => option.value !== undefined)
-        .map((option) => option.value) as IPaintEntry[];
+        .map((option) => ({ paint: option.value, ratio: 1 })) as IPaintMix[];
       this.props.updatePaints(this.props.sectionIndex, this.props.index, paints);
     }
   }
@@ -59,7 +63,7 @@ export class Paint extends React.Component<IProps, {}> {
       </div>);
   }
 
-  private renderValue = (option: Option<IPaintEntry>) => {
+  private renderValue = (mixes: IPaintMix[]) => (option: Option<IPaintEntry>) => {
     const onInputChange = (e: React.FormEvent<HTMLInputElement>) => {
       if (+e.currentTarget.value < 1) { e.currentTarget.value = "1"; }
       if (option.value) { this.updateRatio(option.value.id, +e.currentTarget.value); }
@@ -68,6 +72,7 @@ export class Paint extends React.Component<IProps, {}> {
     if (!option.value) {
       return null;
     }
+    const selectedValue = mixes.filter((mix) => !!option.value && mix.paint.id === option.value.id);
     return (
       <div style={{ background: option.value.color }} >
         {option.value.name}
@@ -75,14 +80,14 @@ export class Paint extends React.Component<IProps, {}> {
           <input
             onChange={onInputChange}
             type="number"
-            defaultValue={option.value.ratio ? option.value.ratio.toString() : "1"}
+            defaultValue={selectedValue[0].ratio.toString()}
           /> : null}
       </div>);
   }
 
   private updateRatio = (id: number, ratio: number) => {
     const values = this.props.selectedValue;
-    values.map((paint: IPaintEntry) => (paint.id === id) ? paint.ratio = ratio : paint);
+    values.map((mix: IPaintMix) => (mix.paint.id === id) ? mix.ratio = ratio : mix);
     this.props.updatePaints(this.props.sectionIndex, this.props.index, values);
   }
 }
@@ -95,7 +100,7 @@ const mapStateToProps = (state: ISchemeState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch<ISchemeState>) => {
   return {
-    updatePaints: (sectionIndex: number, index: number, paints: IPaintEntry[]) =>
+    updatePaints: (sectionIndex: number, index: number, paints: IPaintMix[]) =>
       dispatch(updateStep(sectionIndex, index, paints)),
   };
 };

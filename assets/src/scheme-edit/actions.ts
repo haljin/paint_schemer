@@ -1,7 +1,7 @@
 /* tslint:disable:object-literal-sort-keys interface-name*/
 import { ActionCreator } from "redux";
 import { IPaintEntry, IPaintTechniqueEntry } from "../data-types/response-types";
-import { IPaintSection } from "./state";
+import { IPaintMix, IPaintSection } from "./state";
 
 export enum SchemeActionType {
     LOAD_SCHEME = "LOAD_SCHEME",
@@ -61,7 +61,7 @@ export interface UpdateStepAction {
     readonly type: typeof SchemeActionType.UPDATE_STEP;
     readonly sectionIndex: number;
     readonly index: number;
-    readonly paints?: IPaintEntry[];
+    readonly paints?: IPaintMix[];
     readonly technique?: IPaintTechniqueEntry;
 }
 export interface MoveStepAction {
@@ -151,7 +151,7 @@ export const addStep: ActionCreator<AddStepAction> =
     };
 
 export const updateStep: ActionCreator<UpdateStepAction> =
-    (sectionIndex: number, index: number, paints?: IPaintEntry[], technique?: IPaintTechniqueEntry) => {
+    (sectionIndex: number, index: number, paints?: IPaintMix[], technique?: IPaintTechniqueEntry) => {
         return {
             type: SchemeActionType.UPDATE_STEP,
             sectionIndex,

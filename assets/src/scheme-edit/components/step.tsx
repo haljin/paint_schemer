@@ -1,12 +1,13 @@
 import React from "react";
-import { IPaintEntry, IPaintTechniqueEntry } from "../../data-types/response-types";
+import { IPaintTechniqueEntry } from "../../data-types/response-types";
+import { IPaintMix } from "../state";
 import Paint from "./paint";
 import PaintTechnique from "./technique";
 
 interface IProps {
   sectionIndex: number;
   stepId: number;
-  paints: IPaintEntry[];
+  paints: IPaintMix[];
   technique: IPaintTechniqueEntry;
   valid?: boolean;
 }
