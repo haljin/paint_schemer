@@ -18,8 +18,9 @@ defmodule PaintSchemer.Schemes do
 
   """
   def list_schemes do
-    Repo.all(Scheme)
-    |> Enum.map(&(Repo.preload(&1, :sections)))
+    Repo.all paint_associative_expr()
+    # Repo.all(Scheme)
+    # |> Enum.map(&preload_scheme/1)
   end
 
   @doc """
@@ -38,7 +39,7 @@ defmodule PaintSchemer.Schemes do
   """
   def get_scheme!(id), do:
     Repo.get!(Scheme, id)
-    |> Repo.preload(sections: [steps: [:paint_technique, paints: [paint: [:manufacturer, :type]]]])
+    |> preload_scheme
 
   @doc """
   Creates a scheme.
@@ -55,7 +56,7 @@ defmodule PaintSchemer.Schemes do
   def create_scheme(attrs \\ %{}) do
     with {:ok, data} <- %Scheme{} |> Scheme.changeset(attrs) |> Repo.insert() do
         data
-        |> Repo.preload(sections: [steps: [:paint_technique, paints: [paint: [:manufacturer, :type]]]])
+        |> preload_scheme
         |> (fn d -> {:ok, d} end).()
     else
         error -> error
@@ -107,6 +108,26 @@ defmodule PaintSchemer.Schemes do
   """
   def change_scheme(%Scheme{} = scheme) do
     Scheme.changeset(scheme, %{})
+  end
+
+  defp preload_scheme(%Scheme{} = scheme) do
+    Repo.preload(scheme, sections: [steps: [:paint_technique, paints: [paint: [:manufacturer, :type]]]])
+  end
+
+  defp paint_associative_expr() do
+    from scheme in Scheme,
+        join: section in assoc(scheme, :sections),
+        join: step in assoc(section, :steps),
+        join: pt in assoc(step, :paint_technique),
+        join: mixes in assoc(step, :paints),
+        join: paints in assoc(mixes, :paint),
+        join: m in assoc(paints, :manufacturer),
+        join: t in assoc(paints, :type),
+        preload: [sections:
+            {section, steps:
+                {step, [paint_technique: pt, paints:
+                    {mixes, paint:
+                        {paints, [type: t, manufacturer: m]}}]}}]
   end
 
   alias PaintSchemer.Schemes.Section

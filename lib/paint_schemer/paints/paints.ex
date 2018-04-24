@@ -210,11 +210,7 @@ defmodule PaintSchemer.Paints do
       [%Paint{}, ...]
 
   """
-  def list_paints do
-    Repo.all(Paint)
-    |> Repo.preload(:manufacturer)
-    |> Repo.preload(:type)
-  end
+  def list_paints, do: Repo.all paint_associative_expr()
 
   @doc """
   Gets a single paint.
@@ -230,7 +226,7 @@ defmodule PaintSchemer.Paints do
       ** (Ecto.NoResultsError)
 
   """
-  def get_paint!(id), do:  Repo.get!(Paint, id)|> Repo.preload(:manufacturer) |> Repo.preload(:type)
+  def get_paint!(id), do: Repo.get! paint_associative_expr(), id
   @doc """
   Creates a paint.
 
@@ -296,6 +292,12 @@ defmodule PaintSchemer.Paints do
     Paint.changeset(paint, %{})
   end
 
+  defp paint_associative_expr() do
+    from p in Paint,
+        join: t in assoc(p, :type),
+        join: m in assoc(p, :manufacturer),
+        preload: [type: t, manufacturer: m]
+    end
 
   alias PaintSchemer.Paints.PaintTechnique
 
