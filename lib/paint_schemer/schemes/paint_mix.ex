@@ -7,7 +7,7 @@ defmodule PaintSchemer.Schemes.PaintMix do
   schema "scheme_mixes" do
     field :ratio, :integer
     belongs_to :step, PaintSchemer.Schemes.Step
-    belongs_to :paint, PaintSchemer.Paints.PaintTechnique
+    belongs_to :paint, PaintSchemer.Paints.Paint
 
     timestamps()
   end

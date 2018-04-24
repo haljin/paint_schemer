@@ -38,7 +38,7 @@ defmodule PaintSchemer.Schemes do
   """
   def get_scheme!(id), do:
     Repo.get!(Scheme, id)
-    |> Repo.preload(:sections)
+    |> Repo.preload(sections: [steps: [:paint_technique, paints: [:paint]]])
 
   @doc """
   Creates a scheme.
