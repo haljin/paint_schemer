@@ -18,7 +18,7 @@ defmodule PaintSchemer.Schemes do
 
   """
   def list_schemes do
-    Repo.all paint_associative_expr()
+    Repo.all scheme_associative_expr()
     # Repo.all(Scheme)
     # |> Enum.map(&preload_scheme/1)
   end
@@ -110,11 +110,13 @@ defmodule PaintSchemer.Schemes do
     Scheme.changeset(scheme, %{})
   end
 
+# This call instead results in a lot of quesries one for each table
   defp preload_scheme(%Scheme{} = scheme) do
     Repo.preload(scheme, sections: [steps: [:paint_technique, paints: [paint: [:manufacturer, :type]]]])
   end
 
-  defp paint_associative_expr() do
+# This call results in a single SELECT query with a lot of joins
+  defp scheme_associative_expr() do
     from scheme in Scheme,
         join: section in assoc(scheme, :sections),
         join: step in assoc(section, :steps),
