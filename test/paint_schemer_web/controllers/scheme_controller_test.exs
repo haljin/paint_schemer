@@ -4,9 +4,9 @@ defmodule PaintSchemerWeb.SchemeControllerTest do
   alias PaintSchemer.Schemes
   alias PaintSchemer.Schemes.Scheme
 
-  @create_attrs %{description: "some description", image_url: "some image_url", title: "some title"}
+  @create_attrs %{description: "some description", image_url: "some image_url", title: "some title", sections: []}
   @update_attrs %{description: "some updated description", image_url: "some updated image_url", title: "some updated title"}
-  @invalid_attrs %{description: nil, image_url: nil, title: nil}
+  @invalid_attrs %{description: nil, image_url: nil, title: nil, sections: []}
 
   def fixture(:scheme) do
     {:ok, scheme} = Schemes.create_scheme(@create_attrs)

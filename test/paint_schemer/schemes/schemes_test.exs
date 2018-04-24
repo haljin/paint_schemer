@@ -7,7 +7,7 @@ defmodule PaintSchemer.SchemesTest do
   describe "schemes" do
     alias PaintSchemer.Schemes.Scheme
 
-    @valid_attrs %{description: "some description", image_url: "some image_url", title: "some title"}
+    @valid_attrs %{description: "some description", image_url: "some image_url", title: "some title", sections: []}
     @update_attrs %{description: "some updated description", image_url: "some updated image_url", title: "some updated title"}
     @invalid_attrs %{description: nil, image_url: nil, title: nil}
 
@@ -71,10 +71,10 @@ defmodule PaintSchemer.SchemesTest do
   describe "scheme_section" do
     alias PaintSchemer.Schemes.Section
 
-    @scheme_attrs %{description: "some description", image_url: "some image_url", title: "some title"}
+    @scheme_attrs %{description: "some description", image_url: "some image_url", title: "some title", sections: []}
     @valid_attrs %{name: "some sections"}
     @update_attrs %{}
-    @invalid_attrs %{scheme_id: nil}
+    @invalid_attrs %{name: ""}
 
     def section_fixture(attrs \\ %{}) do
       {:ok, scheme} =
@@ -144,8 +144,8 @@ defmodule PaintSchemer.SchemesTest do
     alias PaintSchemer.Paints
 
     @paint_technique_attrs %{name: "Some technique"}
-    @scheme_attrs %{description: "some description", image_url: "some image_url", title: "some title"}
-    @section_attrs %{title: "Some title"}
+    @scheme_attrs %{description: "some description", image_url: "some image_url", title: "some title", sections: []}
+    @section_attrs %{name: "Some title"}
     @valid_attrs %{ordering: 42}
     @update_attrs %{ordering: 43}
     @invalid_attrs %{ordering: nil}
@@ -236,7 +236,7 @@ defmodule PaintSchemer.SchemesTest do
     @paint_attrs %{color: <<255, 255, 255>>, name: "some paint"}
     @paint_technique_attrs %{name: "Some technique"}
     @scheme_attrs %{description: "some description", image_url: "some image_url", title: "some title"}
-    @section_attrs %{title: "Some title"}
+    @section_attrs %{name: "Some title"}
     @step_attrs %{ordering: 42}
     @valid_attrs %{ratio: 42}
     @update_attrs %{ratio: 43}

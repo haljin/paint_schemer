@@ -14,7 +14,6 @@ defmodule PaintSchemerWeb.SchemeController do
   def create(conn, %{"scheme" => %{"sections" => sections} = scheme_params}) do
     mapped_sections = Enum.map(sections, &map_section_fields/1)
     mapped_params = %{scheme_params | "sections" => mapped_sections}
-    IO.inspect mapped_params
     with {:ok, %Scheme{} = scheme} <- Schemes.create_scheme(mapped_params) do
       conn
       |> put_status(:created)

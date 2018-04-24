@@ -19,6 +19,7 @@ defmodule PaintSchemer.Schemes do
   """
   def list_schemes do
     Repo.all(Scheme)
+    |> Enum.map(&(Repo.preload(&1, :sections)))
   end
 
   @doc """
@@ -35,7 +36,9 @@ defmodule PaintSchemer.Schemes do
       ** (Ecto.NoResultsError)
 
   """
-  def get_scheme!(id), do: Repo.get!(Scheme, id)
+  def get_scheme!(id), do:
+    Repo.get!(Scheme, id)
+    |> Repo.preload(:sections)
 
   @doc """
   Creates a scheme.

@@ -6,7 +6,6 @@ defmodule PaintSchemer.Repo.Migrations.FillPaints do
 
   def change do
     {:ok, games_workshop} = PaintSchemer.Repo.insert(%Manufacturer{name: "Games Workshop"})
-    IO.inspect games_workshop
 
     {:ok, normal_type} = PaintSchemer.Repo.insert(%PaintType{name: "Normal"})
     {:ok, metallic_type} = PaintSchemer.Repo.insert(%PaintType{name: "Metallic"})
