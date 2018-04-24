@@ -9,7 +9,7 @@ export interface IPaintStep {
 }
 
 export interface IPaintSection {
-    title: string;
+    name: string;
     steps: IPaintStep[];
 }
 
@@ -42,7 +42,7 @@ const reducer: Reducer<ISchemeState> = (state = initialState, action: SchemeActi
             return { ...state, paintSections: validatedSections };
         case SchemeActionType.SAVE_SCHEME:
             if (isValid(state.paintSections)) {
-                const data = { name: "My Scheme", sections: state.paintSections };
+                const data = { scheme: { title: "My Scheme", sections: state.paintSections } };
                 const request = {
                     body: JSON.stringify(data),
                     headers: {
@@ -58,7 +58,7 @@ const reducer: Reducer<ISchemeState> = (state = initialState, action: SchemeActi
             return { ...state, paintList: action.paints };
         case SchemeActionType.UPDATE_PAINT_TECHNIQUES:
             const initialStep = [{ paints: [], technique: action.techniques[0] }];
-            const initialSection = [{ title: "Unnamed Section", steps: initialStep }];
+            const initialSection = [{ name: "Unnamed Section", steps: initialStep }];
             return {
                 ...state,
                 paintSections: initialSection,
@@ -66,12 +66,12 @@ const reducer: Reducer<ISchemeState> = (state = initialState, action: SchemeActi
             };
         case SchemeActionType.ADD_SECTION:
             const newStep = [{ paints: [], technique: state.techniqueList[0] }];
-            const newSection = { title: "Unnamed Section", steps: newStep };
+            const newSection = { name: "Unnamed Section", steps: newStep };
             return { ...state, paintSections: [...state.paintSections, newSection] };
         case SchemeActionType.UPDATE_SECTION:
             const updatedSections = state.paintSections.map((section, i): IPaintSection => {
                 if (i === action.sectionIndex) {
-                    return { ...section, title: action.name };
+                    return { ...section, name: action.name };
                 }
                 return section;
             });

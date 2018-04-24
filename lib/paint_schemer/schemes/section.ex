@@ -15,7 +15,8 @@ defmodule PaintSchemer.Schemes.Section do
   @doc false
   def changeset(%Section{} = section, attrs) do
     section
-    |> cast(attrs, [:scheme_id])
-    |> validate_required([:scheme_id])
+    |> cast(attrs, [:name])
+    |> validate_required([:name])
+    |> cast_assoc(:steps, with: &PaintSchemer.Schemes.Step.changeset/2)
   end
 end

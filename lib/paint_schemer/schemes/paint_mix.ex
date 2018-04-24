@@ -15,7 +15,7 @@ defmodule PaintSchemer.Schemes.PaintMix do
   @doc false
   def changeset(%PaintMix{} = paint_mix, attrs) do
     paint_mix
-    |> cast(attrs, [:ratio, :step_id, :paint_id])
-    |> validate_required([:ratio, :step_id, :paint_id])
+    |> cast(attrs, [:ratio, :paint_id])
+    |> validate_required([:ratio, :paint_id])
   end
 end

@@ -38,7 +38,7 @@ class MainComponent extends React.Component<IProps> {
             <div key={i}>
               <Section
                 sectionIndex={i}
-                title={section.title}
+                name={section.name}
                 paintSteps={section.steps}
                 paintList={this.props.paintList}
                 techniqueList={this.props.techniqueList}

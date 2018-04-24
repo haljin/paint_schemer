@@ -15,7 +15,7 @@ import Step from "./step";
 
 interface IProps {
   sectionIndex: number;
-  title: string;
+  name: string;
   paintList: IPaintEntry[];
   techniqueList: IPaintTechniqueEntry[];
   paintSteps: IPaintStep[];
@@ -34,7 +34,7 @@ class Section extends React.Component<IProps, {}> {
     return (
       <div className="schemeSection">
         <RIEInput
-          value={this.props.title}
+          value={this.props.name}
           change={updateTitleHandler}
           propName="title"
         />

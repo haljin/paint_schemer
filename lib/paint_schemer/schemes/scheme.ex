@@ -15,8 +15,12 @@ defmodule PaintSchemer.Schemes.Scheme do
 
   @doc false
   def changeset(%Scheme{} = scheme, attrs) do
+    a =
     scheme
     |> cast(attrs, [:title, :description, :image_url])
     |> validate_required([:title])
+    |> cast_assoc(:sections, with: &PaintSchemer.Schemes.Section.changeset/2)
+    IO.inspect a
+    a
   end
 end
