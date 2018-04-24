@@ -5,7 +5,7 @@ import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import { devToolsEnhancer } from "redux-devtools-extension";
-import ConnectedMainComponent from "./scheme-edit/components/main";
+import ConnectedMainComponent from "./scheme-edit/components/scheme";
 import reducer from "./scheme-edit/state";
 
 const mainStore = createStore(reducer, devToolsEnhancer({ name: "dev" }));

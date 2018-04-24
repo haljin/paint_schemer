@@ -1,12 +1,14 @@
 import React from "react";
 import { connect, Dispatch } from "react-redux";
+import { RIEInput } from "rieke";
 import AddButton from "../../common/components/add-button";
 import DeleteButton from "../../common/components/delete-button";
 import { IPaintEntry, IPaintTechniqueEntry } from "../../data-types/response-types";
 import {
   addSection, AddSectionAction, deleteSection, DeleteSectionAction,
   saveScheme, SaveSchemeAction, UpdatePaintListAction, updatePaints,
-  UpdatePaintTechniquesAction, updateTechniques, validateScheme, ValidateSchemeAcion,
+  UpdatePaintTechniquesAction, updateTechniques, updateTitle, UpdateTitleAction,
+  validateScheme, ValidateSchemeAcion,
 } from "../actions";
 import { IPaintSection, ISchemeState } from "../state";
 import SaveButton from "./save-button";
@@ -16,22 +18,31 @@ interface IProps {
   paintList: IPaintEntry[];
   paintSections: IPaintSection[];
   techniqueList: IPaintTechniqueEntry[];
+  title: string;
   onPaintListUpdate: (paints: IPaintEntry[]) => UpdatePaintListAction;
   onTechniqueListUpdate: (techniques: IPaintTechniqueEntry[]) => UpdatePaintTechniquesAction;
   onAddSection: () => AddSectionAction;
   onDeleteSection: (sectionIndex: number) => DeleteSectionAction;
   validate: () => ValidateSchemeAcion;
   onSave: () => SaveSchemeAction;
+  onUpdateTitle: (title: string) => UpdateTitleAction;
 }
 
-class MainComponent extends React.Component<IProps> {
+class Scheme extends React.Component<IProps> {
   public componentDidMount() {
     this.refresh();
   }
 
   public render() {
+    const updateTitleHandler = ({ title }: { title: string }) =>
+      this.props.onUpdateTitle(title);
     return (
       <div>
+        <RIEInput
+          value={this.props.title}
+          change={updateTitleHandler}
+          propName="title"
+        />
         {this.props.paintSections.map((section, i) => {
           const deleteHandler = () => this.props.onDeleteSection(i);
           return (
@@ -78,6 +89,7 @@ const mapStateToProps = (state: ISchemeState) => {
     paintList: state.paintList,
     paintSections: state.paintSections,
     techniqueList: state.techniqueList,
+    title: state.title,
   };
 };
 
@@ -88,11 +100,12 @@ const mapDispatchToProps = (dispatch: Dispatch<ISchemeState>) => {
     onPaintListUpdate: (paints: IPaintEntry[]) => dispatch(updatePaints(paints)),
     onSave: () => dispatch(saveScheme()),
     onTechniqueListUpdate: (techniques: IPaintTechniqueEntry[]) => dispatch(updateTechniques(techniques)),
+    onUpdateTitle: (title: string) => dispatch(updateTitle(title)),
     validate: () => dispatch(validateScheme()),
   };
 };
 
 // tslint:disable-next-line:variable-name
-const ConnectedMainComponent = connect(mapStateToProps, mapDispatchToProps)(MainComponent);
+const ConnectedScheme = connect(mapStateToProps, mapDispatchToProps)(Scheme);
 
-export default ConnectedMainComponent;
+export default ConnectedScheme;

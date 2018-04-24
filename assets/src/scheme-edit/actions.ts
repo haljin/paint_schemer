@@ -5,6 +5,7 @@ import { IPaintEntry, IPaintTechniqueEntry } from "../data-types/response-types"
 export enum SchemeActionType {
     VALIDATE_SCHEME = "VALIDATE_SCHEME",
     SAVE_SCHEME = "SAVE_SCHEME",
+    UPDATE_TITLE = "UPDATE_TITLE",
     ADD_SECTION = "ADD_SECTION",
     UPDATE_SECTION = "UPDATE_SECTION",
     DELETE_SECTION = "DELETE_SECTION",
@@ -22,6 +23,10 @@ export interface ValidateSchemeAcion {
 
 export interface SaveSchemeAction {
     readonly type: typeof SchemeActionType.SAVE_SCHEME;
+}
+
+export interface UpdateTitleAction {
+    readonly type: typeof SchemeActionType.UPDATE_TITLE;
 }
 
 export interface AddSectionAction {
@@ -85,6 +90,14 @@ export const saveScheme: ActionCreator<SaveSchemeAction> =
     () => {
         return {
             type: SchemeActionType.SAVE_SCHEME,
+        };
+    };
+
+export const updateTitle: ActionCreator<UpdateTitleAction> =
+    (title: string) => {
+        return {
+            type: SchemeActionType.UPDATE_TITLE,
+            title,
         };
     };
 
@@ -172,6 +185,7 @@ export const otherAction: OtherAction = { type: "" };
 export type SchemeAction =
     ValidateSchemeAcion |
     SaveSchemeAction |
+    UpdateTitleAction |
     UpdatePaintListAction |
     UpdatePaintTechniquesAction |
     AddSectionAction |

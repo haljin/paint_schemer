@@ -17,12 +17,14 @@ export interface ISchemeState {
     paintList: IPaintEntry[];
     paintSections: IPaintSection[];
     techniqueList: IPaintTechniqueEntry[];
+    title: string;
 }
 
 export const initialState: ISchemeState = {
     paintList: [],
     paintSections: [],
     techniqueList: [],
+    title: "Unnamed Scheme",
 };
 
 function isValid(paintSections: IPaintSection[]): boolean {
@@ -42,7 +44,7 @@ const reducer: Reducer<ISchemeState> = (state = initialState, action: SchemeActi
             return { ...state, paintSections: validatedSections };
         case SchemeActionType.SAVE_SCHEME:
             if (isValid(state.paintSections)) {
-                const data = { scheme: { title: "My Scheme", sections: state.paintSections } };
+                const data = { scheme: { title: state.title, sections: state.paintSections } };
                 const request = {
                     body: JSON.stringify(data),
                     headers: {
@@ -61,7 +63,7 @@ const reducer: Reducer<ISchemeState> = (state = initialState, action: SchemeActi
             const initialSection = [{ name: "Unnamed Section", steps: initialStep }];
             return {
                 ...state,
-                paintSections: initialSection,
+                paintSections: (state.paintSections.length > 0) ? state.paintSections : initialSection,
                 techniqueList: action.techniques,
             };
         case SchemeActionType.ADD_SECTION:
