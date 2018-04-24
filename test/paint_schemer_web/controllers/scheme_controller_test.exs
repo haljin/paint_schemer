@@ -34,7 +34,8 @@ defmodule PaintSchemerWeb.SchemeControllerTest do
         "id" => id,
         "description" => "some description",
         "image_url" => "some image_url",
-        "title" => "some title"}
+        "title" => "some title",
+        "sections" => []}
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
@@ -55,7 +56,8 @@ defmodule PaintSchemerWeb.SchemeControllerTest do
         "id" => id,
         "description" => "some updated description",
         "image_url" => "some updated image_url",
-        "title" => "some updated title"}
+        "title" => "some updated title",
+        "sections" => []}
     end
 
     test "renders errors when data is invalid", %{conn: conn, scheme: scheme} do

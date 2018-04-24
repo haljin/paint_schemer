@@ -38,7 +38,7 @@ defmodule PaintSchemer.Schemes do
   """
   def get_scheme!(id), do:
     Repo.get!(Scheme, id)
-    |> Repo.preload(sections: [steps: [:paint_technique, paints: [:paint]]])
+    |> Repo.preload(sections: [steps: [:paint_technique, paints: [paint: [:manufacturer, :type]]]])
 
   @doc """
   Creates a scheme.
@@ -53,9 +53,13 @@ defmodule PaintSchemer.Schemes do
 
   """
   def create_scheme(attrs \\ %{}) do
-    %Scheme{}
-    |> Scheme.changeset(attrs)
-    |> Repo.insert()
+    with {:ok, data} <- %Scheme{} |> Scheme.changeset(attrs) |> Repo.insert() do
+        data
+        |> Repo.preload(sections: [steps: [:paint_technique, paints: [paint: [:manufacturer, :type]]]])
+        |> (fn d -> {:ok, d} end).()
+    else
+        error -> error
+    end
   end
 
   @doc """
