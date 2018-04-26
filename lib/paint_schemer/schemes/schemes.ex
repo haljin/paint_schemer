@@ -118,13 +118,13 @@ defmodule PaintSchemer.Schemes do
 # This call results in a single SELECT query with a lot of joins
   defp scheme_associative_expr() do
     from scheme in Scheme,
-        join: section in assoc(scheme, :sections),
-        join: step in assoc(section, :steps),
-        join: pt in assoc(step, :paint_technique),
-        join: mixes in assoc(step, :paints),
-        join: paints in assoc(mixes, :paint),
-        join: m in assoc(paints, :manufacturer),
-        join: t in assoc(paints, :type),
+        left_join: section in assoc(scheme, :sections),
+        left_join: step in assoc(section, :steps),
+        left_join: pt in assoc(step, :paint_technique),
+        left_join: mixes in assoc(step, :paints),
+        left_join: paints in assoc(mixes, :paint),
+        left_join: m in assoc(paints, :manufacturer),
+        left_join: t in assoc(paints, :type),
         preload: [sections:
             {section, steps:
                 {step, [paint_technique: pt, paints:
