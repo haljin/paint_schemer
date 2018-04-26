@@ -61,7 +61,7 @@ defmodule PaintSchemerWeb.SchemeController do
     )
   end
 
-  defp map_paints(%{"id" => id, "ratio" => _ratio} = paint_info) do
+  defp map_paints(%{"paint" => %{"id" => id}, "ratio" => _ratio} = paint_info) do
     Map.put(paint_info, "paint_id", id)
   end
   defp map_paints(paint_info) do
