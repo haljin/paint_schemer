@@ -3,7 +3,7 @@ defmodule PaintSchemerWeb.SchemeController do
   alias PaintSchemer.Schemes
   alias PaintSchemer.Schemes.Scheme
 
-  action_fallback PaintSchemerWeb.FallbackController
+  action_fallback(PaintSchemerWeb.FallbackController)
 
   def index(conn, _params) do
     schemes = Schemes.list_schemes()
@@ -12,6 +12,7 @@ defmodule PaintSchemerWeb.SchemeController do
 
   def create(conn, %{"scheme" => %{}} = data) do
     mapped_data = map_json(data)
+
     with {:ok, %Scheme{} = scheme} <- Schemes.create_scheme(mapped_data["scheme"]) do
       conn
       |> put_status(:created)
@@ -35,35 +36,33 @@ defmodule PaintSchemerWeb.SchemeController do
 
   def delete(conn, %{"id" => id}) do
     scheme = Schemes.get_scheme!(id)
+
     with {:ok, %Scheme{}} <- Schemes.delete_scheme(scheme) do
       send_resp(conn, :no_content, "")
     end
   end
 
-
   defp map_json(%{"scheme" => %{"sections" => sections} = scheme_params}) do
-    %{"scheme" =>  %{scheme_params | "sections" => Enum.map(sections, &map_section_fields/1)}}
+    %{"scheme" => %{scheme_params | "sections" => Enum.map(sections, &map_section_fields/1)}}
   end
 
   defp map_section_fields(%{"steps" => steps} = section) do
-    newSteps =
-    steps
-    |> Enum.with_index
-    |> Enum.map(&map_step_fields/1)
-    %{ section | "steps" => newSteps }
+    new_steps =
+      steps
+      |> Enum.with_index()
+      |> Enum.map(&map_step_fields/1)
+
+    %{section | "steps" => new_steps}
   end
 
   defp map_step_fields({%{"technique" => %{"id" => id}, "paints" => paints} = step, index}) do
-    Map.merge(step,
-      %{"paint_technique_id" => id,
-        "ordering" => index,
-        "paints" => Enum.map(paints, &map_paints/1)}
-    )
+    Map.merge(step, %{"paint_technique_id" => id, "ordering" => index, "paints" => Enum.map(paints, &map_paints/1)})
   end
 
   defp map_paints(%{"paint" => %{"id" => id}, "ratio" => _ratio} = paint_info) do
     Map.put(paint_info, "paint_id", id)
   end
+
   defp map_paints(paint_info) do
     map_paints(Map.put(paint_info, "ratio", 1))
   end

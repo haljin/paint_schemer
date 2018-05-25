@@ -12,8 +12,10 @@ defmodule PaintSchemerWeb.ConnCase do
   inside a transaction which is reset at the beginning
   of the test unless the test case is marked as async.
   """
+  alias Phoenix.ConnTest
 
   use ExUnit.CaseTemplate
+  alias Ecto.Adapters.SQL.Sandbox
 
   using do
     quote do
@@ -26,13 +28,13 @@ defmodule PaintSchemerWeb.ConnCase do
     end
   end
 
-
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(PaintSchemer.Repo)
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(PaintSchemer.Repo, {:shared, self()})
-    end
-    {:ok, conn: Phoenix.ConnTest.build_conn()}
-  end
+    :ok = Sandbox.checkout(PaintSchemer.Repo)
 
+    unless tags[:async] do
+      Sandbox.mode(PaintSchemer.Repo, {:shared, self()})
+    end
+
+    {:ok, conn: ConnTest.build_conn()}
+  end
 end

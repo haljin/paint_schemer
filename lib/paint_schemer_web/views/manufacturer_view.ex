@@ -11,7 +11,6 @@ defmodule PaintSchemerWeb.ManufacturerView do
   end
 
   def render("manufacturer.json", %{manufacturer: manufacturer}) do
-    %{id: manufacturer.id,
-      name: manufacturer.name}
+    %{id: manufacturer.id, name: manufacturer.name}
   end
 end

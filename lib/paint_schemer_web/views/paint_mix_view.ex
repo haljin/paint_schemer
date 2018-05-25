@@ -11,7 +11,6 @@ defmodule PaintSchemerWeb.PaintMixView do
   end
 
   def render("paint_mix.json", %{paint_mix: paint_mix}) do
-    %{id: paint_mix.id,
-      ratio: paint_mix.ratio}
+    %{id: paint_mix.id, ratio: paint_mix.ratio}
   end
 end

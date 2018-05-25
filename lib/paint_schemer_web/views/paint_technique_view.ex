@@ -11,7 +11,6 @@ defmodule PaintSchemerWeb.PaintTechniqueView do
   end
 
   def render("paint_technique.json", %{paint_technique: paint_technique}) do
-    %{id: paint_technique.id,
-      name: paint_technique.name}
+    %{id: paint_technique.id, name: paint_technique.name}
   end
 end

@@ -9,10 +9,12 @@ defmodule PaintSchemerWeb.PaintControllerTest do
   def fixture(:paint) do
     {:ok, type} = Paints.create_paint_type(%{name: "Some paint type"})
     {:ok, manufacturer} = Paints.create_manufacturer(%{name: "Some manufacturer"})
+
     {:ok, paint} =
       @create_attrs
       |> Map.merge(%{type_id: type.id, manufacturer_id: manufacturer.id})
-      |> Paints.create_paint
+      |> Paints.create_paint()
+
     paint
   end
 
@@ -22,7 +24,7 @@ defmodule PaintSchemerWeb.PaintControllerTest do
 
   describe "index" do
     test "lists all paints", %{conn: conn} do
-      conn = get conn, paint_path(conn, :index)
+      conn = get(conn, paint_path(conn, :index))
       assert is_list(json_response(conn, 200)["data"])
     end
   end
@@ -31,24 +33,27 @@ defmodule PaintSchemerWeb.PaintControllerTest do
     test "renders paint when data is valid", %{conn: conn} do
       {:ok, type} = Paints.create_paint_type(%{name: "Some paint type"})
       {:ok, manufacturer} = Paints.create_manufacturer(%{name: "Some manufacturer"})
+
       attrs =
         @create_attrs
         |> Map.merge(%{type_id: type.id, manufacturer_id: manufacturer.id, color: "#0F0C0C"})
 
-      conn = post conn, paint_path(conn, :create), data: attrs
+      conn = post(conn, paint_path(conn, :create), data: attrs)
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
-      conn = get conn, paint_path(conn, :show, id)
+      conn = get(conn, paint_path(conn, :show, id))
+
       assert json_response(conn, 200)["data"] == %{
-        "id" => id,
-        "manufacturer" => "Some manufacturer",
-        "type" => "Some paint type",
-        "color" => "#0F0C0C",
-        "name" => "some name"}
+               "id" => id,
+               "manufacturer" => "Some manufacturer",
+               "type" => "Some paint type",
+               "color" => "#0F0C0C",
+               "name" => "some name"
+             }
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
-      conn = post conn, paint_path(conn, :create), data: @invalid_attrs
+      conn = post(conn, paint_path(conn, :create), data: @invalid_attrs)
       assert json_response(conn, 422)
     end
   end
@@ -57,11 +62,12 @@ defmodule PaintSchemerWeb.PaintControllerTest do
     setup [:create_paint]
 
     test "deletes chosen paint", %{conn: conn, paint: paint} do
-      conn = delete conn, paint_path(conn, :delete, paint)
+      conn = delete(conn, paint_path(conn, :delete, paint))
       assert response(conn, 204)
-      assert_error_sent 404, fn ->
-        get conn, paint_path(conn, :show, paint)
-      end
+
+      assert_error_sent(404, fn ->
+        get(conn, paint_path(conn, :show, paint))
+      end)
     end
   end
 

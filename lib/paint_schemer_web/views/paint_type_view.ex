@@ -11,7 +11,6 @@ defmodule PaintSchemerWeb.PaintTypeView do
   end
 
   def render("paint_type.json", %{paint_type: paint_type}) do
-    %{id: paint_type.id,
-      name: paint_type.name}
+    %{id: paint_type.id, name: paint_type.name}
   end
 end

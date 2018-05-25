@@ -136,16 +136,18 @@ defmodule PaintSchemer.PaintsTest do
       {:ok, manufacturer} =
         @manufacturer_attrs
         |> Paints.create_manufacturer()
+
       {:ok, type} =
         @type_attrs
         |> Paints.create_paint_type()
+
       {:ok, paint} =
         attrs
         |> Enum.into(@valid_attrs)
         |> Enum.into(%{manufacturer_id: manufacturer.id, type_id: type.id})
         |> Paints.create_paint()
 
-      %Paint{ paint | manufacturer: manufacturer, type: type}
+      %Paint{paint | manufacturer: manufacturer, type: type}
     end
 
     test "list_paints/0 returns all paints" do
@@ -162,13 +164,16 @@ defmodule PaintSchemer.PaintsTest do
       {:ok, manufacturer} =
         @manufacturer_attrs
         |> Paints.create_manufacturer()
+
       {:ok, type} =
         @type_attrs
         |> Paints.create_paint_type()
 
       assert {:ok, %Paint{} = paint} =
-        Map.merge(@valid_attrs, %{manufacturer_id: manufacturer.id, type_id: type.id})
-        |> Paints.create_paint()
+               @valid_attrs
+               |> Map.merge(%{manufacturer_id: manufacturer.id, type_id: type.id})
+               |> Paints.create_paint()
+
       assert paint.color == <<255, 255, 255>>
       assert paint.name == "some name"
     end
@@ -202,8 +207,6 @@ defmodule PaintSchemer.PaintsTest do
       assert %Ecto.Changeset{} = Paints.change_paint(paint)
     end
   end
-
-
 
   describe "paint_technique" do
     alias PaintSchemer.Paints.PaintTechnique

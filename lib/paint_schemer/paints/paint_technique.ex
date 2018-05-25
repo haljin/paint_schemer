@@ -1,8 +1,8 @@
 defmodule PaintSchemer.Paints.PaintTechnique do
+  @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
   alias PaintSchemer.Paints.PaintTechnique
-
 
   schema "paint_techniques" do
     field :name, :string

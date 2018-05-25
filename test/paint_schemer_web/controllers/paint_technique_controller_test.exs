@@ -17,24 +17,22 @@ defmodule PaintSchemerWeb.PaintTechniqueControllerTest do
 
   describe "index" do
     test "lists all paint_technique", %{conn: conn} do
-      conn = get conn, paint_technique_path(conn, :index)
+      conn = get(conn, paint_technique_path(conn, :index))
       assert json_response(conn, 200)["data"] == []
     end
   end
 
   describe "create paint_technique" do
     test "renders paint_technique when data is valid", %{conn: conn} do
-      conn = post conn, paint_technique_path(conn, :create), data: @create_attrs
+      conn = post(conn, paint_technique_path(conn, :create), data: @create_attrs)
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
-      conn = get conn, paint_technique_path(conn, :show, id)
-      assert json_response(conn, 200)["data"] == %{
-        "id" => id,
-        "name" => "some name"}
+      conn = get(conn, paint_technique_path(conn, :show, id))
+      assert json_response(conn, 200)["data"] == %{"id" => id, "name" => "some name"}
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
-      conn = post conn, paint_technique_path(conn, :create), data: @invalid_attrs
+      conn = post(conn, paint_technique_path(conn, :create), data: @invalid_attrs)
       assert json_response(conn, 422)["errors"] != %{}
     end
   end
@@ -43,11 +41,12 @@ defmodule PaintSchemerWeb.PaintTechniqueControllerTest do
     setup [:create_paint_technique]
 
     test "deletes chosen paint_technique", %{conn: conn, paint_technique: paint_technique} do
-      conn = delete conn, paint_technique_path(conn, :delete, paint_technique)
+      conn = delete(conn, paint_technique_path(conn, :delete, paint_technique))
       assert response(conn, 204)
-      assert_error_sent 404, fn ->
-        get conn, paint_technique_path(conn, :show, paint_technique)
-      end
+
+      assert_error_sent(404, fn ->
+        get(conn, paint_technique_path(conn, :show, paint_technique))
+      end)
     end
   end
 

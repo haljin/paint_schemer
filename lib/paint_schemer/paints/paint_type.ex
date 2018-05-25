@@ -1,8 +1,8 @@
 defmodule PaintSchemer.Paints.PaintType do
+  @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
   alias PaintSchemer.Paints.PaintType
-
 
   schema "paint_types" do
     field :name, :string

@@ -1,8 +1,8 @@
 defmodule PaintSchemer.Schemes.PaintMix do
+  @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
   alias PaintSchemer.Schemes.PaintMix
-
 
   schema "scheme_mixes" do
     field :ratio, :integer

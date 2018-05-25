@@ -17,24 +17,22 @@ defmodule PaintSchemerWeb.PaintTypeControllerTest do
 
   describe "index" do
     test "lists all paint_types", %{conn: conn} do
-      conn = get conn, paint_type_path(conn, :index)
+      conn = get(conn, paint_type_path(conn, :index))
       assert is_list(json_response(conn, 200)["data"])
     end
   end
 
   describe "create paint_type" do
     test "renders paint_type when data is valid", %{conn: conn} do
-      conn = post conn, paint_type_path(conn, :create), data: @create_attrs
+      conn = post(conn, paint_type_path(conn, :create), data: @create_attrs)
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
-      conn = get conn, paint_type_path(conn, :show, id)
-      assert json_response(conn, 200)["data"] == %{
-        "id" => id,
-        "name" => "some name"}
+      conn = get(conn, paint_type_path(conn, :show, id))
+      assert json_response(conn, 200)["data"] == %{"id" => id, "name" => "some name"}
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
-      conn = post conn, paint_type_path(conn, :create), data: @invalid_attrs
+      conn = post(conn, paint_type_path(conn, :create), data: @invalid_attrs)
       assert json_response(conn, 422)["errors"] != %{}
     end
   end
@@ -43,11 +41,12 @@ defmodule PaintSchemerWeb.PaintTypeControllerTest do
     setup [:create_paint_type]
 
     test "deletes chosen paint_type", %{conn: conn, paint_type: paint_type} do
-      conn = delete conn, paint_type_path(conn, :delete, paint_type)
+      conn = delete(conn, paint_type_path(conn, :delete, paint_type))
       assert response(conn, 204)
-      assert_error_sent 404, fn ->
-        get conn, paint_type_path(conn, :show, paint_type)
-      end
+
+      assert_error_sent(404, fn ->
+        get(conn, paint_type_path(conn, :show, paint_type))
+      end)
     end
   end
 

@@ -12,14 +12,17 @@ defmodule PaintSchemerWeb.PaintView do
   end
 
   def render("paint.json", %{paint: paint}) do
-    %{id: paint.id,
+    %{
+      id: paint.id,
       name: paint.name,
       manufacturer: association_field(paint.manufacturer),
       type: association_field(paint.type),
-      color: "#" <> Base.encode16(paint.color)}
+      color: "#" <> Base.encode16(paint.color)
+    }
   end
 
   defp association_field(nil), do: nil
+
   defp association_field(relation) do
     case Ecto.assoc_loaded?(relation) do
       true -> relation.name

@@ -1,15 +1,15 @@
 defmodule PaintSchemer.Schemes.Step do
+  @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
-  alias PaintSchemer.Schemes.Step
-
+  alias PaintSchemer.Paints.PaintTechnique
+  alias PaintSchemer.Schemes.{Section, Step, PaintMix}
 
   schema "scheme_steps" do
     field :ordering, :integer
-    belongs_to :paint_technique, PaintSchemer.Paints.PaintTechnique
-    belongs_to :section, PaintSchemer.Schemes.Section
-    has_many :paints, PaintSchemer.Schemes.PaintMix
-
+    belongs_to :paint_technique, PaintTechnique
+    belongs_to :section, Section
+    has_many(:paints, PaintMix)
 
     timestamps()
   end
@@ -19,6 +19,6 @@ defmodule PaintSchemer.Schemes.Step do
     step
     |> cast(attrs, [:ordering, :paint_technique_id])
     |> validate_required([:ordering, :paint_technique_id])
-    |> cast_assoc(:paints, with: &PaintSchemer.Schemes.PaintMix.changeset/2)
+    |> cast_assoc(:paints, with: &PaintMix.changeset/2)
   end
 end

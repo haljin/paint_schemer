@@ -4,7 +4,7 @@ defmodule PaintSchemerWeb.PaintTechniqueController do
   alias PaintSchemer.Paints
   alias PaintSchemer.Paints.PaintTechnique
 
-  action_fallback PaintSchemerWeb.FallbackController
+  action_fallback(PaintSchemerWeb.FallbackController)
 
   def index(conn, _params) do
     paint_technique = Paints.list_paint_technique()
@@ -27,6 +27,7 @@ defmodule PaintSchemerWeb.PaintTechniqueController do
 
   def delete(conn, %{"id" => id}) do
     paint_technique = Paints.get_paint_technique!(id)
+
     with {:ok, %PaintTechnique{}} <- Paints.delete_paint_technique(paint_technique) do
       send_resp(conn, :no_content, "")
     end

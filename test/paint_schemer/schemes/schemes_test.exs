@@ -80,6 +80,7 @@ defmodule PaintSchemer.SchemesTest do
       {:ok, scheme} =
         @scheme_attrs
         |> Schemes.create_scheme()
+
       {:ok, section} =
         attrs
         |> Enum.into(@valid_attrs)
@@ -105,8 +106,10 @@ defmodule PaintSchemer.SchemesTest do
         |> Schemes.create_scheme()
 
       assert {:ok, %Section{} = section} =
-        Map.merge(@valid_attrs, %{scheme_id: scheme.id})
-        |> Schemes.create_section()
+               @valid_attrs
+               |> Map.merge(%{scheme_id: scheme.id})
+               |> Schemes.create_section()
+
       assert %Section{} = section
     end
 
@@ -130,7 +133,7 @@ defmodule PaintSchemer.SchemesTest do
       section = section_fixture()
       assert {:ok, %Section{}} = Schemes.delete_section(section)
       assert_raise Ecto.NoResultsError, fn -> Schemes.get_section!(section.id) end
-  end
+    end
 
     test "change_section/1 returns a section changeset" do
       section = section_fixture()
@@ -154,13 +157,16 @@ defmodule PaintSchemer.SchemesTest do
       {:ok, technique} =
         @paint_technique_attrs
         |> Paints.create_paint_technique()
+
       {:ok, scheme} =
         @scheme_attrs
         |> Schemes.create_scheme()
+
       {:ok, section} =
         @section_attrs
         |> Enum.into(%{scheme_id: scheme.id})
         |> Schemes.create_section()
+
       {:ok, step} =
         attrs
         |> Enum.into(@valid_attrs)
@@ -184,18 +190,21 @@ defmodule PaintSchemer.SchemesTest do
       {:ok, technique} =
         @paint_technique_attrs
         |> Paints.create_paint_technique()
+
       {:ok, scheme} =
         @scheme_attrs
         |> Schemes.create_scheme()
+
       {:ok, section} =
         @section_attrs
         |> Enum.into(%{scheme_id: scheme.id})
         |> Schemes.create_section()
 
-
       assert {:ok, %Step{} = step} =
-        Map.merge(@valid_attrs, %{paint_technique_id: technique.id, section_id: section.id})
-        |> Schemes.create_step()
+               @valid_attrs
+               |> Map.merge(%{paint_technique_id: technique.id, section_id: section.id})
+               |> Schemes.create_step()
+
       assert step.ordering == 42
     end
 
@@ -246,23 +255,29 @@ defmodule PaintSchemer.SchemesTest do
       {:ok, manufacturer} =
         @manufacturer_attrs
         |> Paints.create_manufacturer()
+
       {:ok, type} =
         @type_attrs
         |> Paints.create_paint_type()
+
       {:ok, paint} =
         @paint_attrs
         |> Enum.into(%{manufacturer_id: manufacturer.id, type_id: type.id})
         |> Paints.create_paint()
+
       {:ok, technique} =
         @paint_technique_attrs
         |> Paints.create_paint_technique()
+
       {:ok, scheme} =
         @scheme_attrs
         |> Schemes.create_scheme()
+
       {:ok, section} =
         @section_attrs
         |> Enum.into(%{scheme_id: scheme.id})
         |> Schemes.create_section()
+
       {:ok, step} =
         @step_attrs
         |> Enum.into(%{section_id: section.id, paint_technique_id: technique.id})
@@ -291,31 +306,39 @@ defmodule PaintSchemer.SchemesTest do
       {:ok, manufacturer} =
         @manufacturer_attrs
         |> Paints.create_manufacturer()
+
       {:ok, type} =
         @type_attrs
         |> Paints.create_paint_type()
+
       {:ok, paint} =
         @paint_attrs
         |> Enum.into(%{manufacturer_id: manufacturer.id, type_id: type.id})
         |> Paints.create_paint()
+
       {:ok, technique} =
         @paint_technique_attrs
         |> Paints.create_paint_technique()
+
       {:ok, scheme} =
         @scheme_attrs
         |> Schemes.create_scheme()
+
       {:ok, section} =
         @section_attrs
         |> Enum.into(%{scheme_id: scheme.id})
         |> Schemes.create_section()
+
       {:ok, step} =
         @step_attrs
         |> Enum.into(%{section_id: section.id, paint_technique_id: technique.id})
         |> Schemes.create_step()
 
       assert {:ok, %PaintMix{} = paint_mix} =
-        Map.merge(@valid_attrs, %{paint_id: paint.id, step_id: step.id})
-        |> Schemes.create_paint_mix()
+               @valid_attrs
+               |> Map.merge(%{paint_id: paint.id, step_id: step.id})
+               |> Schemes.create_paint_mix()
+
       assert paint_mix.ratio == 42
     end
 

@@ -14,6 +14,7 @@ defmodule PaintSchemerWeb.ChannelCase do
   """
 
   use ExUnit.CaseTemplate
+  alias Ecto.Adapters.SQL.Sandbox
 
   using do
     quote do
@@ -25,13 +26,13 @@ defmodule PaintSchemerWeb.ChannelCase do
     end
   end
 
-
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(PaintSchemer.Repo)
+    :ok = Sandbox.checkout(PaintSchemer.Repo)
+
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(PaintSchemer.Repo, {:shared, self()})
+      Sandbox.mode(PaintSchemer.Repo, {:shared, self()})
     end
+
     :ok
   end
-
 end

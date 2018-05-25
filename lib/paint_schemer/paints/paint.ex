@@ -1,8 +1,8 @@
 defmodule PaintSchemer.Paints.Paint do
+  @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
   alias PaintSchemer.Paints.Paint
-
 
   schema "paints" do
     field :color, :binary

@@ -11,7 +11,6 @@ defmodule PaintSchemerWeb.StepView do
   end
 
   def render("step.json", %{step: step}) do
-    %{id: step.id,
-      ordering: step.ordering}
+    %{id: step.id, ordering: step.ordering}
   end
 end

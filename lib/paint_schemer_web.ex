@@ -28,8 +28,9 @@ defmodule PaintSchemerWeb do
 
   def view do
     quote do
-      use Phoenix.View, root: "lib/paint_schemer_web/templates",
-                        namespace: PaintSchemerWeb
+      use Phoenix.View,
+        root: "lib/paint_schemer_web/templates",
+        namespace: PaintSchemerWeb
 
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_flash: 2, view_module: 1]

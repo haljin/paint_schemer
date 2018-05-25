@@ -1,5 +1,8 @@
 defmodule PaintSchemer.Application do
+  @moduledoc false
   use Application
+  alias PaintSchemer.Repo
+  alias PaintSchemerWeb.Endpoint
 
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
@@ -9,9 +12,9 @@ defmodule PaintSchemer.Application do
     # Define workers and child supervisors to be supervised
     children = [
       # Start the Ecto repository
-      supervisor(PaintSchemer.Repo, []),
+      supervisor(Repo, []),
       # Start the endpoint when the application starts
-      supervisor(PaintSchemerWeb.Endpoint, []),
+      supervisor(Endpoint, [])
       # Start your own worker by calling: PaintSchemer.Worker.start_link(arg1, arg2, arg3)
       # worker(PaintSchemer.Worker, [arg1, arg2, arg3]),
     ]
@@ -25,7 +28,7 @@ defmodule PaintSchemer.Application do
   # Tell Phoenix to update the endpoint configuration
   # whenever the application is updated.
   def config_change(changed, _new, removed) do
-    PaintSchemerWeb.Endpoint.config_change(changed, removed)
+    Endpoint.config_change(changed, removed)
     :ok
   end
 end

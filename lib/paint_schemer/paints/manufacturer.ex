@@ -1,8 +1,8 @@
 defmodule PaintSchemer.Paints.Manufacturer do
+  @moduledoc false
   use Ecto.Schema
   import Ecto.Changeset
   alias PaintSchemer.Paints.Manufacturer
-
 
   schema "paint_manufacturers" do
     field :name, :string

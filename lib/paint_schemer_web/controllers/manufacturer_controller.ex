@@ -4,7 +4,7 @@ defmodule PaintSchemerWeb.ManufacturerController do
   alias PaintSchemer.Paints
   alias PaintSchemer.Paints.Manufacturer
 
-  action_fallback PaintSchemerWeb.FallbackController
+  action_fallback(PaintSchemerWeb.FallbackController)
 
   def index(conn, _params) do
     paint_manufacturers = Paints.list_paint_manufacturers()
@@ -27,6 +27,7 @@ defmodule PaintSchemerWeb.ManufacturerController do
 
   def delete(conn, %{"id" => id}) do
     manufacturer = Paints.get_manufacturer!(id)
+
     with {:ok, %Manufacturer{}} <- Paints.delete_manufacturer(manufacturer) do
       send_resp(conn, :no_content, "")
     end

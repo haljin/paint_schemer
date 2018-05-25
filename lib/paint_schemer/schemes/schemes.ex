@@ -18,7 +18,7 @@ defmodule PaintSchemer.Schemes do
 
   """
   def list_schemes do
-    Repo.all scheme_associative_expr()
+    Repo.all(scheme_associative_expr())
     # Repo.all(Scheme)
     # |> Enum.map(&preload_scheme/1)
   end
@@ -37,9 +37,11 @@ defmodule PaintSchemer.Schemes do
       ** (Ecto.NoResultsError)
 
   """
-  def get_scheme!(id), do:
-    Repo.get!(Scheme, id)
-    |> preload_scheme
+  def get_scheme!(id),
+    do:
+      Scheme
+      |> Repo.get!(id)
+      |> preload_scheme
 
   @doc """
   Creates a scheme.
@@ -55,11 +57,11 @@ defmodule PaintSchemer.Schemes do
   """
   def create_scheme(attrs \\ %{}) do
     with {:ok, data} <- %Scheme{} |> Scheme.changeset(attrs) |> Repo.insert() do
-        data
-        |> preload_scheme
-        |> (fn d -> {:ok, d} end).()
+      data
+      |> preload_scheme
+      |> (fn d -> {:ok, d} end).()
     else
-        error -> error
+      error -> error
     end
   end
 
@@ -110,26 +112,22 @@ defmodule PaintSchemer.Schemes do
     Scheme.changeset(scheme, %{})
   end
 
-# This call instead results in a lot of quesries one for each table
+  # This call instead results in a lot of quesries one for each table
   defp preload_scheme(%Scheme{} = scheme) do
     Repo.preload(scheme, sections: [steps: [:paint_technique, paints: [paint: [:manufacturer, :type]]]])
   end
 
-# This call results in a single SELECT query with a lot of joins
-  defp scheme_associative_expr() do
+  # This call results in a single SELECT query with a lot of joins
+  defp scheme_associative_expr do
     from scheme in Scheme,
-        left_join: section in assoc(scheme, :sections),
-        left_join: step in assoc(section, :steps),
-        left_join: pt in assoc(step, :paint_technique),
-        left_join: mixes in assoc(step, :paints),
-        left_join: paints in assoc(mixes, :paint),
-        left_join: m in assoc(paints, :manufacturer),
-        left_join: t in assoc(paints, :type),
-        preload: [sections:
-            {section, steps:
-                {step, [paint_technique: pt, paints:
-                    {mixes, paint:
-                        {paints, [type: t, manufacturer: m]}}]}}]
+      left_join: section in assoc(scheme, :sections),
+      left_join: step in assoc(section, :steps),
+      left_join: pt in assoc(step, :paint_technique),
+      left_join: mixes in assoc(step, :paints),
+      left_join: paints in assoc(mixes, :paint),
+      left_join: m in assoc(paints, :manufacturer),
+      left_join: t in assoc(paints, :type),
+      preload: [sections: {section, steps: {step, [paint_technique: pt, paints: {mixes, paint: {paints, [type: t, manufacturer: m]}}]}}]
   end
 
   alias PaintSchemer.Schemes.Section

@@ -1,8 +1,7 @@
 defmodule PaintSchemerWeb.SchemeView do
   use PaintSchemerWeb, :view
-  alias PaintSchemerWeb.SchemeView
-  alias PaintSchemer.Schemes
-  alias PaintSchemer.Paints
+  alias PaintSchemerWeb.{SchemeView, PaintView}
+  alias PaintSchemer.{Schemes, Paints}
 
   def render("index.json", %{schemes: schemes}) do
     %{data: render_many(schemes, SchemeView, "scheme.json")}
@@ -13,7 +12,8 @@ defmodule PaintSchemerWeb.SchemeView do
   end
 
   def render("scheme.json", %{scheme: scheme}) do
-    %{id: scheme.id,
+    %{
+      id: scheme.id,
       title: scheme.title,
       description: scheme.description,
       image_url: scheme.image_url,
@@ -44,7 +44,7 @@ defmodule PaintSchemerWeb.SchemeView do
     %{
       id: id,
       ratio: ratio,
-      paint: PaintSchemerWeb.PaintView.render("paint.json", %{paint: paint})
+      paint: PaintView.render("paint.json", %{paint: paint})
     }
   end
 end
