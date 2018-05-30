@@ -11,6 +11,10 @@ defmodule PaintSchemerWeb.SchemeView do
     %{data: render_one(scheme, SchemeView, "scheme.json")}
   end
 
+  def render("updated.json", %{scheme: scheme}) do
+    %{updated: true}
+  end
+
   def render("scheme.json", %{scheme: scheme}) do
     %{
       id: scheme.id,
@@ -25,7 +29,10 @@ defmodule PaintSchemerWeb.SchemeView do
     %{
       id: id,
       name: name,
-      steps: Enum.map(steps, &render_steps/1)
+      steps:
+        steps
+        |> Enum.sort_by(& &1.ordering)
+        |> Enum.map(&render_steps/1)
     }
   end
 

@@ -4,7 +4,7 @@ defmodule PaintSchemer.Repo.Migrations.CreateSchemeSteps do
   def change do
     create table(:scheme_steps) do
       add :ordering, :integer
-      add :section_id, references(:scheme_sections, on_delete: :nothing)
+      add :section_id, references(:scheme_sections, on_delete: :delete_all)
       add :paint_technique_id, references(:paint_techniques, on_delete: :nothing)
 
       timestamps()

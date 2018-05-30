@@ -9,7 +9,7 @@ defmodule PaintSchemer.Schemes.Step do
     field :ordering, :integer
     belongs_to :paint_technique, PaintTechnique
     belongs_to :section, Section
-    has_many(:paints, PaintMix)
+    has_many :paints, PaintMix, on_replace: :delete
 
     timestamps()
   end

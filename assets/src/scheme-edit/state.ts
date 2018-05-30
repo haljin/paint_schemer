@@ -23,6 +23,7 @@ export interface ISchemeState {
     paintSections: IPaintSection[];
     techniqueList: IPaintTechniqueEntry[];
     title: string;
+    schemeId?: number;
 }
 
 export const initialState: ISchemeState = {
@@ -40,7 +41,7 @@ function isValid(paintSections: IPaintSection[]): boolean {
 const reducer: Reducer<ISchemeState> = (state = initialState, action: SchemeAction): ISchemeState => {
     switch (action.type) {
         case SchemeActionType.LOAD_SCHEME:
-            return { ...state, paintSections: action.paintSections, title: action.title };
+            return { ...state, schemeId: action.schemeId, paintSections: action.paintSections, title: action.title };
         case SchemeActionType.VALIDATE_SCHEME:
             const validatedSections = state.paintSections.map((section): IPaintSection => {
                 const validatedSteps = section.steps.map((step): IPaintStep => {
@@ -51,16 +52,30 @@ const reducer: Reducer<ISchemeState> = (state = initialState, action: SchemeActi
             return { ...state, paintSections: validatedSections };
         case SchemeActionType.SAVE_SCHEME:
             if (isValid(state.paintSections)) {
-                const data = { scheme: { title: state.title, sections: state.paintSections } };
-                const request = {
-                    body: JSON.stringify(data),
-                    headers: {
-                        "Content-type": "application/json",
-                    },
-                    method: "POST",
-                };
-                fetch("/api/schemes", request)
-                    .then((resp) => console.log(resp)); // tslint:disable-line:no-console
+                if (!!state.schemeId) {
+                    const data = { scheme: { title: state.title, sections: state.paintSections }, id: state.schemeId };
+                    const request = {
+                        body: JSON.stringify(data),
+                        headers: {
+                            "Content-type": "application/json",
+                        },
+                        method: "PATCH",
+                    };
+                    fetch("/api/schemes/" + state.schemeId, request)
+                        .then((resp) => console.log(resp)); // tslint:disable-line:no-console
+
+                } else {
+                    const data = { scheme: { title: state.title, sections: state.paintSections } };
+                    const request = {
+                        body: JSON.stringify(data),
+                        headers: {
+                            "Content-type": "application/json",
+                        },
+                        method: "POST",
+                    };
+                    fetch("/api/schemes", request)
+                        .then((resp) => console.log(resp)); // tslint:disable-line:no-console
+                }
             }
             return state;
         case SchemeActionType.UPDATE_PAINT_LIST:

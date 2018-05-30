@@ -5,7 +5,7 @@ defmodule PaintSchemerWeb.SchemeControllerTest do
   alias PaintSchemer.Schemes.Scheme
 
   @create_attrs %{description: "some description", image_url: "some image_url", title: "some title", sections: []}
-  @update_attrs %{description: "some updated description", image_url: "some updated image_url", title: "some updated title"}
+  @update_attrs %{description: "some updated description", image_url: "some updated image_url", title: "some updated title", sections: []}
   @invalid_attrs %{description: nil, image_url: nil, title: nil, sections: []}
 
   def fixture(:scheme) do
@@ -51,7 +51,7 @@ defmodule PaintSchemerWeb.SchemeControllerTest do
 
     test "renders scheme when data is valid", %{conn: conn, scheme: %Scheme{id: id} = scheme} do
       conn = put(conn, scheme_path(conn, :update, scheme), scheme: @update_attrs)
-      assert %{"id" => ^id} = json_response(conn, 200)["data"]
+      assert %{"updated" => true} = json_response(conn, 200)
 
       conn = get(conn, scheme_path(conn, :show, id))
 

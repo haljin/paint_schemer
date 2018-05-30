@@ -9,7 +9,7 @@ defmodule PaintSchemer.Schemes.Scheme do
     field :description, :string
     field :image_url, :string
     field :title, :string
-    has_many(:sections, Section)
+    has_many :sections, Section, on_replace: :delete
 
     timestamps()
   end

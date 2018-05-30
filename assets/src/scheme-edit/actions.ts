@@ -22,6 +22,7 @@ export enum SchemeActionType {
 export interface LoadSchemeAction {
     readonly type: typeof SchemeActionType.LOAD_SCHEME;
     readonly paintSections: IPaintSection[];
+    readonly schemeId?: number;
     readonly title: string;
 }
 
@@ -88,9 +89,10 @@ export interface UpdatePaintTechniquesAction {
 }
 
 export const loadScheme: ActionCreator<LoadSchemeAction> =
-    (scheme: IPaintSection[], title: string) => {
+    (scheme: IPaintSection[], title: string, schemeId?: number) => {
         return {
             type: SchemeActionType.LOAD_SCHEME,
+            schemeId,
             paintSections: scheme,
             title,
         };

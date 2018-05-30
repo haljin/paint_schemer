@@ -26,11 +26,12 @@ defmodule PaintSchemerWeb.SchemeController do
     render(conn, "show.json", scheme: scheme)
   end
 
-  def update(conn, %{"id" => id, "scheme" => scheme_params}) do
+  def update(conn, %{"id" => id, "scheme" => scheme_params} = data) do
     scheme = Schemes.get_scheme!(id)
+    %{"scheme" => scheme_params} = mapped_data = map_json(data)
 
     with {:ok, %Scheme{} = scheme} <- Schemes.update_scheme(scheme, scheme_params) do
-      render(conn, "show.json", scheme: scheme)
+      render(conn, "updated.json", scheme: scheme)
     end
   end
 

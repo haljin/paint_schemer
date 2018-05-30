@@ -26,7 +26,7 @@ if (mainNode) {
             const schemeId = (window as any).__SCHEME_ID__;
             if (!!schemeId) {
                 getRequest(`/api/schemes/${schemeId}`)
-                    .then((data) => mainStore.dispatch(loadScheme(data.sections, data.title)));
+                    .then((data) => mainStore.dispatch(loadScheme(data.sections, data.title, data.id)));
             }
         });
 

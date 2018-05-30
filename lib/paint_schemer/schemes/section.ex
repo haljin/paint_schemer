@@ -7,7 +7,7 @@ defmodule PaintSchemer.Schemes.Section do
   schema "scheme_sections" do
     field :name, :string
     belongs_to :scheme, Scheme
-    has_many(:steps, Step)
+    has_many :steps, Step, on_replace: :delete
 
     timestamps()
   end
