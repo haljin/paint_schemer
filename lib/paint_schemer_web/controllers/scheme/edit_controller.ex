@@ -1,12 +1,15 @@
 defmodule PaintSchemerWeb.Scheme.EditController do
   use PaintSchemerWeb, :controller
 
+  alias PaintSchemer.Schemes
+  alias PaintSchemerWeb.ErrorView
+
   def index(conn, params) do
-    case PaintSchemer.Schemes.get_scheme(params["id"]) do
+    case Schemes.get_scheme(params["id"]) do
       nil ->
         conn
         |> put_status(:not_found)
-        |> render(PaintSchemerWeb.ErrorView, :"404")
+        |> render(ErrorView, :"404")
 
       _ ->
         render(conn, "index.html", %{scheme: params["id"]})
