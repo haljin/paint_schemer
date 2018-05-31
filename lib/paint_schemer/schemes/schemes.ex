@@ -19,8 +19,18 @@ defmodule PaintSchemer.Schemes do
   """
   def list_schemes do
     Repo.all(scheme_associative_expr())
-    # Repo.all(Scheme)
-    # |> Enum.map(&preload_scheme/1)
+  end
+
+  def list_schemes_page(page_size, page_number) do
+    offset = page_size * (page_number - 1)
+
+    query =
+      from scheme in Scheme,
+        limit: ^page_size,
+        offset: ^offset
+
+    query
+    |> Repo.all()
   end
 
   @doc """
@@ -42,6 +52,8 @@ defmodule PaintSchemer.Schemes do
       Scheme
       |> Repo.get!(id)
       |> preload_scheme
+
+  def get_scheme(id), do: Repo.get(Scheme, id)
 
   @doc """
   Creates a scheme.
@@ -124,9 +136,9 @@ defmodule PaintSchemer.Schemes do
       left_join: step in assoc(section, :steps),
       left_join: pt in assoc(step, :paint_technique),
       left_join: mixes in assoc(step, :paints),
-      left_join: paints in assoc(mixes, :paint),
-      left_join: m in assoc(paints, :manufacturer),
-      left_join: t in assoc(paints, :type),
+      join: paints in assoc(mixes, :paint),
+      join: m in assoc(paints, :manufacturer),
+      join: t in assoc(paints, :type),
       preload: [sections: {section, steps: {step, [paint_technique: pt, paints: {mixes, paint: {paints, [type: t, manufacturer: m]}}]}}]
   end
 

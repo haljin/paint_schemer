@@ -8,9 +8,9 @@ import { devToolsEnhancer } from "redux-devtools-extension";
 import {
     loadScheme, UpdatePaintListAction,
     updatePaints, UpdatePaintTechniquesAction, updateTechniques,
-} from "./scheme-edit/actions";
-import Scheme from "./scheme-edit/components/scheme";
-import reducer from "./scheme-edit/state";
+} from "./actions";
+import Scheme from "./components/scheme";
+import reducer from "./state";
 
 const mainStore = createStore(reducer, devToolsEnhancer({ name: "dev" }));
 const mainNode = document.getElementById("react-main");

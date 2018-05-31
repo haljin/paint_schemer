@@ -6,6 +6,7 @@ const config = {
     devtool: "inline-source-map",
     entry: {
         app: ["./css/app.css", "./src/app.tsx"],
+        "scheme-edit": ["./css/app.css", "./src/scheme-edit/app.tsx"],
         admin: ["./css/app.css", "./src/admin/admin.tsx"]
     },
     output: {
