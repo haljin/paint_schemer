@@ -5,7 +5,8 @@ defmodule PaintSchemerWeb.SchemeController do
 
   action_fallback(PaintSchemerWeb.FallbackController)
 
-  def index(conn, %{"page" => page_number} \\ %{"page" => "1"}) do
+  def index(conn, params) do
+    page_number = Access.get(params, "page_number", "1")
     schemes = Schemes.list_schemes_page(3, String.to_integer(page_number))
     render(conn, "index.json", schemes: schemes)
   end
@@ -26,9 +27,9 @@ defmodule PaintSchemerWeb.SchemeController do
     render(conn, "show.json", scheme: scheme)
   end
 
-  def update(conn, %{"id" => id, "scheme" => scheme_params} = data) do
+  def update(conn, %{"id" => id, "scheme" => _scheme_params} = data) do
     scheme = Schemes.get_scheme!(id)
-    %{"scheme" => scheme_params} = mapped_data = map_json(data)
+    %{"scheme" => scheme_params} = map_json(data)
 
     with {:ok, %Scheme{} = scheme} <- Schemes.update_scheme(scheme, scheme_params) do
       render(conn, "updated.json", scheme: scheme)
