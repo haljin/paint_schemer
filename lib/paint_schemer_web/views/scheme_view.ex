@@ -16,12 +16,18 @@ defmodule PaintSchemerWeb.SchemeView do
   end
 
   def render("scheme.json", %{scheme: scheme}) do
+    sections =
+      case scheme.sections do
+        sec when is_list(sec) -> Enum.map(scheme.sections, &render_section/1)
+        _ -> nil
+      end
+
     %{
       id: scheme.id,
       title: scheme.title,
       description: scheme.description,
       image_url: scheme.image_url,
-      sections: Enum.map(scheme.sections, &render_section/1)
+      sections: sections
     }
   end
 

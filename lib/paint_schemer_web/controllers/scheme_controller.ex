@@ -5,8 +5,8 @@ defmodule PaintSchemerWeb.SchemeController do
 
   action_fallback(PaintSchemerWeb.FallbackController)
 
-  def index(conn, _params) do
-    schemes = Schemes.list_schemes()
+  def index(conn, %{"page" => page_number} \\ %{"page" => "1"}) do
+    schemes = Schemes.list_schemes_page(3, String.to_integer(page_number))
     render(conn, "index.json", schemes: schemes)
   end
 

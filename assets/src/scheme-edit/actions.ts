@@ -36,6 +36,7 @@ export interface SaveSchemeAction {
 
 export interface UpdateTitleAction {
     readonly type: typeof SchemeActionType.UPDATE_TITLE;
+    readonly title: string;
 }
 
 export interface AddSectionAction {

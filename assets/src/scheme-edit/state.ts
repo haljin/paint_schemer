@@ -80,6 +80,8 @@ const reducer: Reducer<ISchemeState> = (state = initialState, action: SchemeActi
             return state;
         case SchemeActionType.UPDATE_PAINT_LIST:
             return { ...state, paintList: action.paints };
+        case SchemeActionType.UPDATE_TITLE:
+            return { ...state, title: action.title };
         case SchemeActionType.UPDATE_PAINT_TECHNIQUES:
             const initialStep = [{ paints: [], technique: action.techniques[0] }];
             const initialSection = [{ name: "Unnamed Section", steps: initialStep }];

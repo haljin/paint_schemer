@@ -136,9 +136,9 @@ defmodule PaintSchemer.Schemes do
       left_join: step in assoc(section, :steps),
       left_join: pt in assoc(step, :paint_technique),
       left_join: mixes in assoc(step, :paints),
-      join: paints in assoc(mixes, :paint),
-      join: m in assoc(paints, :manufacturer),
-      join: t in assoc(paints, :type),
+      left_join: paints in assoc(mixes, :paint),
+      left_join: m in assoc(paints, :manufacturer),
+      left_join: t in assoc(paints, :type),
       preload: [sections: {section, steps: {step, [paint_technique: pt, paints: {mixes, paint: {paints, [type: t, manufacturer: m]}}]}}]
   end
 
