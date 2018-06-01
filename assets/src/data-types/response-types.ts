@@ -15,3 +15,11 @@ export interface IPaintEntry extends IDataEntry {
 }
 
 export interface IPaintTechniqueEntry extends IDataEntry { }
+
+export interface IScheme {
+    id: number;
+    title: string;
+}
+export interface ISchemeList {
+    data: IScheme[];
+}

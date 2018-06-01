@@ -1,12 +1,6 @@
 import React from "react";
-
-interface IScheme {
-    id: number;
-    title: string;
-}
-interface ISchemeList {
-    data: IScheme[];
-}
+import { ISchemeList } from "../../data-types/response-types";
+import SchemeListEntry from "./scheme-list-entry";
 
 interface IState {
     cursor: number;
@@ -20,42 +14,31 @@ export default class SchemeList extends React.Component<any, IState> {
     }
 
     public componentDidMount() {
-
-        fetch("/api/schemes?page=" + this.state.cursor)
-            .then((resp) => resp.json())
-            .then((json) => this.setState({ cursor: this.state.cursor, data: json }));
-
+        this.requestPage(1);
     }
 
     public render() {
-        const onClick = () => this.nextPage();
-        const onClickPrev = () => this.prevPage();
+        const onClick = () => this.requestPage(this.state.cursor + 1);
+        const onClickPrev = () => this.requestPage(this.state.cursor - 1);
         if (!this.state.data) {
-            return <button className="addButton" type="button" onClick={onClick}> +</button >;
+            return <button className="nextPage" type="button" onClick={onClick}> +</button >;
         }
 
-        const schemes = this.state.data.data.map((scheme) => <div key={scheme.id}>{scheme.id} - {scheme.title}</div>);
+        const schemes = this.state.data.data.map((scheme) => <SchemeListEntry key={scheme.id} scheme={scheme} />);
 
         return (
             <div>
                 {schemes}
-                <button className="addButton" type="button" onClick={onClick}> +</button >
+                {schemes.length > 0 &&
+                    <button className="nextPage" type="button" onClick={onClick}> +</button >}
                 {this.state.cursor > 1 &&
-                    <button className="addButton" type="button" onClick={onClickPrev}> -</button >}
+                    <button className="prevPage" type="button" onClick={onClickPrev}> -</button >}
             </div>);
     }
 
-    private nextPage() {
-        fetch("/api/schemes?page=" + (this.state.cursor + 1))
+    private requestPage(pageNo: number) {
+        return fetch("/api/schemes?page=" + pageNo)
             .then((resp) => resp.json())
-            .then((json) => this.setState({ cursor: this.state.cursor + 1, data: json }));
-
-    }
-
-    private prevPage() {
-        fetch("/api/schemes?page=" + (this.state.cursor - 1))
-            .then((resp) => resp.json())
-            .then((json) => this.setState({ cursor: this.state.cursor - 1, data: json }));
-
+            .then((json) => this.setState({ cursor: pageNo, data: json }));
     }
 }

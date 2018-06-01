@@ -6,7 +6,7 @@ defmodule PaintSchemerWeb.SchemeController do
   action_fallback(PaintSchemerWeb.FallbackController)
 
   def index(conn, params) do
-    page_number = Access.get(params, "page_number", "1")
+    page_number = Access.get(params, "page", "1")
     schemes = Schemes.list_schemes_page(3, String.to_integer(page_number))
     render(conn, "index.json", schemes: schemes)
   end

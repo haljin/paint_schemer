@@ -18,7 +18,8 @@ defmodule PaintSchemer.Schemes do
 
   """
   def list_schemes do
-    Repo.all(scheme_associative_expr())
+    Repo.all(Scheme)
+    |> preload_scheme
   end
 
   def list_schemes_page(page_size, page_number) do
@@ -125,21 +126,8 @@ defmodule PaintSchemer.Schemes do
   end
 
   # This call instead results in a lot of quesries one for each table
-  defp preload_scheme(%Scheme{} = scheme) do
+  defp preload_scheme(scheme) do
     Repo.preload(scheme, sections: [steps: [:paint_technique, paints: [paint: [:manufacturer, :type]]]])
-  end
-
-  # This call results in a single SELECT query with a lot of joins
-  defp scheme_associative_expr do
-    from scheme in Scheme,
-      left_join: section in assoc(scheme, :sections),
-      left_join: step in assoc(section, :steps),
-      left_join: pt in assoc(step, :paint_technique),
-      left_join: mixes in assoc(step, :paints),
-      left_join: paints in assoc(mixes, :paint),
-      left_join: m in assoc(paints, :manufacturer),
-      left_join: t in assoc(paints, :type),
-      preload: [sections: {section, steps: {step, [paint_technique: pt, paints: {mixes, paint: {paints, [type: t, manufacturer: m]}}]}}]
   end
 
   alias PaintSchemer.Schemes.Section
