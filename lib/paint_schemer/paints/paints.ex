@@ -209,7 +209,7 @@ defmodule PaintSchemer.Paints do
       [%Paint{}, ...]
 
   """
-  def list_paints, do: Repo.all(Paint) |> Repo.preload([:type, :manufacturer])
+  def list_paints, do: Paint |> Repo.all() |> Repo.preload([:type, :manufacturer])
 
   @doc """
   Gets a single paint.
@@ -225,7 +225,7 @@ defmodule PaintSchemer.Paints do
       ** (Ecto.NoResultsError)
 
   """
-  def get_paint!(id), do: Repo.get!(Paint, id) |> Repo.preload([:type, :manufacturer])
+  def get_paint!(id), do: Paint |> Repo.get!(id) |> Repo.preload([:type, :manufacturer])
 
   @doc """
   Creates a paint.

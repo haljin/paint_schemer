@@ -18,7 +18,8 @@ defmodule PaintSchemer.Schemes do
 
   """
   def list_schemes do
-    Repo.all(Scheme)
+    Scheme
+    |> Repo.all()
     |> preload_scheme
   end
 

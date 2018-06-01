@@ -11,7 +11,7 @@ defmodule PaintSchemerWeb.SchemeView do
     %{data: render_one(scheme, SchemeView, "scheme.json")}
   end
 
-  def render("updated.json", %{scheme: scheme}) do
+  def render("updated.json", %{scheme: _scheme}) do
     %{updated: true}
   end
 

@@ -6,13 +6,14 @@ interface IProps {
 }
 export default class SchemeListEntry extends React.Component<IProps> {
     public render() {
+        const onSchemeViewClick = () => window.location.href = "/scheme/" + this.props.scheme.id;
         const onSchemeEditClick = () => window.location.href = "/scheme/edit/" + this.props.scheme.id;
         return (
             <div className="schemeEntry">
-                <div>
+                <div onClick={onSchemeViewClick}>
                     {this.props.scheme.id} - {this.props.scheme.title}
                 </div>
-                <button type="button" onClick={onSchemeEditClick}>Edit</button>
-            </div>);
+                <button type="button" onClick={onSchemeEditClick}>Edit</button>;
+            </div >);
     }
 }
