@@ -29,8 +29,8 @@ defmodule PaintSchemerWeb.Router do
     get "/", PageController, :index
 
     scope "/scheme", Scheme do
-      get "/:id", ViewController, :index
       get "/new", NewController, :index
+      get "/:id", ViewController, :index
       get "/edit/:id", EditController, :index
     end
   end
